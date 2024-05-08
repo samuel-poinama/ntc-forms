@@ -31,7 +31,7 @@ export default class User {
     }
 
 
-    generateSessionId(): string {
+    generateToken(): string {
         this._token = sign({ email: this._email, picture: this._picture }, process.env.JWT_SECRET as string, { expiresIn: "24h" })
         return this._token
     }

@@ -29,10 +29,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return
     }
 
-    const sessionId = user.generateSessionId()
+    const token = user.generateToken()
     await user.update()
 
-    const cookie = "sessionId=" + sessionId + "; Path=/; HttpOnly; SameSite=Strict; Max-Age=3600; Secure"
+    const cookie = "token=" + token + "; Path=/; HttpOnly; SameSite=Strict; Max-Age=3600; Secure"
 
     res.setHeader("Set-Cookie", cookie)
     res.status(200).json({ message: "Logged in" })
