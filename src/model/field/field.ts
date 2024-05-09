@@ -14,7 +14,6 @@ export class Field {
 
     private _type: FieldType
     private _name: string
-    private data: any
 
     constructor(type: FieldType, name: string) {
         this._type = type
@@ -33,7 +32,6 @@ export class Field {
         return {
             type: this._type,
             name: this._name,
-            data: this.data
         }
     }
 
