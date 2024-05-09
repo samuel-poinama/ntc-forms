@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongodb'
-import { Field } from './field/field'
+import { Field, FieldType } from './field/field'
 import db from '../lib/database'
 
 
@@ -21,7 +21,7 @@ export default class Form {
         this._id = id ? id : new ObjectId()
         this._title = title
         this._description = description
-        this._fields = fields ? fields : []
+        this._fields = fields ? fields : [ new Field(FieldType.TEXT, "email") ] 
     }
 
     get id(): ObjectId {
