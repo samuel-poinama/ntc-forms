@@ -1,4 +1,4 @@
-import db from "@/lib/Database"
+import db from "@/lib/database"
 import { sign } from "jsonwebtoken"
 import { ObjectId } from "mongodb"
 
