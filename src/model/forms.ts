@@ -36,16 +36,32 @@ export default class Form {
         this._title = title
     }
 
+    get description(): string {
+        return this._description
+    }
+
+    set description(description: string) {
+        this._description = description
+    }
+
     public addField(field: Field) {
         this._fields.push(field)
     }
 
-    public insert() {
-        collection.insertOne(this.toJson())
+    public async insert(): Promise<boolean> {
+        const result = await collection.insertOne(this.toJson())
+
+        return result.acknowledged
     }
 
-    public static async find(id: ObjectId): Promise<Form | null> {
-        const result = await collection.findOne({ _id: id })
+    public async remove(): Promise<boolean> {
+        const result = await collection.deleteOne({ _id: this._id })
+
+        return result.deletedCount > 0
+    }
+
+    public static async find(id: string): Promise<Form | null> {
+        const result = await collection.findOne({ _id: new ObjectId(id) })
         if (!result) {
             return null
         }
@@ -55,7 +71,8 @@ export default class Form {
 
     public static async all(): Promise<Form[]> {
         const result = await collection.find().toArray()
-        return result.map((form: any) => Form.fromJson(form))
+        const forms = result.map((form: any) => Form.fromJson(form).toJson())
+        return forms
     }
 
     public async update(): Promise<boolean> {

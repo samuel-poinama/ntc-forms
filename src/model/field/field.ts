@@ -1,11 +1,11 @@
 
 
 export enum FieldType {
-    TEXT = 'text',
-    NUMBER = 'number',
-    DATE = 'date',
-    BOOLEAN = 'boolean',
-    SELECT = 'select',
+    TEXT = 'TEXT',
+    NUMBER = 'NUMBER',
+    DATE = 'DATE',
+    BOOLEAN = 'BOOLEAN',
+    SELECT = 'SELECT',
     /*FILE = 'file',
     IMAGE = 'image',*/
 }
