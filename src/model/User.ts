@@ -1,100 +1,74 @@
-import db from "@/lib/Database"
+import db from "@/lib/database"
 import { sign } from "jsonwebtoken"
 import { ObjectId } from "mongodb"
 
-if (!process.env.MONGO_URI) {
-    throw new Error("MONGO_URI is not in the environment")
-}
 
-if (!process.env.JWT_SECRET) {
-    throw new Error('JWT_SECRET is not defined')
-}
 
 const collection = db.collection("users")
+
+enum Role {
+    ADMIN = "ADMIN",
+    USER = "USER",
+}
+
+
 export default class User {
-    
+
     private _id: ObjectId
     private _email: string
-    private _picture: string
-    private _token: string | null
+    private _role: Role
 
-    constructor( 
-        email: string,
-        token?: string, 
-        id?: ObjectId,
-        picture?: string
-    ) {
-        this._id = id ? id : new ObjectId()
+
+    constructor(email: string,role?: Role, id?: ObjectId) {
         this._email = email
-        this._token = token ? token : null
-        this._picture = picture ? picture : "/assets/profile.png"
+        this._role = role ? role : Role.USER
+        this._id = id ? id : new ObjectId()
     }
 
-
-    generateToken(): string {
-        this._token = sign({ email: this._email, picture: this._picture }, process.env.JWT_SECRET as string, { expiresIn: "24h" })
-        return this._token
+    set email(email: string) {
+        this._email = email
     }
 
-    async insert(password: string): Promise<boolean> {
-        const json = {
-            _id: this._id,
-            email: this._email,
-            picture: this._picture,
-            token: this._token,
-            password: password
-        }
+    set role(role: Role) {
+        this._role = role
+    }
 
-        const result = await collection.insertOne(json)
+    public async insert() : Promise<boolean> {
+        const result = await collection.insertOne(this.toJson())
         return result.acknowledged
+
     }
 
-    async update(password?: string): Promise<boolean> {
-        const json: any = {
+    public async update() : Promise<boolean> {
+        const result = await collection.updateOne({_id: this._id}, {$set: this.toJson()})
+        return result.modifiedCount > 0
+    }
+
+    public async delete() : Promise<boolean> {
+        const result = await collection.deleteOne({_id: this._id})
+        return result.deletedCount > 0
+    }
+
+    public static async findByEmail(email: string) : Promise<User | null> {
+        const result = await collection.findOne({ email })
+
+        if (!result) {
+            return null
+        }
+
+        return User.fromJson(result)
+    }
+
+
+    private static fromJson(json: any): User {
+        return new User(json.email, json.role, json._id)
+    }
+
+    public toJson() {
+        return {
             email: this._email,
-            picture: this._picture,
-            token: this._token,
+            _id: this._id,
+            role: this._role
         }
-
-        if (password) {
-            json.password = password
-        }
-
-        const result = await collection.updateOne({ _id: this._id }, { $set: json })
-        return result.modifiedCount === 1
-    }
-
-    async delete(): Promise<boolean> {
-        const result = await collection.deleteOne({ _id: this._id })
-        return result.deletedCount === 1
-    }
-
-    static async checkCredentials(email: string, password: string): Promise<User | null> {
-        const json = await collection.findOne({ email })
-        if (!json) {
-            return null
-        }
-
-        if (json.password !== password) {
-            return null
-        }
-
-        return this.fromJson(json)
-    }
-
-        
-
-    static async findByEmail(email: string): Promise<User | null> {
-        const json = await collection.findOne({ email: email })
-        if (!json) {
-            return null
-        }
-
-        return this.fromJson(json)
-    }
-
-
-    static fromJson(json: any): User {
-        return new User(json.email, json.token, json._id, json.picture)
     }
 }
