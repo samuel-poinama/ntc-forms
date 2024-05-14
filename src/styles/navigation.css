@@ -1,0 +1,44 @@
+.navigation *{
+    padding: 0;
+    margin: 0;
+    color: black;
+}
+
+.navigation{
+    width: 10%; 
+    background-color: rgb(47, 85, 151);
+    color: white; 
+    padding: 20px; 
+    height: 100vh;
+}
+
+.navigation button p {
+    margin: 0; 
+    font-size: 14px; 
+    margin-right: 5px; 
+}
+
+
+.navigation button img {
+    width: 20px; 
+    height: auto; 
+}
+
+.navigation button{
+    display: flex;
+    margin-bottom: 20px; 
+
+    padding: 15px; 
+
+    border: none; 
+    border-radius: 5px; 
+}
+
+.navigation .general{
+    background-color: yellow; 
+}
+.navigation .sign_out{
+    position: absolute;
+    bottom: 1%;
+    left: 1%;
+}

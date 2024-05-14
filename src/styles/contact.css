@@ -1,0 +1,73 @@
+.contact *{
+    margin: 0%;
+    padding: 0%;
+}
+
+
+.contact .img{
+    text-align: center;
+    margin: 0 auto;
+}
+
+
+
+.contact h2{
+    padding-top: 2%;
+    text-align: center;
+    margin-bottom: 2%;
+}
+
+.contact .container form{
+    text-align: center;
+    display: flex;
+    flex-direction: column; 
+    width: 300px; 
+    margin: 0 auto;
+    align-items: center;
+}
+
+.contact form>*{
+
+    width: 445px;
+    margin-bottom: 3%;
+
+}
+
+.contact #submit{
+    background-color: #f4dd13;
+    border: none;
+    border-radius: 0.2em;
+    height: 30px;
+}
+
+.contact #message{
+    height: 150px;
+}
+
+
+.contact input,#message{
+    border: none;
+    border-radius: 0.2em;
+    border-bottom: solid #d7dff5 0.15em;
+    background-color: #edf2f7;
+    padding-left: 2%;
+}
+
+
+
+.contact #name,#email{
+    height: 30px ;
+}
+
+
+.contact input::placeholder {
+
+    text-align: left;
+    padding-left: 2%;
+  }
+
+.contact textarea::placeholder {
+
+    text-align: left;
+    padding-left: 2%;
+  }

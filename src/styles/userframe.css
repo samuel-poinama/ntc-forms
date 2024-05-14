@@ -1,0 +1,51 @@
+.userframe *{
+    padding: 0;
+    margin: 0;
+    color: black;
+}
+
+.userframe .content {
+    display: flex; 
+}
+
+
+.userframe main {
+    align-items: center;
+    padding: 20px;
+    background-color: rgb(230, 235, 243);
+    flex-grow: 1;
+    height: 100vh;
+}
+
+
+.userframe article {
+    margin-right: 20px;
+    padding: 1%;
+    background-color: white;
+    border-radius: 5px;
+    height: 10%;
+}
+
+.userframe article img {
+    width: 80px;
+    height: auto;
+    margin-right: 20px; 
+    background-color: yellow;
+    padding: 15px; 
+    border-radius: 5px; 
+    
+}
+
+.userframe .paire{
+    width: 30%; 
+    padding: 1%;
+
+    display: flex;
+}
+.userframe .single{
+    width: 100%;
+}
+
+.userframe .a{
+    display: flex;
+}
