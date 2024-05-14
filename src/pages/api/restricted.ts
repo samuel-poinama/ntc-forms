@@ -5,7 +5,6 @@ import { NextRequest, NextResponse } from "next/server"
 export default async function handler(req: any, res: any) {
   const session = await getServerSession(req, res, authOptions)
 
-  console.log(session)
   if (session && session.user) {
     res.send({ user: session.user })
   } else {
