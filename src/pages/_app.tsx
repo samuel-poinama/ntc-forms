@@ -1,6 +1,7 @@
 import Layout from "@/components/loyout";
 import { SessionProvider } from "next-auth/react";
 import "@/styles/header.css";
+import "@/styles/footer.css";
 import "@/styles/panel.css";
 import "@/styles/userframe.css";
 import "@/styles/contact.css";

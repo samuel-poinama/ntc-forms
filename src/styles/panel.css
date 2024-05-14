@@ -56,3 +56,15 @@
     width: 92%;
 }
 
+.panel_cbtn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.panel_cbtn .btn{
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}

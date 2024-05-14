@@ -38,6 +38,6 @@ export default function Login() {
   }, [session])
 
   return (
-    <Loading fun={redirect} delay={500} />
+    <Loading fun={redirect} delay={100} />
   )
 }

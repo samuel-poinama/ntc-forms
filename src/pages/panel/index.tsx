@@ -13,7 +13,7 @@ export default function Panel() {
 
     return (
         <div>
-            <Loading fun={redirect} delay={0}/>
+            <Loading fun={redirect} delay={500}/>
         </div>
     )
 }
