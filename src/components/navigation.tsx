@@ -21,7 +21,7 @@ export default function Navigation() {
         <p>Forms</p>
         </Link>
 
-        <Link type="submit" className="sign_out nav_button" href="/panel/signout" >
+        <Link type="submit" className="sign_out nav_button" href="/logout" >
         <Image src="/sign out.png" alt="sign out" width={20} height={100} /><p>Sign Out</p>
         </Link>
     </div>

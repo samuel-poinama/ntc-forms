@@ -1,9 +1,27 @@
 import Image from "next/image"
+import { useEffect, useState } from "react"
 
 
 
 
 export default function Users() {
+    const [users, setUsers] = useState([])
+
+    async function getUsers() {
+        const response = await fetch("/api/users")
+        const users = await response.json()
+        setUsers(users)
+    }
+
+    function imageLoader({src , width, quality} : any ) {
+        return `${src}`
+    }
+
+    useEffect(() => {
+        getUsers()
+    }, [])
+
+
     return (
         <div className="userframe">
             <div className="single">
@@ -13,11 +31,10 @@ export default function Users() {
             
             <div className="grid">
 
-                {[...Array(20)].map((_, i) => {
-                    console.log(i)
+                {users.map((obj: any, i) => {
                     return (
                         <div className="box">
-                            <Image src="/comunity.png" alt="comunity" width={1000} height={1000}/>
+                            <Image loader={imageLoader} src={obj.image} alt="comunity" width={128} height={128}/>
                             <div>
                                 <h3>Users</h3>
                             </div>
