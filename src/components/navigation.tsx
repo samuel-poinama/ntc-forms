@@ -1,40 +1,29 @@
 import Image from "next/image"
+import Link from "next/link"
 
 
 
 export default function Navigation() {
     return (
     <div className="navigation">
-        <form action="">
-
-            <button type="submit" className="general">
+        <Link className="nav_button" href="/panel/home" >
                 <Image src="/home.png" alt="home" width={20} height={100} />
                 <p>General</p>
-            </button>
+        </Link>
 
-            <button type="submit">
-            <Image src="/users.png" alt="users" width={20} height={100} />
-            <p>Users</p>
-            </button>
+        <Link className="nav_button" href="/panel/users" >
+        <Image src="/users.png" alt="users" width={20} height={100} />
+        <p>Users</p>
+        </Link>
 
-            <button type="submit">
-                <p>Statistic</p>
-            </button>
+        <Link className="nav_button" href="/panel/forms" >
+        <Image src="/forms.png" alt="forms" width={20} height={100} />
+        <p>Forms</p>
+        </Link>
 
-            <button type="submit">
-                <p>Inactive</p>
-            </button>
-
-            <button type="submit">
-            <Image src="/forms.png" alt="forms" width={20} height={100} />
-            <p>Forms</p>
-            </button>
-
-            <button type="submit" className="sign_out">
-            <Image src="/sign out.png" alt="sign out" width={20} height={100} /><p>Sign Out</p>
-            </button>
-
-            </form>
+        <Link type="submit" className="sign_out nav_button" href="/panel/signout" >
+        <Image src="/sign out.png" alt="sign out" width={20} height={100} /><p>Sign Out</p>
+        </Link>
     </div>
     )
 }

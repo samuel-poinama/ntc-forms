@@ -4,21 +4,12 @@
     color: black;
 }
 
-.userframe .content {
-    display: flex; 
+div .userframe {
+    width: 100%;
+    margin: 10px;
 }
 
-
-.userframe main {
-    align-items: center;
-    padding: 20px;
-    background-color: rgb(230, 235, 243);
-    flex-grow: 1;
-    height: 100vh;
-}
-
-
-.userframe article {
+.box {
     margin-right: 20px;
     padding: 1%;
     background-color: white;
@@ -26,7 +17,7 @@
     height: 10%;
 }
 
-.userframe article img {
+.box img {
     width: 80px;
     height: auto;
     margin-right: 20px; 
@@ -36,14 +27,19 @@
     
 }
 
-.userframe .paire{
-    width: 30%; 
-    padding: 1%;
-
-    display: flex;
+.userframe .grid {
+    display: grid;
+    grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10%;
+    row-gap: 10%;
 }
 .userframe .single{
     width: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    gap: 2%;
+    align-items: center;
 }
 
 .userframe .a{
