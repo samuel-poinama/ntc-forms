@@ -24,5 +24,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(401).end()
     }
 
+    // update user info
+    user.name = session.user.name ?? user.email
+    user.image = session.user.image ?? user.image
+
+    await user.update()
+
     res.status(200).end()
 }

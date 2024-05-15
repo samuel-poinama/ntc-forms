@@ -1,5 +1,4 @@
 import db from "@/lib/database"
-import { sign } from "jsonwebtoken"
 import { ObjectId } from "mongodb"
 
 
@@ -16,17 +15,29 @@ export default class User {
 
     private _id: ObjectId
     private _email: string
+    private _name: string
+    private _image: string
     private _role: Role
 
 
-    constructor(email: string,role?: Role, id?: ObjectId) {
+    constructor(email: string, name?: string, image?: string, role?: Role, id?: ObjectId) {
         this._email = email
+        this._name = name ? name : email
+        this._image = image ? image : "/comunity.png"
         this._role = role ? role : Role.USER
         this._id = id ? id : new ObjectId()
     }
 
     set email(email: string) {
         this._email = email
+    }
+
+    set name(name: string) {
+        this._name = name
+    }
+
+    set image(image: string) {
+        this._image = image
     }
 
     set role(role: Role) {
@@ -59,15 +70,23 @@ export default class User {
         return User.fromJson(result)
     }
 
+    public static async all() : Promise<User[]> {
+        const result = await collection.find().toArray()
+
+        return result.map((user: any) => User.fromJson(user))
+    }
+
 
     private static fromJson(json: any): User {
-        return new User(json.email, json.role, json._id)
+        return new User(json.email, json.name, json.image, json.role, json._id)
     }
 
     public toJson() {
         return {
-            email: this._email,
             _id: this._id,
+            email: this._email,
+            name: this._name,
+            image: this._image,
             role: this._role
         }
     }
