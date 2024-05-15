@@ -34,9 +34,9 @@ export default function Users() {
                 {users.map((obj: any, i) => {
                     return (
                         <div className="box">
-                            <Image loader={imageLoader} src={obj.image} alt="comunity" width={128} height={128}/>
+                            <Image loader={imageLoader} src={obj.image} alt="" width={128} height={128}/>
                             <div>
-                                <h3>Users</h3>
+                                <h3>{ obj.name }</h3>
                             </div>
                         
                             <a href="*">View All </a>
