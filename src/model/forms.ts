@@ -48,6 +48,14 @@ export default class Form {
         this._fields.push(field)
     }
 
+    public getField(name: string) : Field | null {
+        return this._fields.find(field => field.name === name) || null
+    }
+
+    public removeField(field: Field) {
+        this._fields = this._fields.filter(f => f !== field)
+    }
+
     public async insert(): Promise<boolean> {
         const result = await collection.insertOne(this.toJson())
 
