@@ -23,7 +23,19 @@ body {
       transparent,
       rgb(var(--background-end-rgb))
     )
-    rgb(var(--background-start-rgb));  
+    rgb(var(--background-start-rgb));
+    color: black;
+}
+
+button {
+  border: none;
+  background-color: #FFFF00;
+  border-radius: 5px;
+  text-align: center;
+}
+
+button:hover {
+  background-color: #FFD700;
 }
 
 @layer utilities {
