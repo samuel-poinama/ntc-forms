@@ -1,5 +1,6 @@
 import Image from "next/image"
 import { useEffect, useState } from "react"
+import User from "./subcomponents/user"
 
 
 
@@ -32,16 +33,7 @@ export default function Users() {
             <div className="grid">
 
                 {users.map((obj: any, i) => {
-                    return (
-                        <div className="box">
-                            <Image loader={imageLoader} src={obj.image} alt="" width={128} height={128}/>
-                            <div>
-                                <h3>{ obj.name }</h3>
-                            </div>
-                        
-                            <a href="*">View All </a>
-                        </div>
-                    )
+                    return <User user={obj}/>
                 })}
             </div>
         </div>

@@ -1,22 +1,10 @@
-.panel *{
-    padding: 0;
-    margin: 0;
-    color: black;
+.panel {
+    background-color: #EDF2F7;
 }
 
 .panel .content {
     display: flex; 
 }
-
-
-.panel main {
-    align-items: center;
-    padding: 20px;
-    background-color: rgb(230, 235, 243);
-    flex-grow: 1;
-    height: 100vh;
-}
-
 
 .panel article {
     margin-right: 20px;
@@ -66,5 +54,137 @@
 .panel_cbtn .btn{
     padding: 10px 20px;
     font-size: 16px;
+    cursor: pointer;
+}
+
+/* navigation */
+
+.navigation *{
+    padding: 0;
+    margin: 0;
+    color: black;
+}
+
+.navigation{
+    width: 10%; 
+    background-color: rgb(47, 85, 151);
+    color: white; 
+    padding: 20px; 
+    height: 100vh;
+}
+
+.navigation .nav_button p {
+    margin: 0; 
+    font-size: 14px; 
+    margin-right: 5px; 
+}
+
+
+.navigation .nav_button img {
+    width: 20px; 
+    height: auto; 
+}
+
+.nav_button {
+    display: flex;
+    margin-bottom: 20px; 
+    padding: 15px; 
+    border: none; 
+    border-radius: 5px; 
+    background-color: yellow;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.navigation .sign_out{
+    position: absolute;
+    bottom: 1%;
+    left: 1%;
+}
+
+
+
+/* user */
+
+.userframe *{
+    padding: 0;
+    margin: 0;
+    color: black;
+}
+
+div .userframe {
+    width: 100%;
+    margin: 10px;
+}
+
+.userframe .box {
+    margin-right: 20px;
+    padding: 1%;
+    background-color: white;
+    border-radius: 5px;
+    height: 10%;
+}
+
+.userframe .box img {
+    width: 80px;
+    height: auto;
+    margin-right: 20px; 
+    background-color: yellow;
+    padding: 15px; 
+    border-radius: 25%; 
+    
+}
+
+.userframe .grid {
+    display: grid;
+    grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10%;
+    row-gap: 10%;
+}
+.userframe .single{
+    width: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    gap: 2%;
+    align-items: center;
+}
+
+.userframe .a {
+    display: flex;
+}
+
+
+/* forms */
+
+.forms {
+    margin: 10px;
+    width: 100%;
+}
+
+.forms .box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content:flex-end;
+    gap: 40%;
+    background-color: white;
+    border-radius: 10px;
+    height: 15%;
+    width: 100%;
+    box-shadow: 5px 5px 0px 0px #2F5597;
+    margin: 1% 0 1% 0;
+}
+
+.forms .box button {
+    width: 20%;
+    height: 25%;
+}
+
+.forms .top {
+    justify-content: center;
+}
+
+.forms .box img {
     cursor: pointer;
 }

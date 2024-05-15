@@ -1,9 +1,9 @@
 import Navigation from '@/components/navigation'
 import Home from '@/components/panel/home'
+import FormsPanel from '@/components/panel/forms'
 import Users from '@/components/panel/users'
 import { useRouter } from 'next/router'
 import { signIn, useSession } from 'next-auth/react'
-import Link from 'next/link'
 import Loading from '@/components/loading'
 
 
@@ -19,6 +19,8 @@ export default function Panel() {
                 return <Home/>
             case 'users':
                 return <Users/>
+            case 'forms':
+                return <FormsPanel/>
             default:
                 return <Home/>
         }
