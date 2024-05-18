@@ -5,13 +5,13 @@ import { ObjectId } from "mongodb"
 
 const collection = db.collection("users")
 
-enum Role {
+export enum Role {
     ADMIN = "ADMIN",
     USER = "USER",
 }
 
 
-export default class User {
+export class User {
 
     private _id: ObjectId
     private _email: string
@@ -20,11 +20,11 @@ export default class User {
     private _role: Role
 
 
-    constructor(email: string, name?: string, image?: string, role?: Role, id?: ObjectId) {
+    constructor(email: string, role?: Role, name?: string, image?: string, id?: ObjectId) {
         this._email = email
+        this._role = role ? role : Role.USER
         this._name = name ? name : email
         this._image = image ? image : "/comunity.png"
-        this._role = role ? role : Role.USER
         this._id = id ? id : new ObjectId()
     }
 
@@ -78,7 +78,7 @@ export default class User {
 
 
     private static fromJson(json: any): User {
-        return new User(json.email, json.name, json.image, json.role, json._id)
+        return new User(json.email, json.role, json.name, json.image, json._id)
     }
 
     public toJson() {
