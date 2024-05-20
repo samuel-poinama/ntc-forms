@@ -7,7 +7,8 @@ const collection = db.collection("users")
 
 export enum Role {
     ADMIN = 0,
-    USER = 1,
+    VIEWER = 1,
+    USER = 2
 }
 
 
@@ -22,7 +23,7 @@ export class User {
 
     constructor(email: string, role?: Role, name?: string, image?: string, id?: ObjectId) {
         this._email = email
-        this._role = role ? role : Role.USER
+        this._role = role === undefined ? Role.USER : role
         this._name = name ? name : email
         this._image = image ? image : "/comunity.png"
         this._id = id ? id : new ObjectId()
@@ -42,6 +43,10 @@ export class User {
 
     set role(role: Role) {
         this._role = role
+    }
+
+    get role() {
+        return this._role
     }
 
     public async insert() : Promise<boolean> {
@@ -66,7 +71,7 @@ export class User {
         if (!result) {
             return null
         }
-
+        console.log(result)
         return User.fromJson(result)
     }
 
@@ -88,6 +93,7 @@ export class User {
 
 
     private static fromJson(json: any): User {
+        console.log('test', Role[json.role as keyof typeof Role])
         return new User(json.email, Role[json.role as keyof typeof Role], json.name, json.image, json._id)
     }
 
