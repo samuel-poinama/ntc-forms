@@ -1,4 +1,3 @@
-import { Island_Moments } from "next/font/google"
 import Navigation from '../components/navigation'
 
 

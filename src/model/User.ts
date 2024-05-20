@@ -5,13 +5,14 @@ import { ObjectId } from "mongodb"
 
 const collection = db.collection("users")
 
-enum Role {
-    ADMIN = "ADMIN",
-    USER = "USER",
+export enum Role {
+    ADMIN = 0,
+    VIEWER = 1,
+    USER = 2
 }
 
 
-export default class User {
+export class User {
 
     private _id: ObjectId
     private _email: string
@@ -20,11 +21,11 @@ export default class User {
     private _role: Role
 
 
-    constructor(email: string, name?: string, image?: string, role?: Role, id?: ObjectId) {
+    constructor(email: string, role?: Role, name?: string, image?: string, id?: ObjectId) {
         this._email = email
+        this._role = role === undefined ? Role.USER : role
         this._name = name ? name : email
         this._image = image ? image : "/comunity.png"
-        this._role = role ? role : Role.USER
         this._id = id ? id : new ObjectId()
     }
 
@@ -42,6 +43,10 @@ export default class User {
 
     set role(role: Role) {
         this._role = role
+    }
+
+    get role() {
+        return this._role
     }
 
     public async insert() : Promise<boolean> {
@@ -70,6 +75,16 @@ export default class User {
         return User.fromJson(result)
     }
 
+    public static async find(id: string) : Promise<User | null> {
+        const result = await collection.findOne({ _id: new ObjectId(id) })
+
+        if (!result) {
+            return null
+        }
+
+        return User.fromJson(result)
+    }
+
     public static async all() : Promise<User[]> {
         const result = await collection.find().toArray()
 
@@ -78,7 +93,7 @@ export default class User {
 
 
     private static fromJson(json: any): User {
-        return new User(json.email, json.name, json.image, json.role, json._id)
+        return new User(json.email, Role[json.role as keyof typeof Role], json.name, json.image, json._id)
     }
 
     public toJson() {
@@ -87,7 +102,7 @@ export default class User {
             email: this._email,
             name: this._name,
             image: this._image,
-            role: this._role
+            role: Role[this._role]
         }
     }
 }

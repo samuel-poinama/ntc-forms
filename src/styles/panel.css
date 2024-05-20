@@ -6,7 +6,7 @@
     display: flex; 
 }
 
-.panel article {
+.panel .paire div {
     margin-right: 20px;
     margin-top: 5%;
     padding: 1%;
@@ -15,7 +15,7 @@
     height: 10%;
 }
 
-.panel article img {
+.paire div img {
     width: 80px;
     height: auto;
     margin-right: 20px; 
@@ -37,11 +37,6 @@
     justify-content: space-evenly;
     display: flex;
     flex-wrap: wrap;
-}
-.panel .single{
-    padding-left: 4%;
-    justify-content: center;
-    width: 92%;
 }
 
 .panel_cbtn{
@@ -106,23 +101,17 @@
 
 /* user */
 
-.userframe *{
-    padding: 0;
-    margin: 0;
-    color: black;
-}
-
 div .userframe {
     width: 100%;
     margin: 10px;
 }
 
 .userframe .box {
-    margin-right: 20px;
-    padding: 1%;
+    margin: 5%;
+    padding: 15%;
     background-color: white;
     border-radius: 5px;
-    height: 10%;
+    height: 100%;
 }
 
 .userframe .box img {
@@ -145,14 +134,108 @@ div .userframe {
     margin: 0;
     display: flex;
     flex-direction: row;
-    justify-content: left;
+    justify-content: space-between;
     gap: 2%;
     align-items: center;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.userframe .single button {
+    width: 64px;
+    height: 64px;
+    margin-right: 2%;
 }
 
 .userframe .a {
     display: flex;
 }
+
+.popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 2%;
+    width: 800px;
+    border: 2px solid black;
+    border-radius: 20px; 
+    padding: 1%;
+    background-color: white; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.add_user .image {
+    border-radius: 5%; 
+    background-color: yellow;
+}
+
+
+.popup .title {
+    width: 80%; 
+    padding: 1%;
+}
+
+.add_user .mail {
+    width: 50%;
+}
+
+.add_user .mail form {
+    margin-top: 10px;
+}
+
+.popup h1 {
+    text-align: center; 
+}
+
+.add_user p {
+    width: 50%;
+    size: auto;
+}
+
+.popup .top{
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+    width: 100%;
+}
+
+.popup .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10%;
+}
+
+.add_user .button {
+    padding: 1%;
+}
+
+
+.popup .button button {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+.popup select {
+    margin: 10px;
+}
+
+.add_user .mail form select,
+.mail form input[type="submit"] {
+    width: 80%;
+    padding: 0; 
+    margin: 0; 
+    background: none; 
+    border: none; 
+    font-size: inherit; 
+}
+
 
 
 /* forms */

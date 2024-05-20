@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "./[...nextauth]"
 import { NextApiRequest, NextApiResponse } from "next"
-import User from "@/model/User"
+import { User } from "@/model/User"
 
 
 
@@ -12,7 +12,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     const session = await getServerSession(req, res, authOptions)
-    console.log(session)
 
     if (!session || !session.user || !session.user.email) {
         return res.status(401).end()
