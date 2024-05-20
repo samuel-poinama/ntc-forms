@@ -2,32 +2,19 @@ import { Role, User } from "@/model/User"
 import { NextApiRequest, NextApiResponse } from "next"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/pages/api/auth/[...nextauth]"
+import { permissions } from "@/lib/checker"
 
 
 
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+
+    // check permissions
     const session = await getServerSession(req, res, authOptions)
-
-    if (!session || !session.user || ! session.user.email) {
-        return res.status(401).end()
-    }
-
-    const user = await User.findByEmail(session.user.email)
-    console.log(user)
-
+    const user = await permissions(session, Role.VIEWER)
     if (!user) {
         return res.status(401).end()
     }
-
-    console.log(user.role)
-    console.log(Role.VIEWER)
-
-    if (user.role > Role.VIEWER) {
-        return res.status(403).end()
-    }
-
-    
 
     const { id } = req.query
 
@@ -72,6 +59,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             
         return res.status(200).json(out)
     } else if (req.method === "POST") {
+        if (user.role > Role.ADMIN) {
+            return res.status(403).end()
+        }
+
         const { email, role } = req.body
 
         if (!email) {
