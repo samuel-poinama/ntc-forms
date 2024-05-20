@@ -6,8 +6,8 @@ import { ObjectId } from "mongodb"
 const collection = db.collection("users")
 
 export enum Role {
-    ADMIN = "ADMIN",
-    USER = "USER",
+    ADMIN = 0,
+    USER = 1,
 }
 
 
@@ -70,6 +70,16 @@ export class User {
         return User.fromJson(result)
     }
 
+    public static async find(id: string) : Promise<User | null> {
+        const result = await collection.findOne({ _id: new ObjectId(id) })
+
+        if (!result) {
+            return null
+        }
+
+        return User.fromJson(result)
+    }
+
     public static async all() : Promise<User[]> {
         const result = await collection.find().toArray()
 
@@ -78,7 +88,7 @@ export class User {
 
 
     private static fromJson(json: any): User {
-        return new User(json.email, json.role, json.name, json.image, json._id)
+        return new User(json.email, Role[json.role as keyof typeof Role], json.name, json.image, json._id)
     }
 
     public toJson() {
@@ -87,7 +97,7 @@ export class User {
             email: this._email,
             name: this._name,
             image: this._image,
-            role: this._role
+            role: Role[this._role]
         }
     }
 }

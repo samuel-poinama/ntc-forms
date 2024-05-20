@@ -10,7 +10,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
         return res.status(405).end()
     }
 
-    const roles: string[] = Object.keys(Role)
+    const roles: string[] = Object.keys(Role).filter(role => isNaN(Number(role)))
     
     res.status(200).json(roles)
 }

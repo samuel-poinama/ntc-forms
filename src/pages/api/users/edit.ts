@@ -19,18 +19,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(400).json({ error: "User type is required" })
     }
 
-    if (!Object.values(Role).includes(role)) {
+    const newRole = Role[role as keyof typeof Role]
+    console.log(newRole === undefined)
+
+    if (newRole === undefined) {
         return res.status(400).json({ error: "Invalid user type" })
     }
 
     const user = await User.findByEmail(email)
 
     if (!user) {
-        return res.status(400).json({ error: "User not found" })
+        return res.status(404).json({ error: "User not found" })
     }
 
-    user.role = role
-
+    user.role = newRole
+    console.log(user.role)
     const result = await user.update()
 
     if (!result) {

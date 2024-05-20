@@ -19,11 +19,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(400).json({ error: "User type is required" })
     }
 
-    if (!Object.values(Role).includes(role)) {
+    const newRole = Role[role as keyof typeof Role]
+    
+
+    if (newRole === undefined) {
         return res.status(400).json({ error: "Invalid user type" })
     }
 
-    const user = new User(email, role)
+    const user = new User(email, newRole)
     user.insert()
 
     res.status(200).json({ message: "User added" })
