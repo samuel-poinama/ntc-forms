@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb'
-import { Field, FieldType } from './field/field'
-import db from '../lib/database'
+import Field from './field'
+import db from '@/lib/database'
 
 
 const collection = db.collection("forms")
@@ -21,7 +21,7 @@ export default class Form {
         this._id = id ? id : new ObjectId()
         this._title = title
         this._description = description
-        this._fields = fields ? fields : [ new Field(FieldType.TEXT, "email") ] 
+        this._fields = fields ? fields : [] 
     }
 
     get id(): ObjectId {
@@ -54,6 +54,10 @@ export default class Form {
 
     public removeField(field: Field) {
         this._fields = this._fields.filter(f => f !== field)
+    }
+
+    public size(): number {
+        return this._fields.length
     }
 
     public async insert(): Promise<boolean> {
