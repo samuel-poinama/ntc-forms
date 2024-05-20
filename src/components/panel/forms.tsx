@@ -12,7 +12,6 @@ export default function FormsPanel() {
         const res = await fetch('/api/forms')
         const data = await res.json()
         setForms(data)
-        console.log(data)
     }
 
     async function deleteForm(id: string) {
@@ -24,7 +23,6 @@ export default function FormsPanel() {
             body: JSON.stringify({ id })
         })
         const data = await res.json()
-        console.log(data)
         getForms()
     }
 

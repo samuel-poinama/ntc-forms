@@ -71,7 +71,7 @@ export class User {
         if (!result) {
             return null
         }
-        console.log(result)
+
         return User.fromJson(result)
     }
 
@@ -93,7 +93,6 @@ export class User {
 
 
     private static fromJson(json: any): User {
-        console.log('test', Role[json.role as keyof typeof Role])
         return new User(json.email, Role[json.role as keyof typeof Role], json.name, json.image, json._id)
     }
 

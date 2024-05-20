@@ -1,5 +1,5 @@
 import Image from "next/image"
-import { useEffect, useState, MouseEvent } from "react"
+import { useEffect, useState } from "react"
 import User from "./subcomponents/user"
 import Popup from "../popup"
 
