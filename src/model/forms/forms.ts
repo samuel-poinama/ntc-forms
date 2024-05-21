@@ -44,6 +44,10 @@ export default class Form {
         this._description = description
     }
 
+    get fields(): Field[] {
+        return this._fields
+    }
+
     public addField(field: Field) {
         this._fields.push(field)
     }

@@ -6,13 +6,13 @@ import FieldType from "./fieldType"
 export abstract class Field {
 
     private _name: string
-    private _isRequired: boolean
+    private _required: boolean
     private _type: FieldType
     private _content: any
 
-    constructor(name: string, isRequired: boolean, type: FieldType, content?: any) {
+    constructor(name: string, required: boolean, type: FieldType, content?: any) {
         this._name = name
-        this._isRequired = isRequired
+        this._required = required
         this._type = type
         this._content = content
     }
@@ -21,8 +21,8 @@ export abstract class Field {
         return this._name
     }
 
-    public get isRequired(): boolean {
-        return this._isRequired
+    public get required(): boolean {
+        return this._required
     }
 
     public get type(): FieldType {
@@ -33,17 +33,24 @@ export abstract class Field {
         return this._content
     }
 
+    public set content(content: any) {
+        this._content = content
+    }
+
+    abstract restriction(): boolean
+
+
     abstract toJson(): any
 
 
     static fromJson(json: any): Field {
         switch (json.type) {
             case FieldType.TEXT:
-                return new TextField(json.name, json.isRequired, json.minLength, json.maxLength, json.content)
+                return new TextField(json.name, json.required, json.regex, "")
             case FieldType.NUMBER:
-                return new NumberField(json.name, json.isRequired, json.min, json.max, json.content)
+                return new NumberField(json.name, json.required, json.min, json.max, json.min)
             case FieldType.BOOLEAN:
-                return new BooleanField(json.name, json.isRequired, json.content)
+                return new BooleanField(json.name, json.required, false)
             default:
                 throw new Error("Invalid type")
         }
@@ -52,37 +59,33 @@ export abstract class Field {
 
 export class TextField extends Field {
     
-    private _minLength: number
-    private _maxLength: number
+    private _regex: RegExp
 
     constructor(
         name: string,
-        isRequired: boolean,
-        minLength: number,
-        maxLength: number,
+        required: boolean,
+        regex: RegExp,
         content?: string
     ) {
-        super(name, isRequired, FieldType.TEXT, content)
-        this._minLength = minLength
-        this._maxLength = maxLength
+        super(name, required, FieldType.TEXT, content)
+        this._regex = regex
     }
 
-    get minLength(): number {
-        return this._minLength
-    }
+    public restriction(): boolean {
+        if (typeof this.content !== 'string') {
+            return false
+        }
 
-    get maxLength(): number {
-        return this._maxLength
+        return this._regex.test(this.content)
     }
 
     public toJson(): any {
         return {
             name: this.name,
-            isRequired: this.isRequired,
+            required: this.required,
             type: this.type,
             content: this.content,
-            minLength: this.minLength,
-            maxLength: this.maxLength,
+            regex: this._regex
         }
     }
 }
@@ -93,12 +96,12 @@ export class NumberField extends Field {
 
     constructor(
         name: string,
-        isRequired: boolean,
+        required: boolean,
         min: number,
         max: number,
         content?: number
     ) {
-        super(name, isRequired, FieldType.NUMBER, content)
+        super(name, required, FieldType.NUMBER, content)
         this._min = min
         this._max = max
     }
@@ -111,10 +114,18 @@ export class NumberField extends Field {
         return this._max
     }
 
+    public restriction(): boolean {
+        if (typeof this.content !== 'number') {
+            return false
+        }
+
+        return this.content >= this._min && this.content <= this._max
+    }
+
     public toJson(): any {
         return {
             name: this.name,
-            isRequired: this.isRequired,
+            required: this.required,
             content: this.content,
             type: this.type,
             min: this.min,
@@ -127,16 +138,20 @@ export default class BooleanField extends Field {
 
     constructor(
         name: string,
-        isRequired: boolean,
+        required: boolean,
         content?: boolean
     ) {
-        super(name, isRequired, FieldType.BOOLEAN, content)
+        super(name, required, FieldType.BOOLEAN, content)
+    }
+
+    public restriction(): boolean {
+        return typeof this.content === 'boolean'
     }
 
     public toJson(): any {
         return {
             name: this.name,
-            isRequired: this.isRequired,
+            required: this.required,
             type: this.type,
             content: this.content
         }
