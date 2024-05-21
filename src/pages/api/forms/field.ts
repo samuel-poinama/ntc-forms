@@ -3,8 +3,9 @@ import { getServerSession } from "next-auth"
 import { authOptions } from "@/pages/api/auth/[...nextauth]"
 import { permissions } from "@/lib/checker"
 import { Role } from "@/model/User"
-import Form from "@/model/forms"
-import { Field, FieldType } from "@/model/field/field"
+import Form from "@/model/forms/forms"
+import BooleanField, { Field, NumberField, TextField } from "@/model/forms/field"
+import FieldType from "@/model/forms/fieldType"
 
 
 
@@ -36,7 +37,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     if (req.method === "POST") {
-        const { type } = req.body
+        const { type, isRequired } = req.body
 
         if (!type) {
             return res.status(400).json({ error: "Type is required" })
@@ -48,8 +49,38 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             return res.status(400).json({ error: "Invalid type" })
         }
 
-        const field = new Field(fieldType, name)
+        if (isRequired === undefined) {
+            return res.status(400).json({ error: "isRequired is required" })
+        }
 
+        let field: Field
+        switch (fieldType) {
+            case FieldType.TEXT:
+                const { minLength, maxLength } = req.body
+                if (!minLength || !maxLength) {
+                    return res.status(400).json({ error: "minLength and maxLength are required" })
+                }
+
+                field = new TextField(name, isRequired, minLength, maxLength)
+                
+                break
+            case FieldType.NUMBER:
+                const { min, max } = req.body
+
+                if (!min || !max) {
+                    return res.status(400).json({ error: "min and max are required" })
+                }
+
+                field = new NumberField(name, isRequired, min, max)
+
+                break
+            case FieldType.BOOLEAN:
+                field = new BooleanField(name, isRequired)
+                break
+            default:
+                return res.status(400).json({ error: "Invalid type" })
+        }
+        
         form.addField(field)
         await form.update()
 

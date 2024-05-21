@@ -29,6 +29,10 @@ export class User {
         this._id = id ? id : new ObjectId()
     }
 
+    get id() {
+        return this._id
+    }
+
     set email(email: string) {
         this._email = email
     }
