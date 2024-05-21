@@ -1,5 +1,5 @@
 import db from "@/lib/database"
-import { Field } from "./field"
+import Field from "./field"
 import Form from "./forms"
 import { ObjectId } from "mongodb"
 import { User } from "../User"
@@ -35,6 +35,10 @@ export default class Response {
             this._fields = arr[3]
         }
 
+    }
+
+    get fields(): Field[] {
+        return this._fields
     }
 
     public async insert() : Promise<boolean> {

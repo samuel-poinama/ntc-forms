@@ -3,7 +3,7 @@ import FieldType from "./fieldType"
 
 
 
-export abstract class Field {
+abstract class Field {
 
     private _name: string
     private _required: boolean
@@ -51,11 +51,17 @@ export abstract class Field {
                 return new NumberField(json.name, json.required, json.min, json.max, json.min)
             case FieldType.BOOLEAN:
                 return new BooleanField(json.name, json.required, false)
+            case FieldType.DATE:
+                return new DateField(json.name, json.required, json.min, json.min)
+            case FieldType.SELECT:
+                return new SelectField(json.name, json.required, json.options, json.options[0])
             default:
                 throw new Error("Invalid type")
         }
     }
 }
+
+export default Field
 
 export class TextField extends Field {
     
@@ -134,7 +140,44 @@ export class NumberField extends Field {
     }
 }
 
-export default class BooleanField extends Field {
+export class DateField extends Field {
+
+    private _min: Date
+
+    constructor(
+        name: string,
+        required: boolean,
+        min: Date,
+        content?: Date
+    ) {
+        super(name, required, FieldType.DATE, content)
+        this._min = min
+    }
+
+    get min(): Date {
+        return this._min
+    }
+
+    public restriction(): boolean {
+        if (!(this.content instanceof Date)) {
+            return false
+        }
+
+        return this.content >= this._min
+    }
+
+    public toJson(): any {
+        return {
+            name: this.name,
+            required: this.required,
+            content: this.content,
+            type: this.type,
+            min: this.min
+        }
+    }
+}
+
+export class BooleanField extends Field {
 
     constructor(
         name: string,
@@ -154,6 +197,39 @@ export default class BooleanField extends Field {
             required: this.required,
             type: this.type,
             content: this.content
+        }
+    }
+}
+
+export class SelectField extends Field {
+
+    private _options: string[]
+
+    constructor(
+        name: string,
+        required: boolean,
+        options: string[],
+        content?: string
+    ) {
+        super(name, required, FieldType.SELECT, content)
+        this._options = options
+    }
+
+    get options(): string[] {
+        return this._options
+    }
+
+    public restriction(): boolean {
+        return this._options.includes(this.content)
+    }
+
+    public toJson(): any {
+        return {
+            name: this.name,
+            required: this.required,
+            type: this.type,
+            content: this.content,
+            options: this.options
         }
     }
 }
