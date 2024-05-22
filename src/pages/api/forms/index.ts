@@ -75,6 +75,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             return res.status(400).json({ error: "Title is required" })
         }
 
+        if (!description) {
+            return res.status(400).json({ error: "Description is required" })
+        }
+
         const form = new Form(title, description)
         await form.insert()
 

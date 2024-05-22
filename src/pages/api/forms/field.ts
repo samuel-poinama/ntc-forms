@@ -4,7 +4,7 @@ import { authOptions } from "@/pages/api/auth/[...nextauth]"
 import { permissions } from "@/lib/checker"
 import { Role } from "@/model/User"
 import Form from "@/model/forms/forms"
-import BooleanField, { Field, NumberField, TextField } from "@/model/forms/field"
+import Field, { BooleanField, DateField, NumberField, SelectField, TextField } from "@/model/forms/field"
 import FieldType from "@/model/forms/fieldType"
 
 
@@ -49,21 +49,26 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             return res.status(400).json({ error: "Invalid type" })
         }
 
+
         if (isRequired === undefined) {
             return res.status(400).json({ error: "isRequired is required" })
         }
+        console.log(typeof isRequired)
 
         let field: Field
         switch (fieldType) {
             case FieldType.TEXT:
-                const { minLength, maxLength } = req.body
-                if (!minLength || !maxLength) {
-                    return res.status(400).json({ error: "minLength and maxLength are required" })
+                const { regex } = req.body
+                if (!regex) {
+                    return res.status(400).json({ error: "regex is required" })
                 }
 
-                field = new TextField(name, isRequired, minLength, maxLength)
-                
+                // convert string to regex
+                const regexObj = new RegExp(regex)
+
+                field = new TextField(name, isRequired, regexObj)
                 break
+
             case FieldType.NUMBER:
                 const { min, max } = req.body
 
@@ -72,11 +77,37 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 }
 
                 field = new NumberField(name, isRequired, min, max)
-
                 break
+
             case FieldType.BOOLEAN:
                 field = new BooleanField(name, isRequired)
                 break
+
+            case FieldType.DATE:
+                const { minDate } = req.body
+
+                if (!minDate) {
+                    return res.status(400).json({ error: "minDate are required" })
+                }
+
+                const date = new Date(minDate)
+                field = new DateField(name, isRequired, date)
+                break
+            case FieldType.SELECT:
+                const { options, defaultValue } = req.body
+
+                if (!options) {
+                    return res.status(400).json({ error: "options is required" })
+                }
+
+                if (!defaultValue) {
+                    return res.status(400).json({ error: "defaultValue is required" })
+                }
+
+                field = new SelectField(name, isRequired, options, defaultValue)
+                break
+            
+
             default:
                 return res.status(400).json({ error: "Invalid type" })
         }
