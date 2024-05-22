@@ -21,7 +21,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { id } = req.query
 
     if (id) {
-        const form = await Form.find(id as string)
+
+        // secure id
+        if (typeof id !== "string") {
+            return res.status(400).json({ error: "Id must be a string" })
+        }
+
+
+        // find form
+        const form = await Form.find(id)
 
         if (!form) {
             return res.status(404).end()
@@ -40,11 +48,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 case "PUT":
                     const { title, description } = req.body
 
-                    if (title) {
+
+                    // secure title
+                    if (title !== undefined && typeof title !== "string") {
                         form.title = title
                     }
 
-                    if (description) {
+                    // secure description
+                    if (description !== undefined && typeof description !== "string") {
                         form.description = description
                     }
                     
@@ -71,12 +82,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         const { title, description } = req.body
 
-        if (!title) {
-            return res.status(400).json({ error: "Title is required" })
+        // secure title
+        if (typeof title !== "string") {
+            return res.status(400).json({ error: "Title must be a string" })
         }
 
-        if (!description) {
-            return res.status(400).json({ error: "Description is required" })
+        // secure description
+        if (typeof description !== "string") {
+            return res.status(400).json({ error: "Description must be a string" })
         }
 
         const form = new Form(title, description)

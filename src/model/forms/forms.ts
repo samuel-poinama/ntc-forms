@@ -109,7 +109,11 @@ export default class Form {
             _id: this._id,
             title: this._title,
             description: this._description,
-            fields: this._fields.map(field => field.toJson())
+            fields: this._fields.map(field => {
+                const out = field.toJson()
+                console.log(out)
+                return out
+            })
         }
     }
 

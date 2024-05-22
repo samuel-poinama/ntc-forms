@@ -19,7 +19,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { id } = req.query
 
     if (id) {
-        const target = await User.find(id as string)
+        if (typeof id !== "string") {
+            return res.status(400).json({ error: "Id must be a string" })
+        }
+
+
+        // find user
+        const target = await User.find(id)
 
         if (!target) {
             return res.status(404).end()
@@ -38,11 +44,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 case "PUT":
                     const { role } = req.body
 
-                    if (!role) {
-                        return res.status(400).json({ error: "Role is required" })
+                    // secure role
+                    if (typeof role !== "string") {
+                        return res.status(400).json({ error: "Role must be a string" })
                     }
 
                     const newRole = Role[role as keyof typeof Role]
+
+                    if (!newRole) {
+                        return res.status(400).json({ error: "Invalid role" })
+                    }
 
                     target.role = newRole
                     await user.update()
@@ -65,12 +76,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         const { email, role } = req.body
 
-        if (!email) {
-            return res.status(400).json({ error: "Email is required" })
+        // secure email
+        if (typeof email !== "string") {
+            return res.status(400).json({ error: "Email must be a string" })
         }
 
-        if (!role) {
-            return res.status(400).json({ error: "Role is required" })
+        // regex email
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            return res.status(400).json({ error: "Invalid email" })
+        }
+
+        // secure role
+        if (typeof role !== "string") {
+            return res.status(400).json({ error: "Role must be a string" })
         }
 
         const newRole = Role[role as keyof typeof Role]

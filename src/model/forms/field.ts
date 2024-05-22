@@ -70,11 +70,15 @@ export class TextField extends Field {
     constructor(
         name: string,
         required: boolean,
-        regex: RegExp,
+        regex: string | RegExp,
         content?: string
     ) {
         super(name, required, FieldType.TEXT, content)
-        this._regex = regex
+        if (typeof regex === 'string') {
+            this._regex = new RegExp(regex)
+        } else {
+            this._regex = regex
+        }
     }
 
     public restriction(): boolean {
@@ -91,7 +95,7 @@ export class TextField extends Field {
             required: this.required,
             type: this.type,
             content: this.content,
-            regex: this._regex
+            regex: this._regex.source
         }
     }
 }

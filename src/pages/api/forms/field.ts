@@ -18,12 +18,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(401).end()
     }
 
+
+    // get form's id
     const { id } = req.query
 
-    if (!id) {
-        return res.status(400).json({ error: "Id is required" })
+    // secure id    
+    if (typeof id !== "string") {
+        return res.status(400).json({ error: "Id must be a string" })
     }
 
+
+    // find form
     const form = await Form.find(id as string)
 
     if (!form) {
@@ -32,15 +37,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const { name } = req.body
 
-    if (!name) {
-        return res.status(400).json({ error: "Name is required" })
+
+    // secure name
+    if (typeof name !== "string") {
+        return res.status(400).json({ error: "Name must be a string" })
     }
 
     if (req.method === "POST") {
         const { type, isRequired } = req.body
 
-        if (!type) {
-            return res.status(400).json({ error: "Type is required" })
+
+        // secure type
+        if (typeof type !== "string") {
+            return res.status(400).json({ error: "Type must be a string" })
         }
 
         const fieldType = FieldType[type as keyof typeof FieldType]
@@ -49,22 +58,32 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             return res.status(400).json({ error: "Invalid type" })
         }
 
-
-        if (isRequired === undefined) {
-            return res.status(400).json({ error: "isRequired is required" })
+        // secure isRequired
+        if (typeof isRequired !== "boolean") {
+            return res.status(400).json({ error: "isRequired must be a boolean" })
         }
-        console.log(typeof isRequired)
 
         let field: Field
         switch (fieldType) {
             case FieldType.TEXT:
                 const { regex } = req.body
-                if (!regex) {
-                    return res.status(400).json({ error: "regex is required" })
+
+
+                // secure regex
+                if (typeof regex !== "string") {
+                    return res.status(400).json({ error: "Regex must be a string" })
                 }
 
                 // convert string to regex
-                const regexObj = new RegExp(regex)
+                let regexObj: RegExp
+
+                // check if regex is valid
+                try {
+                    regexObj = new RegExp(regex)
+                } catch (e) {
+                    return res.status(400).json({ error: "Invalid regex" })
+                }
+
 
                 field = new TextField(name, isRequired, regexObj)
                 break
@@ -72,8 +91,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             case FieldType.NUMBER:
                 const { min, max } = req.body
 
-                if (!min || !max) {
-                    return res.status(400).json({ error: "min and max are required" })
+                // secure min
+                if (typeof min !== "number") {
+                    return res.status(400).json({ error: "min must be a number" })
+                }
+
+                // secure max
+                if (typeof max !== "number") {
+                    return res.status(400).json({ error: "max must be a number" })
                 }
 
                 field = new NumberField(name, isRequired, min, max)
@@ -86,8 +111,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             case FieldType.DATE:
                 const { minDate } = req.body
 
-                if (!minDate) {
-                    return res.status(400).json({ error: "minDate are required" })
+                // secure minDate
+                if (typeof minDate !== "number") {
+                    return res.status(400).json({ error: "minDate must be a number" })
                 }
 
                 const date = new Date(minDate)
@@ -96,12 +122,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             case FieldType.SELECT:
                 const { options, defaultValue } = req.body
 
-                if (!options) {
-                    return res.status(400).json({ error: "options is required" })
+                // secure options
+                if (!Array.isArray(options)) {
+                    return res.status(400).json({ error: "options must be an array" })
                 }
 
-                if (!defaultValue) {
-                    return res.status(400).json({ error: "defaultValue is required" })
+                if (options.length === 0) {
+                    return res.status(400).json({ error: "options can't be empty" })
+                }
+
+                // secure defaultValue
+                if (typeof defaultValue !== "string") {
+                    return res.status(400).json({ error: "defaultValue must be a string" })
+                }
+
+                if (!options.includes(defaultValue)) {
+                    return res.status(400).json({ error: "defaultValue must be in options" })
                 }
 
                 field = new SelectField(name, isRequired, options, defaultValue)
