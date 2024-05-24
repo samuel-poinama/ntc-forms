@@ -4,9 +4,17 @@ import Image from 'next/image'
 
 
 export default function Users({ user, onClick } : 
-    { user: { _id: string, name: string, image: string }, 
+    { user: { _id: string, name: string, image: string, email: string, role: string}, 
     onClick: () => void }) {
-    
+        
+
+        return (
+            <div className="info" onClick={onClick}>
+                <p>{user.name}</p>
+                <p>{user.email}</p>
+                <p>{user.role}</p>
+            </div>
+        )
         return (
         <div className="box" onClick={onClick} >
             <Image loader={({src , width, quality}) => src} src={user.image} alt="" width={128} height={128}/>

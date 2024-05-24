@@ -51,7 +51,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
                     const newRole = Role[role as keyof typeof Role]
 
-                    if (!newRole) {
+                    if (newRole === undefined) {
                         return res.status(400).json({ error: "Invalid role" })
                     }
 

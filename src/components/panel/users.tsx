@@ -29,7 +29,7 @@ export default function Users() {
     }
 
     async function addUser() {
-        const response = await fetch("/api/users/add", {
+        const response = await fetch("/api/users/", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -48,21 +48,28 @@ export default function Users() {
     }
 
     async function editUser() {
-        const response = await fetch("/api/users/edit", {
+        const response = await fetch(`/api/users?id=${selected._id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ email: selected.email, role: role })
+            body: JSON.stringify({ role })
         })
-        const data = await response.json()
-        if (data.error) {
-            setError(data.error)
+        if (!response.ok) {
+            setError("Error updating user")
+            console.log(response)
         } else {
-            getUsers()
-            showEdit()
-            setSelected({} as any)
-            setRole("")
+            const data = await response.json()
+            if (data.error) {
+                setError(data.error)
+            } else {
+                getUsers()
+                showEdit()
+                setSelected({} as any)
+                setRole("")
+                setError("")
+            }
+
         }
     }
 
@@ -93,7 +100,69 @@ export default function Users() {
         getRoles()
     }, [])
 
+    return (
+        <div className="adminuser">
+                <div className="title">
 
+                    <h1>User list</h1>
+
+                    <button className="add" onClick={showAdd}>
+                        <h1>+</h1>
+                    </button>
+                </div>
+
+
+                { isAdd &&
+                    <Popup label="Add user" error={error} showSwitch={showAdd} save={addUser} >
+                    <Image src="/users.png" alt="users" width={64} height={64} />
+                        <input type="email" id="email" placeholder="Enter e-mail" 
+                            maxLength={200} onChange={(e) => setEmail(e.target.value)} />
+                        <select name="role" className="form-control selectpicker">
+                            <option value="">Please select user type</option>
+                            { roles.map((role: any, i: number) => {
+                                return (
+                                    <option key={i} value={role} onClick={() => setRole(role)}>
+                                        { role }
+                                    </option>
+                                )
+                            })}
+                        </select>
+                    </Popup>
+                }
+
+                { isEdit &&
+                    <Popup label="Edit user" error={error} showSwitch={showEdit} save={editUser} >
+                        <Image loader={({src , width, quality}) => src} src={selected.image} alt="users" width={64} height={64} />
+                        <div className="mail">
+                                <h3>Mail : { selected.email }</h3>
+                                <select value={selected.role} name="userType" className="form-control selectpicker">
+                                        { roles.map((role: any, i: number) => {
+                                            return (
+                                                <option key={i} value={role} onClick={() => setRole(role)}>
+                                                    { role }
+                                                </option>
+                                            )
+                                        })}
+                                </select>
+                            </div>
+                    </Popup>
+                }
+
+
+                <div className="description">
+                    <p>Name</p>
+                    <p>Mail</p>
+                    <p>Role</p>
+                </div>
+
+                <div className="list">
+                    {users.map((obj: any, i) => {
+                        return <User user={obj} onClick={() => clicked(obj)} key={i} />
+                    })}
+
+                </div>
+        </div>
+    )
     return (
         <div className="userframe">
             <div className="single">

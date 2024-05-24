@@ -370,54 +370,62 @@
 
 /* user */
 
-div .userframe {
-    width: 100%;
-    margin: 10px;
+.adminuser {
+    background-color: rgb(47, 85, 151);
+    border-radius: 20px; 
+    padding: 1%;
+    width: 97%;
+    margin: 2%;
 }
 
-.userframe .box {
-    margin: 5%;
-    padding: 15%;
-    background-color: white;
-    border-radius: 5px;
-    height: 100%;
-}
-
-.userframe .box img {
-    width: 80px;
-    height: auto;
-    margin-right: 20px; 
-    background-color: yellow;
-    padding: 15px; 
-    border-radius: 25%; 
-    
-}
-
-.userframe .grid {
-    display: grid;
-    grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10%;
-    row-gap: 10%;
-}
-.userframe .single{
-    width: 100%;
-    margin: 0;
+.adminuser .title{
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
-    gap: 2%;
-    align-items: center;
-    background-color: white;
-    border-radius: 10px;
+    color: yellow;
+    padding: 2%;
 }
 
-.userframe .single button {
-    width: 64px;
-    height: 64px;
-    margin-right: 2%;
+.adminuser .add{
+    background-color: gold;
+    border: none;
+    height: 30px;
+    width: 30px;
+    border-radius: 20px;
+    opacity: 0.5;
 }
 
-.userframe .a {
+.adminuser .list{
+    color: aliceblue;
+    display: block;
+    margin: 1%;    
+    border-top: 2px solid yellow;
+
+    /* pour ajouter la bar de scroll*/
+    max-height: 400px; 
+    overflow-y: auto; 
+    padding-right: 10px;
+}
+ /* pour cacher la bar de scroll*/
+.adminuser .list::-webkit-scrollbar {
+    display: none;
+}
+
+.adminuser .description{
+    color: aliceblue;
     display: flex;
+    justify-content: space-between;
+    margin: 1%;
+    margin-right: 20%;
+    color: aliceblue;
+}
+
+.adminuser .list .info{
+    color: aliceblue;
+    display: flex;
+    justify-content: space-between;
+    margin: 1%;
+    margin-right: 20%;
+    cursor: pointer;
 }
 
 .popup {
@@ -427,42 +435,23 @@ div .userframe {
     transform: translate(-50%, -50%);
     padding: 2%;
     width: 800px;
-    border: 2px solid black;
     border-radius: 20px; 
+    box-shadow: 5px 5px 0px 0px yellow;
     padding: 1%;
-    background-color: white; 
+    background-color: aliceblue; 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.add_user .image {
-    border-radius: 5%; 
-    background-color: yellow;
-}
-
-
 .popup .title {
     width: 80%; 
     padding: 1%;
 }
 
-.add_user .mail {
-    width: 50%;
-}
-
-.add_user .mail form {
-    margin-top: 10px;
-}
-
 .popup h1 {
     text-align: center; 
-}
-
-.add_user p {
-    width: 50%;
-    size: auto;
 }
 
 .popup .top{
@@ -479,11 +468,6 @@ div .userframe {
     gap: 10%;
 }
 
-.add_user .button {
-    padding: 1%;
-}
-
-
 .popup .button button {
     background: none;
     border: none;
@@ -494,18 +478,6 @@ div .userframe {
 .popup select {
     margin: 10px;
 }
-
-.add_user .mail form select,
-.mail form input[type="submit"] {
-    width: 80%;
-    padding: 0; 
-    margin: 0; 
-    background: none; 
-    border: none; 
-    font-size: inherit; 
-}
-
-
 
 /* forms */
 
