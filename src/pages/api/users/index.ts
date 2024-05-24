@@ -13,7 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const session = await getServerSession(req, res, authOptions)
     const user = await permissions(session, Role.VIEWER)
     if (!user) {
-        return res.status(401).end()
+        return res.status(401).json({ error: "Unauthorized" })
     }
 
     const { id } = req.query
@@ -28,7 +28,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const target = await User.find(id)
 
         if (!target) {
-            return res.status(404).end()
+            return res.status(404).json({ error: "User not found" })
         }
 
         let out = {}
@@ -37,7 +37,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             out = target.toJson()
         } else {
             if (user.role > Role.ADMIN) {
-                return res.status(403).end()
+                return res.status(403).json({ error: "Unauthorized" })
             }
 
             switch (req.method) {
@@ -64,14 +64,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     out = { message: "User deleted" }
                     break
                 default:
-                    return res.status(405).end()
+                    return res.status(405).json({ error: "Method not allowed" })
             }
         }
             
         return res.status(200).json(out)
     } else if (req.method === "POST") {
         if (user.role > Role.ADMIN) {
-            return res.status(403).end()
+            return res.status(403).json({ error: "Unauthorized" })
         }
 
         const { email, role } = req.body
@@ -107,6 +107,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         return res.status(200).json(json)
     } else {
-        return res.status(405).end()
+        return res.status(405).json({ error: "Method not allowed" })
     }
 }
