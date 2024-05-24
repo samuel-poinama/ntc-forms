@@ -15,7 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const session = await getServerSession(req, res, authOptions)
     const user = await permissions(session, Role.VIEWER)
     if (!user) {
-        return res.status(401).end()
+        return res.status(401).json({ error: "Unauthorized" })
     }
 
     const { id } = req.query
@@ -32,7 +32,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const form = await Form.find(id)
 
         if (!form) {
-            return res.status(404).end()
+            return res.status(404).json({ error: "Form not found" })
         }
 
         let out = {}
@@ -41,7 +41,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             out = form.toJson()
         } else {
             if (user.role > Role.ADMIN) {
-                return res.status(403).end()
+                return res.status(403).json({ error: "Unauthorized" })
             }
 
             switch (req.method) {
@@ -67,7 +67,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     out = { message: "Form deleted" }
                     break
                 default:
-                    return res.status(405).end()
+                    return res.status(405).json({ error: "Method not allowed" })
             }
         }
 
@@ -76,12 +76,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const forms = await Form.all()
         res.status(200).json(forms)
     }  else if (req.method === "POST") {
+        console.log(user.role, Role.ADMIN)
         if (user.role > Role.ADMIN) {
-            return res.status(403).end()
+            return res.status(403).json({ error: "Unauthorized" })
         }
 
         const { title, description } = req.body
 
+        console.log(title, description)
         // secure title
         if (typeof title !== "string") {
             return res.status(400).json({ error: "Title must be a string" })
@@ -97,6 +99,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         res.status(201).json({ message: "Form created" })
     } else {
-        res.status(405).end()
+        res.status(405).json({ error: "Method not allowed" })
     }
 }

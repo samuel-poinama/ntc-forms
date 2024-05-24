@@ -6,21 +6,6 @@
     display: flex; 
 }
 
-.panel .paire div {
-    margin-right: 20px;
-    margin-top: 5%;
-    padding: 1%;
-    background-color: white;
-    border-radius: 5px;
-    height: 10%;
-}
-
-.paire div img {
-    width: 80px;
-    height: auto;
-    margin-right: 20px; 
-}
-
 .panel .a{
     display: flex;
     align-items: center;
@@ -52,103 +37,399 @@
     cursor: pointer;
 }
 
+.adminhome {
+    display: flex;
+    height: 75vh; /* Ensures the full height of the viewport */
+}
+
+.adminhome .info {
+    padding: 10px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1%; /* Adds padding between blocks */
+}
+
+.adminhome .top, .adminhome .bottom {
+    width: 100%;
+    display: flex;
+    flex: 1;
+    gap: 1%; /* Adds padding between blocks */
+    margin-bottom: 1%;
+}
+
+.adminhome .total {
+    width: 70%;
+}
+
+.adminhome .last {
+    width: 30%;
+}
+
+.adminhome .deco {
+    padding: 10px;
+    margin-right: 10px;
+    width: 20%;
+    flex-shrink: 0;
+    height: 100%;
+}
+
+.adminhome-deco {
+    width: 100%;
+    height: 100%;
+    border-radius: 40px;
+    margin: 10px;
+}
+
+.adminhome-deco{
+    background-image: url("../../public/fond.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-size: x-large;
+    padding: 20px;
+}
+
+.adminhome-deco .deco{
+    color: yellow;
+    padding: 20px;
+    display: block;
+}
+
+.adminhome-deco .deco img{
+    justify-content: center;
+    align-items: center;
+    text-align: center; 
+    padding: 1%;
+}
+
+
+
+.adminhome-form{
+    height: 100%;
+    width: 100%;
+    margin: 10px;
+    background-color: rgb(47, 85, 151);
+    border: none;
+    border-radius: 8px;
+}
+
+
+.adminhome-form .title{
+    justify-content: space-between;
+    display: flex;
+    color: white;
+    padding: 2%;
+}
+
+.adminhome-form .add{
+    background-color: rgb(47, 85, 151);
+    border: none;
+    height: 30px;
+    width: 30px;
+    border-radius: 20px;
+}
+
+.adminhome-form .button a {
+    background-image: linear-gradient(to left, yellow, white);
+    background-clip: text;
+    color: transparent;
+    text-decoration: none;
+    font-size: larger;
+}
+
+.adminhome-lastforms {
+    height: 100%;
+    width: 100%;
+    margin: 10px;
+    background-color: rgb(47, 85, 151);
+    border: none;
+    border-radius: 8px;
+}
+
+.adminhome-lastforms .title{
+    justify-content: space-between;
+    display: flex;
+    color: yellow;
+    padding: 2%;
+}
+
+.adminhome-lastforms .add{
+    background-color: gold;
+    border: none;
+    height: 30px;
+    width: 30px;
+    border-radius: 20px;
+    opacity: 0.5;
+}
+
+.adminhome-lastforms .set{
+    background-color: rgb(47, 85, 151);
+    border: none;
+    border-radius: 8px;
+}
+
+
+.last-lastforms .button {
+    background-color: rgb(47, 85, 151);
+    color: white;
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-height: 70%; 
+    overflow-y: auto; 
+    padding-right: 10px;
+    border-radius: 20px;
+}
+
+.last-lastforms ul {
+    width: 100%;
+    max-height: 200px; 
+    overflow-y: auto; 
+    padding-right: 10px;
+}
+
+
+/* user */
+.adminuser .button::-webkit-scrollbar {
+    display: none;
+}
+
+
+.last-lastforms li {
+    background-color: whitesmoke;
+    color: rgb(47, 85, 151);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 10px;
+    height: 60px;
+}
+
+
+.adminhome-user{
+    gap: 10px;
+    height: 100%;
+    width: 100%;
+    margin: 10px;
+    background-color: rgb(47, 85, 151);
+    border: none;
+    border-radius: 8px;
+}
+
+
+.total-forms {
+    padding: 20px;
+
+}
+
+.adminhome-user .title{
+    justify-content: space-between;
+    display: flex;
+    color: white;
+    padding: 2%;
+}
+
+.adminhome-user .button{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;   
+    font-size: 2.2em;
+    margin-top: 10px;
+    padding-bottom: 5%;
+    margin-top: 60px;
+}
+
+.adminhome-user .button a{
+    background-image: linear-gradient(to left, yellow, white);
+    background-clip: text;
+    color: transparent;
+    text-decoration: none;
+    font-size: larger;
+}
+
+.adminhome-members {
+    height: 100%;
+    width: 100%;
+    margin: 10px;
+    background-color: rgb(47, 85, 151);
+    border: none;
+    border-radius: 8px;
+}
+
+.adminhome-members .title{
+    justify-content: space-between;
+    display: flex;
+    color: yellow;
+    padding: 2%;
+}
+
+.adminhome-members .add{
+    background-color: gold;
+    border: none;
+    height: 30px;
+    width: 30px;
+    border-radius: 20px;
+    opacity: 0.5;
+}
+
+.adminhome-members .set{
+    background-color: gold;
+    border: none;
+    border-radius: 10px;
+}
+
+
+.last-members .button {
+    background-color: rgb(47, 85, 151);
+    color: white;
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-height: 70%; 
+    overflow-y: auto; 
+    padding-right: 10px;
+    border-radius: 20px;
+}
+
+.last-members ul {
+    width: 100%;
+    max-height: 200px; 
+    overflow-y: auto; 
+    padding-right: 10px;
+}
+
+.adminuser .button::-webkit-scrollbar {
+    display: none;
+}
+
+
+.last-members li {
+    background-color: gold;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 10px;
+    height: 60px;
+}
+
 /* navigation */
 
-.navigation *{
-    padding: 0;
-    margin: 0;
-    color: black;
+.navigation .logo{
+    padding: 0%;
+    display: flex;
+    color: yellow;
+    margin-bottom: 40px;
+    margin-top: 20px;
+    border-bottom: solid;
 }
 
 .navigation{
-    width: 10%; 
+    width: 270px; 
     background-color: rgb(47, 85, 151);
-    color: white; 
     padding: 20px; 
     height: 100vh;
 }
 
-.navigation .nav_button p {
+.navigation .button p, .navigation .general p, .navigation .sign_out p{
+    color: rgb(47, 85, 151);
     margin: 0; 
     font-size: 14px; 
     margin-right: 5px; 
 }
 
 
-.navigation .nav_button img {
-    width: 20px; 
-    height: auto; 
+.navigation .button img, .navigation .general img ,.navigation .sign_out img{
+    width: 30px; 
+    margin-right: 10px;
+    height: 1%; 
 }
 
-.nav_button {
+.navigation .button, .navigation .general , .navigation .sign_out{
+    cursor: pointer;
+    background-color: yellow;
+    align-items: center;
     display: flex;
-    margin-bottom: 20px; 
+    margin-bottom: 10%; 
     padding: 15px; 
     border: none; 
     border-radius: 5px; 
-    background-color: yellow;
-    text-decoration: none;
-    font-family: Arial, Helvetica, sans-serif;
 }
 
 .navigation .sign_out{
-    position: absolute;
-    bottom: 1%;
-    left: 1%;
+margin-top: 100%;
 }
 
 
 
 /* user */
 
-div .userframe {
-    width: 100%;
-    margin: 10px;
+.adminuser {
+    background-color: rgb(47, 85, 151);
+    border-radius: 20px; 
+    padding: 1%;
+    width: 97%;
+    margin: 2%;
 }
 
-.userframe .box {
-    margin: 5%;
-    padding: 15%;
-    background-color: white;
-    border-radius: 5px;
-    height: 100%;
-}
-
-.userframe .box img {
-    width: 80px;
-    height: auto;
-    margin-right: 20px; 
-    background-color: yellow;
-    padding: 15px; 
-    border-radius: 25%; 
-    
-}
-
-.userframe .grid {
-    display: grid;
-    grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10%;
-    row-gap: 10%;
-}
-.userframe .single{
-    width: 100%;
-    margin: 0;
+.adminuser .title{
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
-    gap: 2%;
-    align-items: center;
-    background-color: white;
-    border-radius: 10px;
+    color: yellow;
+    padding: 2%;
 }
 
-.userframe .single button {
-    width: 64px;
-    height: 64px;
-    margin-right: 2%;
+.adminuser .add{
+    background-color: gold;
+    border: none;
+    height: 30px;
+    width: 30px;
+    border-radius: 20px;
+    opacity: 0.5;
 }
 
-.userframe .a {
+.adminuser .list{
+    color: aliceblue;
+    display: block;
+    margin: 1%;    
+    border-top: 2px solid yellow;
+
+    /* pour ajouter la bar de scroll*/
+    max-height: 400px; 
+    overflow-y: auto; 
+    padding-right: 10px;
+}
+ /* pour cacher la bar de scroll*/
+.adminuser .list::-webkit-scrollbar {
+    display: none;
+}
+
+.adminuser .description{
+    color: aliceblue;
     display: flex;
+    justify-content: space-between;
+    margin: 1%;
+    margin-right: 20%;
+    color: aliceblue;
+}
+
+.adminuser .list .info{
+    color: aliceblue;
+    display: flex;
+    justify-content: space-between;
+    margin: 1%;
+    margin-right: 20%;
+    cursor: pointer;
 }
 
 .popup {
@@ -158,45 +439,27 @@ div .userframe {
     transform: translate(-50%, -50%);
     padding: 2%;
     width: 800px;
-    border: 2px solid black;
     border-radius: 20px; 
+    box-shadow: 5px 5px 0px 0px yellow;
     padding: 1%;
-    background-color: white; 
+    background-color: aliceblue; 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.add_user .image {
-    border-radius: 5%; 
-    background-color: yellow;
-}
-
-
 .popup .title {
     width: 80%; 
     padding: 1%;
-}
-
-.add_user .mail {
-    width: 50%;
-}
-
-.add_user .mail form {
-    margin-top: 10px;
 }
 
 .popup h1 {
     text-align: center; 
 }
 
-.add_user p {
-    width: 50%;
-    size: auto;
-}
-
 .popup .top{
+    display: flex;
     align-items: center;
     justify-content: space-between;
     display: flex;
@@ -210,11 +473,6 @@ div .userframe {
     gap: 10%;
 }
 
-.add_user .button {
-    padding: 1%;
-}
-
-
 .popup .button button {
     background: none;
     border: none;
@@ -225,18 +483,6 @@ div .userframe {
 .popup select {
     margin: 10px;
 }
-
-.add_user .mail form select,
-.mail form input[type="submit"] {
-    width: 80%;
-    padding: 0; 
-    margin: 0; 
-    background: none; 
-    border: none; 
-    font-size: inherit; 
-}
-
-
 
 /* forms */
 
@@ -264,10 +510,26 @@ div .userframe {
     height: 25%;
 }
 
-.forms .top {
+.forms #top {
     justify-content: center;
 }
 
 .forms .box img {
     cursor: pointer;
+}
+
+.forms .popup img {
+    margin-bottom: 10%;
+}
+
+.popup .form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20%;
+}
+
+.popup .form .send {
+
+    margin: 10px;
 }

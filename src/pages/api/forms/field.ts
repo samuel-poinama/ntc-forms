@@ -15,7 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const session = await getServerSession(req, res, authOptions)
     const user = await permissions(session, Role.VIEWER)
     if (!user) {
-        return res.status(401).end()
+        return res.status(401).json({ error: "Unauthorized" })
     }
 
 
@@ -32,7 +32,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const form = await Form.find(id as string)
 
     if (!form) {
-        return res.status(404).end()
+        return res.status(404).json({ error: "Form not found" })
     }
 
     const { name } = req.body
@@ -163,6 +163,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         return res.status(200).json({ message: "Field removed" })
     } else {
-        return res.status(405).end()
+        return res.status(405).json({ error: "Method not allowed" })
     }
 }
