@@ -1,4 +1,4 @@
-import Navigation from '@/components/navigation'
+import Navigation from '@/components/panel/navigation'
 import Home from '@/components/panel/home'
 import FormsPanel from '@/components/panel/forms'
 import Users from '@/components/panel/users'

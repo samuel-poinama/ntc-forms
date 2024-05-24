@@ -76,12 +76,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const forms = await Form.all()
         res.status(200).json(forms)
     }  else if (req.method === "POST") {
+        console.log(user.role, Role.ADMIN)
         if (user.role > Role.ADMIN) {
             return res.status(403).end()
         }
 
         const { title, description } = req.body
 
+        console.log(title, description)
         // secure title
         if (typeof title !== "string") {
             return res.status(400).json({ error: "Title must be a string" })
