@@ -191,6 +191,8 @@
     padding-right: 10px;
 }
 
+
+/* user */
 .adminuser .button::-webkit-scrollbar {
     display: none;
 }
@@ -323,47 +325,49 @@
 
 /* navigation */
 
-.navigation *{
-    padding: 0;
-    margin: 0;
-    color: black;
+.navigation .logo{
+    padding: 0%;
+    display: flex;
+    color: yellow;
+    margin-bottom: 40px;
+    margin-top: 20px;
+    border-bottom: solid;
 }
 
 .navigation{
-    width: 10%; 
+    width: 270px; 
     background-color: rgb(47, 85, 151);
-    color: white; 
     padding: 20px; 
     height: 100vh;
 }
 
-.navigation .nav_button p {
+.navigation .button p, .navigation .general p, .navigation .sign_out p{
+    color: rgb(47, 85, 151);
     margin: 0; 
     font-size: 14px; 
     margin-right: 5px; 
 }
 
 
-.navigation .nav_button img {
-    width: 20px; 
-    height: auto; 
+.navigation .button img, .navigation .general img ,.navigation .sign_out img{
+    width: 30px; 
+    margin-right: 10px;
+    height: 1%; 
 }
 
-.nav_button {
+.navigation .button, .navigation .general , .navigation .sign_out{
+    cursor: pointer;
+    background-color: yellow;
+    align-items: center;
     display: flex;
-    margin-bottom: 20px; 
+    margin-bottom: 10%; 
     padding: 15px; 
     border: none; 
     border-radius: 5px; 
-    background-color: yellow;
-    text-decoration: none;
-    font-family: Arial, Helvetica, sans-serif;
 }
 
 .navigation .sign_out{
-    position: absolute;
-    bottom: 1%;
-    left: 1%;
+margin-top: 100%;
 }
 
 
