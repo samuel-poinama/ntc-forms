@@ -1,5 +1,5 @@
-import { Role, User } from "@/model/User";
-import { Session } from "next-auth";
+import { Role, User } from "@/model/User"
+import { Session } from "next-auth"
 
 
 
