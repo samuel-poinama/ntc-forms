@@ -86,16 +86,24 @@ export default class Response {
         return responses
     }
 
+    static async getByForm(form: Form): Promise<any[]> {
+        const responses = await db.collection('reponses_user_title').find({ formId: form.id }).toArray()
+        return responses
+    }
+
     toJson(): any {
+        const fields = this._fields.map((field) => field.toJson())
+
         return {
             _id: this._id,
             userId: this._userId,
             formId: this._formId,
-            fields: this._fields
+            fields: fields
         }
     }
 
     static fromJSON(json: any): Response {
-        return new Response(json._id, json.userId, json.formId, json.fields)
+        const fields = json.fields.map((field: any) => Field.fromJson(field))
+        return new Response(json._id, json.userId, json.formId, fields)
     }
 }
