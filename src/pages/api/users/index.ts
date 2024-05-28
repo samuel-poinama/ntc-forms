@@ -86,6 +86,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             return res.status(400).json({ error: "Invalid email" })
         }
 
+
+        // check if email already exists
+        if (await User.findByEmail(email)) {
+            return res.status(409).json({ error: "User already exists" })
+        }
+
         // secure role
         if (typeof role !== "string") {
             return res.status(400).json({ error: "Role must be a string" })

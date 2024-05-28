@@ -76,6 +76,15 @@ export default class Form {
         return result.deletedCount > 0
     }
 
+    public static async findByTitle(title: string): Promise<Form | null> {
+        const result = await collection.findOne({ title: title })
+        if (!result) {
+            return null
+        }
+
+        return Form.fromJson(result)
+    }
+
     public static async find(id: string): Promise<Form | null> {
         const result = await collection.findOne({ _id: new ObjectId(id) })
         if (!result) {
