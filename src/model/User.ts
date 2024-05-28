@@ -37,6 +37,10 @@ export class User {
         this._email = email
     }
 
+    get name() {
+        return this._name
+    }
+
     set name(name: string) {
         this._name = name
     }
@@ -89,12 +93,11 @@ export class User {
         return User.fromJson(result)
     }
 
-    public static async all() : Promise<User[]> {
+    public static async all() : Promise<any[]> {
         const result = await collection.find().toArray()
 
-        return result.map((user: any) => User.fromJson(user))
+        return result
     }
-
 
     private static fromJson(json: any): User {
         return new User(json.email, Role[json.role as keyof typeof Role], json.name, json.image, json._id)

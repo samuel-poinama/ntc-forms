@@ -10,11 +10,13 @@
     "test": "jest"
   },
   "dependencies": {
+    "@types/nodemailer": "^6.4.15",
     "dotenv": "^16.4.5",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.6.1",
     "next": "14.2.3",
     "next-auth": "^4.24.7",
+    "nodemailer": "^6.9.13",
     "react": "^18",
     "react-dom": "^18"
   },

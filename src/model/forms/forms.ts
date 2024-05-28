@@ -85,10 +85,9 @@ export default class Form {
         return Form.fromJson(result)
     }
 
-    public static async all(): Promise<Form[]> {
+    public static async all(): Promise<any[]> {
         const result = await collection.find().toArray()
-        const forms = result.map((form: any) => Form.fromJson(form).toJson())
-        return forms
+        return result
     }
 
     public async update(): Promise<boolean> {

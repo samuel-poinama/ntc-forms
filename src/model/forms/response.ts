@@ -51,6 +51,20 @@ export default class Response {
         return response.deletedCount > 0
     }
 
+    public isFilled(): boolean {
+        for (const field of this._fields) {
+            
+            if (!field.restriction()) {
+                return false
+            }
+            
+            if (field.required && field.content === undefined) {
+                return false
+            }
+        }
+        return true
+    }
+
     static async find(id: string): Promise<Response | null> {
         const response = await collection.findOne({ _id: new ObjectId(id) })
         if (!response) {
@@ -67,16 +81,29 @@ export default class Response {
         return responses.map((response: any) => Response.fromJSON(response))
     }
 
+    static async all(): Promise<any[]> {
+        const responses = await db.collection('reponses_user_title').find({}).toArray()
+        return responses
+    }
+
+    static async getByForm(form: Form): Promise<any[]> {
+        const responses = await db.collection('reponses_user_title').find({ formId: form.id }).toArray()
+        return responses
+    }
+
     toJson(): any {
+        const fields = this._fields.map((field) => field.toJson())
+
         return {
             _id: this._id,
             userId: this._userId,
             formId: this._formId,
-            fields: this._fields
+            fields: fields
         }
     }
 
     static fromJSON(json: any): Response {
-        return new Response(json._id, json.userId, json.formId, json.fields)
+        const fields = json.fields.map((field: any) => Field.fromJson(field))
+        return new Response(json._id, json.userId, json.formId, fields)
     }
 }

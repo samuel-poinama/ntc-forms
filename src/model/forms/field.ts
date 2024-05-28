@@ -37,6 +37,10 @@ abstract class Field {
         this._content = content
     }
 
+    public isFilled(): boolean {
+        return this._required && this._content !== undefined
+    }
+
     abstract restriction(): boolean
 
 
@@ -46,13 +50,13 @@ abstract class Field {
     static fromJson(json: any): Field {
         switch (json.type) {
             case FieldType.TEXT:
-                return new TextField(json.name, json.required, json.regex, "")
+                return new TextField(json.name, json.required, json.regex, undefined)
             case FieldType.NUMBER:
-                return new NumberField(json.name, json.required, json.min, json.max, json.min)
+                return new NumberField(json.name, json.required, json.min, json.max, undefined)
             case FieldType.BOOLEAN:
-                return new BooleanField(json.name, json.required, false)
+                return new BooleanField(json.name, json.required, undefined)
             case FieldType.DATE:
-                return new DateField(json.name, json.required, json.min, json.min)
+                return new DateField(json.name, json.required, json.min, undefined)
             case FieldType.SELECT:
                 return new SelectField(json.name, json.required, json.options, json.options[0])
             default:
@@ -163,6 +167,10 @@ export class DateField extends Field {
     }
 
     public restriction(): boolean {
+        if (typeof this.content === 'number') {
+            this.content = new Date(this.content)
+        }
+
         if (!(this.content instanceof Date)) {
             return false
         }

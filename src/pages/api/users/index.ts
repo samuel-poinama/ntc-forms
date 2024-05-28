@@ -103,9 +103,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(201).json({ message: "User created" })
     } else if (req.method === "GET") {
         const users = await User.all()
-        const json = users.map(user => user.toJson())
 
-        return res.status(200).json(json)
+        return res.status(200).json(users)
     } else {
         return res.status(405).json({ error: "Method not allowed" })
     }
