@@ -57,7 +57,6 @@ export default function Users() {
         })
         if (!response.ok) {
             setError("Error updating user")
-            console.log(response)
         } else {
             const data = await response.json()
             if (data.error) {

@@ -47,10 +47,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     } else if (req.method === "POST") {
         const { id, fields } = req.body
 
+
+        // secure id
         if (!id || typeof id !== "string") {
             return res.status(400).json({ error: "Invalid request" })
         }
 
+
+        // check if response already exists
+        const userResponses = await Response.getByUser(user)
+        for (let i = 0; i < userResponses.length; i++) {
+            if (userResponses[i].formId.toString() === id) {
+                return res.status(409).json({ error: "Response already exists" })
+            }
+        }
+
+        // secure fields
         if (!fields || !Array.isArray(fields)) {
             return res.status(400).json({ error: "Invalid request" })
         }

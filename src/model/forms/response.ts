@@ -41,6 +41,10 @@ export default class Response {
         return this._fields
     }
 
+    get formId(): ObjectId {
+        return this._formId
+    }
+
     public async insert() : Promise<boolean> {
         const response = await collection.insertOne(this.toJson())
         return response.acknowledged

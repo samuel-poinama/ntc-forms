@@ -47,6 +47,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const { type, isRequired } = req.body
 
 
+        // check if field already exists
+        if (form.getField(name)) {
+            return res.status(409).json({ error: "Field already exists" })
+        }
+
+
         // secure type
         if (typeof type !== "string") {
             return res.status(400).json({ error: "Type must be a string" })
