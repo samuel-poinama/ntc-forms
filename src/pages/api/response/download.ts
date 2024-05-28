@@ -6,6 +6,7 @@ import { Role } from '@/model/User'
 import Form from '@/model/forms/forms'
 import Response from '@/model/forms/response'
 import { csvFormater } from '@/lib/csvFormater'
+import { sendEmail } from '@/lib/mailer'
 
 
 
@@ -24,7 +25,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
 
-    const { id } = req.query
+    const { id, email } = req.query
 
     if (!id || typeof id !== 'string') {
         return res.status(400).json({ error: 'id is required' })
@@ -36,12 +37,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(404).json({ error: 'Form not found' })
     }
 
+    if (!email) {
+        return res.status(400).json({ error: 'email is required' })
+    } 
 
+    
     const responses = await Response.getByForm(form)
 
     const csv = csvFormater(responses)
-
-    res.setHeader('Content-Type', 'text/csv')
-    res.setHeader('Content-Disposition', `attachment; filename="${form.title}.csv"`)
-    res.status(200).send(csv)
+    if (email === 'true') {
+        sendEmail(user.email, form.title, csv)
+        return res.status(200).json({ message: 'Email sent' })
+    } else if (email === 'false') {
+        res.setHeader('Content-Type', 'text/csv')
+        res.setHeader('Content-Disposition', `attachment; filename="${form.title}.csv"`)
+        res.status(200).send(csv)
+    } else {
+        return res.status(400).json({ error: 'email is required' })
+    }
 }

@@ -37,6 +37,10 @@ export class User {
         this._email = email
     }
 
+    get email() {
+        return this._email
+    }
+
     get name() {
         return this._name
     }
