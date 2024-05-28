@@ -67,6 +67,12 @@ export default class Response {
         return responses.map((response: any) => Response.fromJSON(response))
     }
 
+    static async getByName(name: string): Promise<any[]> {
+        const responses = await db.collection('response_with_title').find({}).toArray()
+
+        return responses
+    }
+
     toJson(): any {
         return {
             _id: this._id,
