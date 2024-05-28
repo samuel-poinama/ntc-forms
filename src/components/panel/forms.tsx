@@ -26,7 +26,6 @@ export default function FormsPanel() {
     }
 
     async function createForm() {
-        console.log(typeof title)
         const res = await fetch('/api/forms', {
             method: 'POST',
             headers: {
