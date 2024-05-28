@@ -37,6 +37,10 @@ abstract class Field {
         this._content = content
     }
 
+    public isFilled(): boolean {
+        return this._required && this._content !== undefined
+    }
+
     abstract restriction(): boolean
 
 
