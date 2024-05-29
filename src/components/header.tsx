@@ -3,13 +3,6 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 export default function Header() {
-    const router = useRouter()
-
-    console.log(router.pathname)
-    if (router.pathname === "/panel/[panel]") {
-        return <div>Header</div>
-    }
-
     return (
         <>
             <header className="my-[10px] bg-white py-2 px-4 border-b-2 border-gray-200">

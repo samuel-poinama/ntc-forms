@@ -12,8 +12,10 @@ export default function Users () {
     const [error, setError] = useState("")
     const [userEmail, setUserEmail] = useState("")
     const [userRole, setUserRole] = useState("")
+    const [userSearch, setUserSearch] = useState("")
 
     const [selectedUser, setSelectedUser] = useState({} as any)
+
 
     const fetchUsers = async () => {
         const response = await fetch("/api/users")
@@ -108,6 +110,29 @@ export default function Users () {
         }
     }
 
+    const enterSearch = (e: any) => {
+        if (e.code === "Enter") {
+            searchUser()
+        }
+    }
+
+    const searchUser = async () => {
+        if (userSearch === "") {
+            fetchUsers()
+            return
+        }
+
+        const response = await fetch(`/api/users/search?s=${userSearch}`, {
+            method: 'GET'
+        })
+        const data = await response.json()
+        if (data.error) {
+            setError(data.error)
+        } else {
+            setUsers(data)
+        }
+    }
+
 
     useEffect(() => {
         fetchUsers()
@@ -199,13 +224,25 @@ export default function Users () {
             </div>
         </Popup>
 
-
         <div className="flex justify-between text-yellow-400 p-4 border-b-2 border-yellow-400">
             <h1 className="text-2xl">User list</h1>
+
+            <div className="search flex items-center">
+                <input type="text" maxLength={200} placeholder="Search" className="py-2 px-4 mr-2 border 
+                    border-gray-300 rounded w-[500px]"
+                    value={userSearch}
+                    onChange={(e) => setUserSearch(e.target.value)}
+                    onKeyDown={enterSearch}
+                     />
+                <button className="p-2 border border-gray-300 rounded" onClick={searchUser} >
+                    <Image src="/Search_Icon.png" alt="Search" width={24} height={24} />
+                </button>
+            </div>
             <button className=" border-none h-8 w-8 rounded-full" onClick={showAdd} >
                 <Image src="/plus.png" alt="home" width={30} height={30} />
             </button>
         </div>
+        
         <div className="pr-40">
             <div className="flex justify-between text-white p-4 border-yellow-400">
                 <p>Name</p>

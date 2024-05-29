@@ -1,6 +1,6 @@
-import Image from "next/image"
+import Image from "next/image";
 
-export default function HomePage() {
+export default function Home() {
   return (
     <div className="bg-website">
       <div>
@@ -36,7 +36,7 @@ export default function HomePage() {
                 alt="Nautical Training Corps"
                 width={600}
                 height={400}
-                className="inline-block"
+                className="inline-block rounded-[30px]"
               />
             </div>
           </div>
@@ -160,7 +160,7 @@ export default function HomePage() {
                     alt="Nautical Training Corps"
                     width={600}
                     height={400}
-                    className="inline-block"
+                    className="inline-block rounded-[30px]"
                   />
                 </div>
               </div>
@@ -168,11 +168,11 @@ export default function HomePage() {
           </div>
           <div>
             <div className="flex justify-center mt-20">
-              <div className="flex flex-col md:flex-row items-center bg-blue-100 text-black h-96 lg:h-[500px] w-full lg:w-3/4 rounded-full relative">
-                <div className="absolute top-10 left-12 bg-white mt-4 rounded-md md:rounded-l-[250px] p-4 w-96 h-96 flex justify-center items-center">
+              <div className="flex flex-col md:flex-row items-center bg-blue-100 text-black lg:h-[400px] mr-[10%] ml-[10%] w-full lg:w-4/4 rounded-full relative">
+                <div className="absolute top-10 left-12 bg-white mt-4 rounded-md md:rounded-l-[250px] p-4 w-72 h-72 flex justify-center items-center">
                   <p className="text-lg font-bold">Management</p>
                 </div>
-                <div className="px-4 py-10 md:pl-24 md:pr-16 ml-96">
+                <div className="md:pl-24 md:pr-16 ml-96">
                   <p className="text-xl font-roboto leading-relaxed max-w-2xl mx-auto">
                     The Corps' governing body, the National Council, acts as
                     Trustees overseeing the charity's operations and assets.
