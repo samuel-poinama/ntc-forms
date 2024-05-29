@@ -1,0 +1,23 @@
+version: '3.7'
+
+
+services:
+  web:
+    image: ntc-form
+    build:
+      context: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo
+    ports:
+      - "27018:27017"
+    environment:
+      MONGO_INITDB_DATABASE: ntc_forms
+      ADMIN_EMAIL: "admin@exemple.com"
+    volumes:
+      - ./docker-entrypoint-initdb.d/:/docker-entrypoint-initdb.d/:ro
+      - ./data:/data/db

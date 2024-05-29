@@ -1,40 +1,110 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+<h1 align="center">
+  <br>
+  NTC forms
+  <br>
+</h1>
 
-First, run the development server:
+<h4 align="center"> Public web site and forms manager based on <a href="http://nextjs.org" target="_blank">Next.js</a>.</h4>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+<p align="center">
+  <a href="#key-features">Key Features</a> •
+  <a href="#how-to-use">How To Use</a> •
+  <a href="#download">Download</a> •
+  <a href="#credits">Credits</a> •
+  <a href="#related">Related</a> •
+  <a href="#license">License</a>
+</p>
+
+
+
+## Key Features
+
+* Public web site
+* complete forms
+* admin panel
+  - manage forms
+  - manage users
+
+## How To Use
+
+replace `.env.example` with `.env` and set the following variables:
+ ```dosini
+AUTH_GOOGLE_ID=secret
+AUTH_GOOGLE_SECRET=secret
+NEXTAUTH_SECRET=secret
+MONGO_URI=mongodb://localhost:27017/ntc_forms
+USER_EMAIL=sender@exemple.com
+EMAIL_ACCESS=secret
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+> * AUTH_GOOGLE_ID: Google client id [get it here](https://developers.google.com/identity/oauth2/web/guides/get-google-api-clientid)
+> * AUTH_GOOGLE_SECRET: Google client secret [get it here](https://developers.google.com/identity/oauth2/web/guides/get-google-api-clientid)
+> * NEXTAUTH_SECRET: a random strong secret key
+> * MONGO_URI: mongodb connection string
+> * USER_EMAIL: email address to send emails
+> * EMAIL_ACCESS: email password [get it here](docs/email.md)
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Development
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+### Prerequisites
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- Node.js (>= v21.7.1)
+- npm version (>= 10.5.0)
+- mongodb
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Run
+```bash
+# Clone this repository
+git clone https://github.com/samuel-poinama/ntc-forms.git
 
-## Learn More
+# Go into the repository
+cd ntc-forms
 
-To learn more about Next.js, take a look at the following resources:
+# Install dependencies
+npm install
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Run the app
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Deployment
 
-## Deploy on Vercel
+### Prerequisites
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- docker (>= 24.0.6)
+- docker-compose (>= 2.23.0)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+> set `MONGO_URI` in `.env` to `mongodb://mongo:27017/ntc_forms`
+> change `ADMIN_EMAIL` in `docker-compose.yml` to your email address
+
+```bash
+# Clone this repository
+git clone https://github.com/samuel-poinama/ntc-forms.git
+
+# Go into the repository
+cd ntc-forms
+
+# Build the app
+docker-compose build
+
+# Run the app
+docker-compose up
+```
+
+## Credits
+
+This software uses the following open source packages:
+
+- [Node.js](https://nodejs.org/)
+- [Next.js](https://nextjs.org/)
+- [MongoDB](https://www.mongodb.com/)
+- [NextAuth.js](https://next-auth.js.org/)
+- [Nodemailer](https://nodemailer.com/about/)
+- [Docker](https://www.docker.com/)
+
+---
+
+> [samuel poinama (Linked In)](https://www.linkedin.com/in/samuel-poinama-428827222/)
+
+
