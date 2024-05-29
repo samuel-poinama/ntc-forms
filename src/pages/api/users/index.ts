@@ -56,7 +56,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     }
 
                     target.role = newRole
-                    await user.update()
+                    console.log(target.id)
+                    const result = await target.update()
+
+                    if (!result) {
+                        return res.status(500).json({ error: "Internal server error" })
+                    }
+
                     out = { message: "User updated" }
                     break
                 case "DELETE":
@@ -97,9 +103,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             return res.status(400).json({ error: "Role must be a string" })
         }
 
+        console.log(role)
         const newRole = Role[role as keyof typeof Role]
 
-        if (!newRole) {
+        if (newRole === undefined) {
             return res.status(400).json({ error: "Invalid role" })
         }
 
