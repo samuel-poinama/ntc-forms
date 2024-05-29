@@ -101,6 +101,18 @@ export class User {
         return result
     }
 
+    public static async getLasts() : Promise<any[]> {
+        const result = await collection.find().sort({_id: -1}).limit(5).toArray()
+
+        return result
+    }
+
+    public static async getNumberOfUsers() : Promise<number> {
+        const result = await collection.countDocuments()
+
+        return result
+    }
+
     private static fromJson(json: any): User {
         return new User(json.email, Role[json.role as keyof typeof Role], json.name, json.image, json._id)
     }

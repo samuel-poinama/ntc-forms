@@ -1,6 +1,31 @@
 import Image from "next/image"
+import { useState, useEffect } from "react"
 
-export default function Adminhome() {
+
+
+export default function Home() {
+    const [formsInfos, setFormsInfos] = useState({ last: [], num: 0 } as { last: { title: string }[], num: number })
+    const [usersInfos, setUsersInfos] = useState({ last: [], num: 0 } as { last: { name: string, role: string }[], num: number })
+
+    const fetchForms = async () => {
+        const response = await fetch("/api/forms/preview")
+        const data = await response.json()
+        console.log(data)
+        setFormsInfos(data)
+    }
+
+    const fetchUsers = async () => {
+        const response = await fetch("/api/users/preview")
+        const data = await response.json()
+        setUsersInfos(data)
+    }
+
+    useEffect(() => {
+        fetchForms()
+        fetchUsers()
+    }, [])
+
+
     return (
         <div className="relative flex h-screen">
             <div className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat bg-cyan-50">
@@ -19,10 +44,10 @@ export default function Adminhome() {
                                         <Image src="/stats.png" alt="home" width={90} height={90} />
                                     </button>
                                 </div>
-                                <div className="flex flex-col justify-center items-center text-center text-2xl mt-2 pb-4">
-                                    <a href="#" className="bg-gradient-to-l from-yellow-400 to-white bg-clip-text text-transparent text-lg no-underline">
-                                        VIEW FORM LIST
-                                    </a>
+                                <div className="flex flex-col justify-center items-center text-center text-[50px] mt-10 pb-4">
+                                    <h1 className="bg-gradient-to-l from-yellow-400 to-white bg-clip-text text-transparent no-underline">
+                                        {formsInfos.num} Forms
+                                    </h1>
                                 </div>
                                 <div className="h-auto max-w-lg ms-auto">
                                     <Image src="/circle_point.png" alt="home" width={200} height={200} className="absolute -bottom-12 -right-12" />
@@ -39,11 +64,11 @@ export default function Adminhome() {
                                 </div>
                                 <div className="bg-blue-700 text-white p-4 flex flex-col justify-center max-h-70 overflow-y-auto pr-2 rounded-xl">
                                     <ul className="w-full max-h-48 overflow-y-auto pr-2">
-                                        {["Form name", "Form name", "Form name", "Form name", "Form name"].map((name, index) => (
+                                        {formsInfos.last.map((value, index) => (
                                             <li key={index} className="bg-white text-blue-700 flex justify-between items-center my-2 p-2 rounded-lg h-16">
                                                 <Image src="/ntc2.png" alt="home" width={50} height={50} />
                                                 <div className="text">
-                                                    <h2>{name}</h2>
+                                                    <h2>{value.title}</h2>
                                                 </div>
                                                 <button type="submit" className="bg-blue-700 border-none rounded-lg">
                                                     <Image src="/settings.png" alt="home" width={20} height={20} />
@@ -64,10 +89,10 @@ export default function Adminhome() {
                                         <Image src="/stats.png" alt="home" width={30} height={30} />
                                     </button>
                                 </div>
-                                <div className="flex flex-col justify-center items-center text-center text-2xl mt-2 pb-4">
-                                    <a href="#" className="bg-gradient-to-l from-yellow-400 to-white bg-clip-text text-transparent text-lg no-underline">
-                                        VIEW USER LIST
-                                    </a>
+                                <div className="flex flex-col justify-center items-center text-center text-[50px] mt-14 pb-4">
+                                    <h1 className="bg-gradient-to-l from-yellow-400 to-white bg-clip-text text-transparent no-underline">
+                                        {usersInfos.num} Users
+                                    </h1>
                                 </div>
                                 <div className="h-auto max-w-lg ms-auto">
                                     <Image src="/circle_point.png" alt="home" width={200} height={200} className="absolute -bottom-12 -right-12"/>
@@ -84,12 +109,12 @@ export default function Adminhome() {
                                 </div>
                                 <div className="bg-blue-700 text-white p-4 flex flex-col justify-center max-h-70 overflow-y-auto pr-2 rounded-xl">
                                     <ul className="w-full max-h-48 overflow-y-auto pr-2">
-                                        {["Name", "Name", "Name", "Name", "Name"].map((name, index) => (
+                                        {usersInfos.last.map((value, index) => (
                                             <li key={index} className="bg-yellow-400 text-white flex justify-between items-center my-2 p-2 rounded-lg h-16">
                                                 <Image src="/ntc2.png" alt="home" width={50} height={50} />
                                                 <div className="text">
-                                                    <h2>{name}</h2>
-                                                    <h3>role</h3>
+                                                    <h2>{value.name}</h2>
+                                                    <h3>{value.role}</h3>
                                                 </div>
                                                 <button type="submit" className="bg-yellow-400 border-none rounded-lg">
                                                     <Image src="/settings.png" alt="home" width={20} height={20} />
