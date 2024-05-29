@@ -99,6 +99,17 @@ export default class Form {
         return result
     }
 
+    public static async getLasts(): Promise<any[]> {
+        const result = await collection.find().sort({ _id: -1 }).limit(5).toArray()
+        return result
+    }
+
+    public static async getNumberOfForms(): Promise<number> {
+        const result = await collection.countDocuments()
+        return result
+    }
+
+
     public async update(): Promise<boolean> {
         const result = await collection.updateOne({ _id: this._id }, { $set: this.toJson() })
 

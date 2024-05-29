@@ -68,7 +68,9 @@ export class User {
     }
 
     public async update() : Promise<boolean> {
-        const result = await collection.updateOne({_id: this._id}, {$set: this.toJson()})
+        console.log(this._id)
+        console.log(await collection.findOne({_id: this._id}))
+        const result = await collection.updateOne({_id: this._id} , {$set: this.toJson()})
         return result.modifiedCount > 0
     }
 
@@ -99,6 +101,18 @@ export class User {
 
     public static async all() : Promise<any[]> {
         const result = await collection.find().toArray()
+
+        return result
+    }
+
+    public static async getLasts() : Promise<any[]> {
+        const result = await collection.find().sort({_id: -1}).limit(5).toArray()
+
+        return result
+    }
+
+    public static async getNumberOfUsers() : Promise<number> {
+        const result = await collection.countDocuments()
 
         return result
     }
