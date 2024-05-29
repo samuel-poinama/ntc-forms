@@ -165,6 +165,7 @@ export default function Users () {
             </div>
         </Popup>
 
+        {/* add user popup */}
         <Popup isVisible={isAdd} error={error} hidePopup={showAdd} save={sendUser} >
             <div className="flex justify-center p-4">
                 <div className="w-1/3 flex flex-col items-center justify-center p-6 ">
