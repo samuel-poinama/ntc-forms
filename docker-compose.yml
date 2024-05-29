@@ -17,7 +17,7 @@ services:
       - "27018:27017"
     environment:
       MONGO_INITDB_DATABASE: ntc_forms
-      ADMIN_EMAIL: "poinama.samuel@gmail.com"
+      ADMIN_EMAIL: "admin@exemple.com"
     volumes:
       - ./docker-entrypoint-initdb.d/:/docker-entrypoint-initdb.d/:ro
       - ./data:/data/db
