@@ -1,6 +1,34 @@
-import Image from "next/image";
+import Image from "next/image"
+import { useState } from "react"
 
 export default function Contact() {
+    const [firstname, setFirstname] = useState('')
+    const [lastname, setLastname] = useState('')
+    const [email, setEmail] = useState('')
+    const [phone, setPhone] = useState('')
+    const [message, setMessage] = useState('')
+
+    const [output, setOutput] = useState({} as any)
+
+    const handleSubmit = async (e: any) => {
+        e.preventDefault()
+
+        const res = await fetch('/api/contact', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ firstname, lastname, email, phone, message }),
+        })
+
+        const data = await res.json()
+
+        setOutput(data)
+    }
+
+
+
+
     return (
         <div>
             <div className="bg-website min-h-screen py-12 relative">
@@ -10,6 +38,9 @@ export default function Contact() {
                 <div className="text-center mb-8">
                     <h3 className="text-white text-lg">Any question or remarks? Just write us a message!</h3>
                 </div>
+                {output.error && <div className="text-center text-red-500">{output.error}</div>}
+                {output.success && <div className="text-center text-green-500">{output.success}</div>}
+
                 <div className="container mx-auto max-w-[80%] bg-white rounded-lg p-8 shadow-lg">
                     <div className="flex flex-wrap justify-between">
                         <div className="bg-website text-white rounded-lg w-full lg:w-[40%] mb-6 lg:mb-0 relative">
@@ -35,30 +66,50 @@ export default function Contact() {
                         </div>
                         <div className="bg-white p-6 w-full lg:w-1/2">
                             <h2 className="text-2xl mb-4">Get in Touch</h2>
-                            <form>
+                            <form onSubmit={handleSubmit}>
                                 <div className="flex flex-wrap -mx-2 mb-4">
                                     <div className="w-full md:w-1/2 px-2 mb-4 md:mb-0">
                                         <label htmlFor="first-name" className="block text-gray-700">First Name:</label>
-                                        <input type="text" id="first-name" className="mt-1 block w-full border-b-2 border-gray-300 focus:border-button outline-none py-2" required />
+                                        <input type="text" id="first-name" className="mt-1 block w-full 
+                                        border-b-2 border-gray-300 focus:border-button outline-none py-2"
+                                        value={firstname}
+                                        onChange={(e) => setFirstname(e.target.value)}
+                                         required />
                                     </div>
                                     <div className="w-full md:w-1/2 px-2">
                                         <label htmlFor="last-name" className="block text-gray-700">Last Name:</label>
-                                        <input type="text" id="last-name" className="mt-1 block w-full border-b-2 border-gray-300 focus:border-button outline-none py-2" required />
+                                        <input type="text" id="last-name" className="mt-1 block w-full
+                                         border-b-2 border-gray-300 focus:border-button outline-none py-2"
+                                         value={lastname}
+                                        onChange={(e) => setLastname(e.target.value)}
+                                         required />
                                     </div>
                                 </div>
                                 <div className="flex flex-wrap -mx-2 mb-4">
                                     <div className="w-full md:w-1/2 px-2 mb-4 md:mb-0">
                                         <label htmlFor="email" className="block text-gray-700">Email:</label>
-                                        <input type="email" id="email" className="mt-1 block w-full border-b-2 border-gray-300 focus:border-button outline-none py-2" required />
+                                        <input type="email" id="email" className="mt-1 block w-full 
+                                        border-b-2 border-gray-300 focus:border-button outline-none py-2"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)} 
+                                        required />
                                     </div>
                                     <div className="w-full md:w-1/2 px-2">
                                         <label htmlFor="phone" className="block text-gray-700">Phone Number:</label>
-                                        <input type="text" id="phone" className="mt-1 block w-full border-b-2 border-gray-300 focus:border-button outline-none py-2" required />
+                                        <input type="text" id="phone" className="mt-1 block w-full 
+                                        border-b-2 border-gray-300 focus:border-button outline-none py-2"
+                                        value={phone}
+                                        onChange={(e) => setPhone(e.target.value)} 
+                                        required />
                                     </div>
                                 </div>
                                 <div className="mb-4">
                                     <label htmlFor="message" className="block text-gray-700">Message:</label>
-                                    <textarea id="message" className="mt-1 block w-full border-b-2 border-gray-300 text-black focus:border-button outline-none py-2" required></textarea>
+                                    <textarea id="message" className="mt-1 block w-full border-b-2 
+                                    border-gray-300 text-black focus:border-button outline-none py-2" 
+                                    value={message}
+                                    onChange={(e) => setMessage(e.target.value)}
+                                    required></textarea>
                                 </div>
                                 <div className="flex mt-12">
                                     <button type="submit" className="bg-button p-2 pl-4 pr-4">Send Message</button>
