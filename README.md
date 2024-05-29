@@ -28,7 +28,7 @@
 
 ## How To Use
 
-replace ==.env.example== with ==.env== and set the following variables:
+replace `.env.example` with `.env` and set the following variables:
  ```dosini
 AUTH_GOOGLE_ID=secret
 AUTH_GOOGLE_SECRET=secret
@@ -75,8 +75,8 @@ npm run dev
 - docker (>= 24.0.6)
 - docker-compose (>= 2.23.0)
 
-> set ==MONGO_URI== in ==.env== to ==mongodb://mongo:27017/ntc_forms==
-> change ==ADMIN_EMAIL== in ==docker-compose.yml== to your email address
+> set `MONGO_URI` in `.env` to `mongodb://mongo:27017/ntc_forms`
+> change `ADMIN_EMAIL` in `docker-compose.yml` to your email address
 
 ```bash
 # Clone this repository
