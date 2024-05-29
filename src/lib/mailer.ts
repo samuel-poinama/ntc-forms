@@ -2,7 +2,7 @@ import nodemailer from 'nodemailer'
 import fs from 'fs'
 import path from 'path'
 
-const html = fs.readFileSync(path.join(__dirname, '../components/mail.html'), 'utf8')
+const html = fs.readFileSync(path.resolve('src', 'components', 'mail.html'), 'utf8')
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -15,7 +15,7 @@ const transporter = nodemailer.createTransport({
 
 
 
-export async function sendEmail(to: string, formName: string, attachment: string) {
+export function sendEmail(to: string, formName: string, attachment: string) {
     const message = {
         from: process.env.USER_EMAIL,
         to,
