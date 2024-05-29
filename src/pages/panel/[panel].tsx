@@ -38,10 +38,6 @@ export default function Panel() {
         return (
         <div  className="panel">
             <div className="content">
-
-
-                <Navigation/>
-
                 {renderPanel()}
             </div> 
         </div>
