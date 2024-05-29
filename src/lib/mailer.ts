@@ -2,7 +2,7 @@ import nodemailer from 'nodemailer'
 import fs from 'fs'
 import path from 'path'
 
-const html = fs.readFileSync(path.resolve('src', 'components', 'mail.html'), 'utf8')
+const forms = fs.readFileSync(path.resolve('src', 'mails', 'forms.html'), 'utf8')
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -12,10 +12,9 @@ const transporter = nodemailer.createTransport({
     }
 })
 
+//export function sendContactMail()
 
-
-
-export function sendEmail(to: string, formName: string, attachment: string) {
+export function sendFormsMail(to: string, formName: string, attachment: string) {
     const message = {
         from: process.env.USER_EMAIL,
         to,
@@ -27,7 +26,7 @@ export function sendEmail(to: string, formName: string, attachment: string) {
             }
         ],
         text: 'For clients with plaintext support only',
-        html: html
+        html: forms
     }
 
 
