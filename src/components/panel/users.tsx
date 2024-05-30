@@ -1,6 +1,6 @@
 import Image from "next/image"
 import { useEffect, useState } from "react"
-import User from "./subcomponents/user"
+import User from "./user/user"
 import Popup from "../popup"
 
 
