@@ -10,7 +10,7 @@ export default function Popup({children, error, isVisible, hidePopup, save }:
 
     return (
         <div className="fixed inset-0 flex items-center justify-center z-50 backdrop-blur-xl">
-            <div className="bg-white border rounded-2xl p-4 w-[675px] h-[425px] m-8">
+            <div className="bg-white border rounded-2xl p-4 w-[675px] h-auto m-8">
                 <div className="bg-cover bg-center bg-no-repeat rounded-2xl p-4 pb-20 w-full" style={{ backgroundImage: 'url("/fond.png")' }}>
                     <div className="flex items-center justify-end mr-10">
                         <Image src="/save.png" alt="save" width={30} height={30} className="mr-10 

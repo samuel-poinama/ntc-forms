@@ -4,9 +4,82 @@ import { Role } from "@/model/User"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/pages/api/auth/[...nextauth]"
 import { permissions } from "@/lib/checker"
+import FieldType from "@/model/forms/fieldType"
+import Field, { BooleanField, DateField, NumberField, SelectField, TextField } from "@/model/forms/field"
 
 
+function createField(type: string, name: string, isRequired: boolean, field: any) : any {
+    switch (type) {
+        case FieldType.TEXT:
+            const { regex } = field
 
+
+            // secure regex
+            if (typeof regex !== "string") {
+                return { error: "Regex must be a string" }
+            }
+
+            // convert string to regex
+            let regexObj: RegExp
+
+            // check if regex is valid
+            try {
+                regexObj = new RegExp(regex)
+            } catch (e) {
+                return { error: "Invalid regex" }
+            }
+
+
+            return new TextField(name, isRequired, regexObj)
+
+        case FieldType.NUMBER:
+            const { min, max } = field
+
+            // secure min
+            if (typeof min !== "number") {
+                return { error: "min must be a number" }
+            }
+
+            // secure max
+            if (typeof max !== "number") {
+                return { error: "max must be a number" }
+            }
+
+            return new NumberField(name, isRequired, min, max)
+
+        case FieldType.BOOLEAN:
+            return new BooleanField(name, isRequired)
+
+        case FieldType.DATE:
+            const { minDate } = field
+
+            // secure minDate
+            if (typeof minDate !== "number") {
+                return { error: "minDate must be a number" }
+            }
+
+            const date = new Date(minDate)
+            return new DateField(name, isRequired, date)
+            
+        case FieldType.SELECT:
+            const { options, defaultValue } = field
+
+            // secure options
+            if (!Array.isArray(options)) {
+                return { error: "options must be an array" }
+            }
+
+            if (options.length === 0) {
+                return { error: "options can't be empty" }
+            }
+
+            return new SelectField(name, isRequired, options)
+        
+
+        default:
+            return { error: "Invalid type" }
+    }
+}
 
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -79,7 +152,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             return res.status(403).json({ error: "Unauthorized" })
         }
 
-        const { title, description } = req.body
+        const { title, description, fields } = req.body
 
         // secure title
         if (typeof title !== "string") {
@@ -97,10 +170,42 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             return res.status(400).json({ error: "Description must be a string" })
         }
 
-        const form = new Form(title, description)
+        // secure fields
+        if (!Array.isArray(fields)) {
+            return res.status(400).json({ error: "Fields must be an array" })
+        }
+
+        if (fields.length === 0) {
+            return res.status(400).json({ error: "Fields can't be empty" })
+        }
+        
+        const newFields = []
+        for (const field of fields) {
+            const { name, isRequired, type } = field
+            if (typeof name !== "string") {
+                return res.status(400).json({ error: "Field name must be a string" })
+            }
+
+            if (typeof isRequired !== "boolean") {
+                return res.status(400).json({ error: "Field isRequired must be a boolean" })
+            }
+
+            if (typeof type !== "string") {
+                return res.status(400).json({ error: "Field type must be a string" })
+            }
+
+            const nField = createField(type, name, isRequired, field)
+            if (nField.error) {
+                return res.status(400).json(nField)
+            }
+
+            newFields.push(nField)
+        }
+
+        const form = new Form(title, description, newFields)
         await form.insert()
 
-        res.status(201).json({ message: "Form created" })
+        res.status(201).json({ _id: form.id.toString() })
     } else {
         res.status(405).json({ error: "Method not allowed" })
     }
