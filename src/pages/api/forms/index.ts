@@ -21,9 +21,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { id } = req.query
 
     if (id) {
-
         // secure id
-        if (typeof id !== "string") {
+        if (typeof id !== "string" || id === "undefined") {
             return res.status(400).json({ error: "Id must be a string" })
         }
 
