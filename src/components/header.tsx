@@ -1,6 +1,7 @@
-import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/router";
+import Image from "next/image"
+import Link from "next/link"
+
+
 
 export default function Header() {
     return (
@@ -43,5 +44,5 @@ export default function Header() {
                 </div>
             </header>
         </>
-    );
+    )
 }

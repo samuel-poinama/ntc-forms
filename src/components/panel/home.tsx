@@ -10,7 +10,6 @@ export default function Home() {
     const fetchForms = async () => {
         const response = await fetch("/api/forms/preview")
         const data = await response.json()
-        console.log(data)
         setFormsInfos(data)
     }
 
@@ -137,5 +136,5 @@ export default function Home() {
                 </div>
             </div>
         </div>
-    );
+    )
 }

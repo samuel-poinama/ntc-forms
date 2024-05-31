@@ -68,8 +68,6 @@ export class User {
     }
 
     public async update() : Promise<boolean> {
-        console.log(this._id)
-        console.log(await collection.findOne({_id: this._id}))
         const result = await collection.updateOne({_id: this._id} , {$set: this.toJson()})
         return result.modifiedCount > 0
     }

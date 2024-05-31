@@ -6,7 +6,7 @@ export default function Popup({children, error, isVisible, hidePopup, save }:
 ) {
 
 
-    if (!isVisible) return null;
+    if (!isVisible) return null
 
     return (
         <div className="fixed inset-0 flex items-center justify-center z-50 backdrop-blur-xl">
@@ -25,24 +25,7 @@ export default function Popup({children, error, isVisible, hidePopup, save }:
                 </div>
                 { error && <div className="text-red-500 text-center">{error}</div> }
                 {children}
-                {/*
-                <div className="mt-0 flex justify-center">
-                    <form>
-                        <select
-                            id="role"
-                            name="userType"
-                            className="text-gray-900 form-control w-4/5 text-center border border-yellow-400 p-4 mx-4 rounded-full"
-                        >
-                            <option value="" disabled selected>
-                                Please select user role
-                            </option>
-                            <option value="user">User</option>
-                            <option value="admin">Admin</option>
-                        </select>
-                    </form>
-                </div>
-                */}
             </div>
         </div>
-    );
+    )
 }

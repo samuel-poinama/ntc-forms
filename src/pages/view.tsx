@@ -1,75 +1,69 @@
-import Date from "@/components/panel/form/date";
-import Text from "@/components/panel/form/text";
-import Select from "@/components/panel/form/select";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import Number from "@/components/panel/form/number";
-import FiledPopUp from "@/components/panel/form/popup/field-popup";
-import Link from "next/link";
+import Date from "@/components/panel/form/date"
+import Text from "@/components/panel/form/text"
+import Select from "@/components/panel/form/select"
+import { useRouter } from "next/router"
+import { useEffect, useState } from "react"
+import Number from "@/components/panel/form/number"
+import FiledPopUp from "@/components/panel/form/popup/field-popup"
+import Link from "next/link"
 
 export default function View() {
-  const router = useRouter();
-  const { id, edit, title, description } = router.query;
+  const router = useRouter()
+  const { id, edit, title, description } = router.query
 
-  const [form, setForm] = useState({} as any);
-  const [field, setField] = useState({ isRequired: false } as any);
-  const [error, setError] = useState("");
-  const [isVisible, setIsVisible] = useState(false);
+  const [form, setForm] = useState({} as any)
+  const [field, setField] = useState({ isRequired: false } as any)
+  const [error, setError] = useState("")
+  const [isVisible, setIsVisible] = useState(false)
 
   const fetchForm = async () => {
 
-    const res = await fetch(`/api/forms?id=${id}`);
+    const res = await fetch(`/api/forms?id=${id}`)
     let newForm: any = {}
     try {
-      newForm = await res.json();
+      newForm = await res.json()
     } catch (error) {
-      newForm = { error: "Form not found" };
+      newForm = { error: "Form not found" }
     }
 
-    setForm(newForm);
-  };
+    setForm(newForm)
+  }
 
   const fetchNewForm = async () => {
-    console.log(form);
     const res = await fetch("/api/forms", {
       method: "POST",
       body: JSON.stringify(form),
       headers: {
         "Content-Type": "application/json",
       },
-    });
+    })
 
-    const data = await res.json();
-    console.log(data);
+    const data = await res.json()
     if (data.error) {
-      console.log(data.error);
-      setError(data.error);
+      setError(data.error)
     } else {
-      console.log(data);
-      router.push(`/view?id=${data._id}`);
+      router.push(`/view?id=${data._id}`)
     }
-  };
+  }
 
   const show = () => {
-    setIsVisible(!isVisible);
+    setIsVisible(!isVisible)
   }
 
   const addField = () => {
-    console.log(field);
-    setForm({ ...form, fields: [...form.fields, field] });
-    console.log(form);
-    setField({ isRequired: false });
-    show();
-  };
+    setForm({ ...form, fields: [...form.fields, field] })
+    setField({ isRequired: false })
+    show()
+  }
 
   useEffect(() => {
     if (id && edit !== 'true')
-      fetchForm();
+      fetchForm()
     else if (title && description)
-      setForm({ title, description, fields: [] });
+      setForm({ title, description, fields: [] })
     else
-      setForm({ error: "Form not found" });
-  }, [id, edit, title, description]);
+      setForm({ error: "Form not found" })
+  }, [id, edit, title, description])
 
   if (form != undefined && Object.keys(form).length !== 0 && !form.error) {
     return (
@@ -142,6 +136,6 @@ export default function View() {
             </div>
           </div>
         </div>
-      );
+      )
     }
 }

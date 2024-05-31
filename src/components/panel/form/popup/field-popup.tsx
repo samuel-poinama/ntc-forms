@@ -1,6 +1,5 @@
 import Popup from "@/components/popup"
-import { ReactNode, useEffect, useState } from "react"
-import Text from "../text"
+import { useEffect, useState } from "react"
 import TextPopup from "./text-popup"
 import NumberPopup from "./number-popup"
 import DatePopup from "./date-popup"

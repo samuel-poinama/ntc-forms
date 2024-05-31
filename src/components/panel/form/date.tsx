@@ -12,5 +12,5 @@ export default function Date( { field } : { field: any }) {
                 <input type="date" className="custom-date w-full max-w-xs border-b-2 border-black p-2 focus:outline-none" />
             </div>
         </div>
-    );
+    )
 }

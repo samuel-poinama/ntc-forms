@@ -25,5 +25,5 @@ export default function NumberPopup({ field, setField }: { field: any, setField:
             }} />
         </div>
     </div>
-  );
+  )
 }

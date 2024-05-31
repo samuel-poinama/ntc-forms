@@ -16,7 +16,6 @@ export default function Forms() {
     const fetchForms = async () => {
         const res = await fetch('/api/forms')
         const newForms = await res.json()
-        console.log(newForms)
         setForms(newForms)
     }
 

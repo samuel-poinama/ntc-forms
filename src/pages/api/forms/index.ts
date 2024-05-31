@@ -5,7 +5,7 @@ import { getServerSession } from "next-auth"
 import { authOptions } from "@/pages/api/auth/[...nextauth]"
 import { permissions } from "@/lib/checker"
 import FieldType from "@/model/forms/fieldType"
-import Field, { BooleanField, DateField, NumberField, SelectField, TextField } from "@/model/forms/field"
+import { BooleanField, DateField, NumberField, SelectField, TextField } from "@/model/forms/field"
 
 
 function createField(type: string, name: string, isRequired: boolean, field: any) : any {

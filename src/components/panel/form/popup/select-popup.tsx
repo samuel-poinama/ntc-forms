@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react'
 
 
 
@@ -36,5 +36,5 @@ export default function SelectPopup({ field, setField }: { field: any, setField:
             </div>
             </div>
         </div>
-  );
+  )
 }

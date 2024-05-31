@@ -1,4 +1,3 @@
-import { stat } from "fs"
 import { useSession } from "next-auth/react"
 import Image from "next/image"
 import { useEffect, useState } from "react"
@@ -58,5 +57,5 @@ export default function Header() {
                 </div>
             </div>
         </div>
-    );
+    )
 }

@@ -11,5 +11,5 @@ export default function DatePopup({ field, setField }: { field: any, setField: (
         border-gray-300 py-2 px-3 text-gray-700"
         onChange={(e: any) => { setField({ ...field, min: e.target.value }) }} />
       </div>
-    );
+    )
   }

@@ -1,7 +1,7 @@
-import Footer from '../footer';
-import Header from './header';
-import Navigation from './navigation';
-import { ReactNode } from 'react';
+import Footer from '../footer'
+import Header from './header'
+import Navigation from './navigation'
+import { ReactNode } from 'react'
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
@@ -15,6 +15,6 @@ export default function Layout({ children }: { children: ReactNode }) {
       </div>
       <Footer />
     </div>
-  );
+  )
 }
  

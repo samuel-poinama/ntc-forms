@@ -10,5 +10,5 @@ export default function Number({ field }: { field: any }) {
             <input type="number" className="number w-full border-b border-gray-300 
             focus:outline-none focus:border-blue-500" id="number" placeholder="write number here..." />
         </div>
-    );
+    )
 }

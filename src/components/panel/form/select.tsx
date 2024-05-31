@@ -18,5 +18,5 @@ export default function Select( { field } : { field: { name: string, required: b
                 ))}
             </div>
         </div>
-    );
+    )
 }
