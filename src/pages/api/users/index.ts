@@ -56,7 +56,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     }
 
                     target.role = newRole
-                    console.log(target.id)
                     const result = await target.update()
 
                     if (!result) {
@@ -103,7 +102,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             return res.status(400).json({ error: "Role must be a string" })
         }
 
-        console.log(role)
         const newRole = Role[role as keyof typeof Role]
 
         if (newRole === undefined) {

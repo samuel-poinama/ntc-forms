@@ -15,13 +15,14 @@ export default class Form {
     constructor(
         title: string,
         description: string,
+        fields: Field[],
         id?: ObjectId,
-        fields?: Field[]
+        
     ) {
         this._id = id ? id : new ObjectId()
         this._title = title
         this._description = description
-        this._fields = fields ? fields : [] 
+        this._fields = fields
     }
 
     get id(): ObjectId {
@@ -46,6 +47,10 @@ export default class Form {
 
     get fields(): Field[] {
         return this._fields
+    }
+
+    set fields(fields: Field[]) {
+        this._fields = fields
     }
 
     public addField(field: Field) {
@@ -133,7 +138,7 @@ export default class Form {
     }
 
     public static fromJson(json: any): Form {
-        return new Form(json.title, json.description,json._id , json.fields.map((field: any) => Field.fromJson(field)))
+        return new Form(json.title, json.description, json.fields.map((field: any) => Field.fromJson(field)), json._id)
     }
 
 }
