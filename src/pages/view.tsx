@@ -4,38 +4,45 @@ import Select from "@/components/panel/form/select";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Number from "@/components/panel/form/number";
+import Link from "next/link";
 
 export default function View() {
   const router = useRouter();
-  const { id } = router.query;
+  const { id, edit } = router.query;
 
   const [form, setForm] = useState({} as any);
 
   const fetchForm = async () => {
 
     const res = await fetch(`/api/forms?id=${id}`);
-    const newForm = await res.json();
+    let newForm: any = {}
+    try {
+      newForm = await res.json();
+    } catch (error) {
+      newForm = { error: "Form not found" };
+    }
+
     setForm(newForm);
   };
 
   useEffect(() => {
     fetchForm();
-  }, [id]);
+  }, [id, edit]);
 
   if (form != undefined && Object.keys(form).length !== 0 && !form.error) {
     return (
       <div className="flex justify-center items-center h-screen">
           <div className="border border-gray-300 rounded-lg p-4 bg-white w-[100%] h-[100%]">
             <div className="flex justify-end items-center mb-4 space-x-2">
+              { edit && edit === 'true' &&
               <div className="btn bg-yellow-500 text-white py-4 px-8 text-lg rounded-lg">
                 +
               </div>
-              <div className="btn bg-yellow-500 text-white py-4 px-8 text-lg rounded-lg">
+              }
+              <Link className="btn bg-yellow-500 text-white py-4 px-8 text-lg rounded-lg"
+                  href={ edit && edit === 'true' ? "panel/forms" : "/"}>
                 x
-              </div>
-              <div className="btn bg-yellow-500 text-white py-4 px-8 text-lg rounded-lg">
-                ✔
-              </div>
+              </Link>
             </div>
             <div className="flex justify-center items-center mb-4 flex-col">
               <h1 className="text-4xl text-yellow-500 font-bold">{form.title}</h1>
