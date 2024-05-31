@@ -2,9 +2,11 @@ import Image from "next/image"
 import { useEffect, useState } from "react"
 import Form from "./form/form"
 import Popup from "../popup"
+import { useRouter } from "next/router"
 
 
 export default function Forms() {
+    const router = useRouter()
     const [forms, setForms] = useState([])
     const [isNewForm, setIsNewForm] = useState(false)
     const [error, setError] = useState('')
@@ -28,22 +30,7 @@ export default function Forms() {
 
 
     const saveForm = async () => {
-        const res = await fetch('/api/forms', {
-            method: 'POST',
-            body: JSON.stringify({ title, description }),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        const data = await res.json()
-        if (data.error) {
-            setError(data.error)
-        } else {
-            setTitle('')
-            setDescription('')
-            fetchForms()
-            showIsNewForm()
-        }
+        router.push(`/view?edit=true&title=${title}&description=${description}`)
     }
 
 
