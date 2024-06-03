@@ -68,6 +68,7 @@ export default function View() {
   if (form != undefined && Object.keys(form).length !== 0 && !form.error) {
     return (
       <div className="flex justify-center items-center h-screen">
+        { error && <div className="text-red-500 text-lg">{error}</div> }
           <div className="border border-gray-300 rounded-lg p-4 bg-white w-[100%] h-[100%]">
             <FiledPopUp field={field} setField={setField} isVisible={isVisible} error={""} hidePopup={show} save={addField} />
             <div className="flex justify-end items-center mb-4 space-x-2">
