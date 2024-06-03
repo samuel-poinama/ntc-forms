@@ -85,16 +85,17 @@ function createField(type: string, name: string, isRequired: boolean, field: any
             console.log(minCheck, maxCheck, checkOptions)
 
             // secure min
-            minCheck = parseInt(minCheck)
-
-            // check if min is a number
-            if (isNaN(minCheck)) {
-                return { error: "min must be a number" }
-            }
-            // secure max
-            maxCheck = parseInt(maxCheck)
-            if (isNaN(maxCheck)) {
+            try {
+                maxCheck = Number(maxCheck)
+            } catch (e) {
                 return { error: "max must be a number" }
+            }
+
+            // secure max
+            try {
+                minCheck = Number(minCheck)
+            } catch (e) {
+                return { error: "min must be a number" }
             }
 
             // check if min is less than max

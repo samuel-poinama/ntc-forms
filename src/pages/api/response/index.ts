@@ -85,13 +85,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 if (response.fields[i].name === entry.name) {
                     response.fields[i].content = entry.content
                     console.log(response.fields[i].restriction())
-                    fieldError = !response.fields[i].restriction() ? { error: "Invalid field content", 
-                    field: response.fields[i].name } : null
+                    fieldError = response.fields[i].restriction()
                     break
                 }
             }
             
-            if (fieldError) {
+            if (fieldError !== true) {
                 return res.status(400).json(fieldError)
             }
         }

@@ -41,7 +41,7 @@ abstract class Field {
         return this._required && this._content !== undefined
     }
 
-    abstract restriction(): boolean
+    abstract restriction(): true | { error: string, field: string }
 
 
     abstract toJson(): any
@@ -87,12 +87,12 @@ export class TextField extends Field {
         }
     }
 
-    public restriction(): boolean {
+    public restriction(): true | { error: string, field: string } {
         if (typeof this.content !== 'string') {
-            return false
+            return { error: "content must be a string", field: this.name }
         }
 
-        return this._regex.test(this.content)
+        return this._regex.test(this.content) ? true : { error: "invalid content", field: this.name }
     }
 
     public toJson(): any {
@@ -130,15 +130,15 @@ export class NumberField extends Field {
         return this._max
     }
 
-    public restriction(): boolean {
+    public restriction(): true | { error: string, field: string } {
         try {
             this.content = Number(this.content)
         } catch (e) {
-            return false
+            return { error: "content must be a number", field: this.name }
         }
         
-        console.log(this._min, this._max, this.content)
-        return this.content >= this._min && this.content <= this._max
+         return (this.content >= this._min && this.content <= this._max) ? true : 
+            { error: "invalid content", field: this.name }
     }
 
     public toJson(): any {
@@ -171,15 +171,15 @@ export class DateField extends Field {
         return this._min
     }
 
-    public restriction(): boolean {
+    public restriction(): true | { error: string, field: string } {
         if (typeof this.content === 'number') {
             this.content = new Date(this.content)
         }
 
         if (!(this.content instanceof Date)) {
-            return false
+            return { error: "content must be a date", field: this.name }
         }
-        return this.content >= this._min
+        return (this.content >= this._min) ? true : { error: "invalid content", field: this.name }
     }
 
     public toJson(): any {
@@ -203,13 +203,14 @@ export class BooleanField extends Field {
         super(name, required, FieldType.BOOLEAN, content)
     }
 
-    public restriction(): boolean {
+    public restriction(): true | { error: string, field: string } {
         try {
             this.content = Boolean(this.content)
         } catch (e) {
-            return false
+            return { error: "content must be a boolean", field: this.name }
         }
-        return !this.required || this.content
+        return (!this.required || this.content) ? true : 
+            { error: "content must be true", field: this.name }
     }
 
     public toJson(): any {
@@ -240,8 +241,11 @@ export class SelectField extends Field {
         return this._options
     }
 
-    public restriction(): boolean {
-        return this._options.includes(this.content)
+    public restriction(): true | { error: string, field: string } {
+        if (!this._options.includes(this.content)) {
+            return { error: "invalid content", field: this.name }
+        }
+        return true
     }
 
     public toJson(): any {
@@ -289,15 +293,18 @@ export class CheckBoxField extends Field {
         return this._options
     }
 
-    public restriction(): boolean {
-        console.log(this.content)
-        if (this.content.length < this._min || this.content.length > this._max) {
-            return false
+    public restriction(): true | { error: string, field: string } {
+        if (this.content.length < this._min) {
+            return { error: "content must have at least " + this._min + " elements", field: this.name }
+        }
+
+        if (this.content.length > this._max) {
+            return { error: "content must have at most " + this._max + " elements", field: this.name }
         }
         
         for (const option of this.content) {
             if (!this._options.includes(option)) {
-                return false
+                return { error: "invalid option " + option, field: this.name }
             }
         }
 
