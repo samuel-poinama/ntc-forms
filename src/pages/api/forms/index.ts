@@ -62,7 +62,7 @@ function createField(type: string, name: string, isRequired: boolean, field: any
             return new DateField(name, isRequired, date)
             
         case FieldType.SELECT:
-            const { options, defaultValue } = field
+            const { options } = field
 
             // secure options
             if (!Array.isArray(options)) {

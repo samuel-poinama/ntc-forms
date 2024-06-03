@@ -84,6 +84,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
                 if (response.fields[i].name === entry.name) {
                     response.fields[i].content = entry.content
+                    console.log(response.fields[i].restriction())
                     fieldError = !response.fields[i].restriction() ? { error: "Invalid field content", 
                     field: response.fields[i].name } : null
                     break
@@ -99,7 +100,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             res.status(400).json({ error: "all fields must be filled" })
         }
 
-        response.insert()
+        const result = await response.insert()
+        if (!result) {
+            return res.status(500).json({ error: "Failed to insert response" })
+        }
 
         res.status(200).json(response.toJson())
     } else {

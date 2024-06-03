@@ -58,7 +58,7 @@ abstract class Field {
             case FieldType.DATE:
                 return new DateField(json.name, json.required, json.min, undefined)
             case FieldType.SELECT:
-                return new SelectField(json.name, json.required, json.options, json.options[0])
+                return new SelectField(json.name, json.required, json.options, undefined)
             default:
                 throw new Error("Invalid type")
         }
@@ -129,10 +129,13 @@ export class NumberField extends Field {
     }
 
     public restriction(): boolean {
-        if (typeof this.content !== 'number') {
+        try {
+            this.content = Number(this.content)
+        } catch (e) {
             return false
         }
-
+        
+        console.log(this._min, this._max, this.content)
         return this.content >= this._min && this.content <= this._max
     }
 
@@ -174,7 +177,6 @@ export class DateField extends Field {
         if (!(this.content instanceof Date)) {
             return false
         }
-
         return this.content >= this._min
     }
 
@@ -200,7 +202,12 @@ export class BooleanField extends Field {
     }
 
     public restriction(): boolean {
-        return typeof this.content === 'boolean'
+        try {
+            this.content = Boolean(this.content)
+        } catch (e) {
+            return false
+        }
+        return !this.required || this.content
     }
 
     public toJson(): any {
