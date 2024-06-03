@@ -7,6 +7,7 @@ import Number from "@/components/panel/form/number"
 import FiledPopUp from "@/components/panel/form/popup/field-popup"
 import Link from "next/link"
 import Boolean from "@/components/panel/form/bool"
+import CheckBox from "@/components/panel/form/checkbox"
 
 export default function View() {
   const router = useRouter()
@@ -153,6 +154,13 @@ export default function View() {
                       return (
                         <Date
                         field={field}
+                        />
+                      )
+                    case "CHECKBOX":
+                      return (
+                        <CheckBox
+                          key={index}
+                          field={field}
                         />
                       )
                   }

@@ -57,6 +57,8 @@ abstract class Field {
                 return new BooleanField(json.name, json.required, undefined)
             case FieldType.DATE:
                 return new DateField(json.name, json.required, json.min, undefined)
+            case FieldType.CHECKBOX:
+                return new CheckBoxField(json.name, json.required, json.min, json.max, json.options, undefined)
             case FieldType.SELECT:
                 return new SelectField(json.name, json.required, json.options, undefined)
             default:
@@ -251,4 +253,68 @@ export class SelectField extends Field {
             options: this.options
         }
     }
+}
+
+
+export class CheckBoxField extends Field {
+
+    private _min: number
+    private _max: number
+    private _options: string[]
+    
+    constructor(
+        name: string,
+        required: boolean,
+        min: number,
+        max: number,
+        options: string[],
+        content?: string[]
+    ) {
+        super(name, required, FieldType.CHECKBOX, content)
+        this._min = min
+        this._max = max
+        this._options = options
+        this.content = content ? content : []
+    }
+
+    get min(): number {
+        return this._min
+    }
+
+    get max(): number {
+        return this._max
+    }
+
+    get options(): string[] {
+        return this._options
+    }
+
+    public restriction(): boolean {
+        console.log(this.content)
+        if (this.content.length < this._min || this.content.length > this._max) {
+            return false
+        }
+        
+        for (const option of this.content) {
+            if (!this._options.includes(option)) {
+                return false
+            }
+        }
+
+        return true
+    }
+
+    public toJson(): any {
+        return {
+            name: this.name,
+            required: this.required,
+            type: this.type,
+            content: this.content,
+            min: this.min,
+            max: this.max,
+            options: this.options
+        }
+    }
+
+
 }

@@ -5,7 +5,7 @@ import { getServerSession } from "next-auth"
 import { authOptions } from "@/pages/api/auth/[...nextauth]"
 import { permissions } from "@/lib/checker"
 import FieldType from "@/model/forms/fieldType"
-import { BooleanField, DateField, NumberField, SelectField, TextField } from "@/model/forms/field"
+import { BooleanField, CheckBoxField, DateField, NumberField, SelectField, TextField } from "@/model/forms/field"
 
 
 function createField(type: string, name: string, isRequired: boolean, field: any) : any {
@@ -45,6 +45,11 @@ function createField(type: string, name: string, isRequired: boolean, field: any
                 return { error: "max must be a number" }
             }
 
+            // check if min is less than max
+            if (min > max) {
+                return { error: "min must be less than max" }
+            }
+
             return new NumberField(name, isRequired, min, max)
 
         case FieldType.BOOLEAN:
@@ -75,6 +80,45 @@ function createField(type: string, name: string, isRequired: boolean, field: any
 
             return new SelectField(name, isRequired, options)
         
+        case FieldType.CHECKBOX:
+            let { min: minCheck, max: maxCheck, options: checkOptions } = field
+            console.log(minCheck, maxCheck, checkOptions)
+
+            // secure min
+            minCheck = parseInt(minCheck)
+
+            // check if min is a number
+            if (isNaN(minCheck)) {
+                return { error: "min must be a number" }
+            }
+            // secure max
+            maxCheck = parseInt(maxCheck)
+            if (isNaN(maxCheck)) {
+                return { error: "max must be a number" }
+            }
+
+            // check if min is less than max
+            if (minCheck > maxCheck) {
+                return { error: "min must be less than max" }
+            }
+
+            // secure options
+            if (!Array.isArray(checkOptions)) {
+                return { error: "options must be an array" }
+            }
+
+            if (checkOptions.length === 0) {
+                return { error: "options can't be empty" }
+            }
+            if (checkOptions.length < minCheck) {
+                return { error: "min must be less than options length" }
+            }
+
+            if (checkOptions.length > maxCheck) {
+                return { error: "max must be greater than options length" }
+            }
+
+            return new CheckBoxField(name, isRequired, minCheck, maxCheck, checkOptions)
 
         default:
             return { error: "Invalid type" }

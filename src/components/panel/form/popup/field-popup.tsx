@@ -4,6 +4,7 @@ import TextPopup from "./text-popup"
 import NumberPopup from "./number-popup"
 import DatePopup from "./date-popup"
 import SelectPopup from "./select-popup"
+import CheckBoxPopup from "./checkbox-popup"
 
 
 
@@ -28,6 +29,8 @@ export default function fieldPopup({ field, setField, error, isVisible, hidePopu
                     return <DatePopup field={field} setField={setField} />
                 case "SELECT":
                     return <SelectPopup field={field} setField={setField} />
+                case "CHECKBOX":
+                    return <CheckBoxPopup field={field} setField={setField} />
             }
                 
         }
