@@ -47,7 +47,7 @@ export default function fieldPopup({ field, setField, error, isVisible, hidePopu
                     <div className="checkbox-container mb-6">
                         <label htmlFor="is-required" className="text-gray-700">Is required</label>
                         <input type="checkbox" id="is-required" name="is-required" className="ml-2"
-                            onChange={(e) => setField({ ...field, isRequired: e.target.checked })}
+                            onChange={(e) => setField({ ...field, required: e.target.checked })}
                         />
                     </div>
                     <div className="mb-6">

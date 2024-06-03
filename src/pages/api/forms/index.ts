@@ -8,7 +8,7 @@ import FieldType from "@/model/forms/fieldType"
 import { BooleanField, CheckBoxField, DateField, NumberField, SelectField, TextField } from "@/model/forms/field"
 
 
-function createField(type: string, name: string, isRequired: boolean, field: any) : any {
+function createField(type: string, name: string, required: boolean, field: any) : any {
     switch (type) {
         case FieldType.TEXT:
             const { regex } = field
@@ -30,7 +30,7 @@ function createField(type: string, name: string, isRequired: boolean, field: any
             }
 
 
-            return new TextField(name, isRequired, regexObj)
+            return new TextField(name, required, regexObj)
 
         case FieldType.NUMBER:
             let { min, max } = field
@@ -54,10 +54,10 @@ function createField(type: string, name: string, isRequired: boolean, field: any
                 return { error: "min must be less than max" }
             }
 
-            return new NumberField(name, isRequired, min, max)
+            return new NumberField(name, required, min, max)
 
         case FieldType.BOOLEAN:
-            return new BooleanField(name, isRequired)
+            return new BooleanField(name, required)
 
         case FieldType.DATE:
             let { minDate } = field
@@ -70,7 +70,7 @@ function createField(type: string, name: string, isRequired: boolean, field: any
             }
 
             const date = new Date(minDate)
-            return new DateField(name, isRequired, date)
+            return new DateField(name, required, date)
             
         case FieldType.SELECT:
             const { options } = field
@@ -84,7 +84,7 @@ function createField(type: string, name: string, isRequired: boolean, field: any
                 return { error: "options can't be empty" }
             }
 
-            return new SelectField(name, isRequired, options)
+            return new SelectField(name, required, options)
         
         case FieldType.CHECKBOX:
             let { min: minCheck, max: maxCheck, options: checkOptions } = field
@@ -126,7 +126,7 @@ function createField(type: string, name: string, isRequired: boolean, field: any
                 return { error: "max must be greater than options length" }
             }
 
-            return new CheckBoxField(name, isRequired, minCheck, maxCheck, checkOptions)
+            return new CheckBoxField(name, required, minCheck, maxCheck, checkOptions)
 
         default:
             return { error: "Invalid type" }
@@ -233,20 +233,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         
         const newFields = []
         for (const field of fields) {
-            const { name, isRequired, type } = field
+            const { name, required, type } = field
             if (typeof name !== "string") {
                 return res.status(400).json({ error: "Field name must be a string" })
             }
 
-            if (typeof isRequired !== "boolean") {
-                return res.status(400).json({ error: "Field isRequired must be a boolean" })
+            if (typeof required !== "boolean") {
+                return res.status(400).json({ error: "Field required must be a boolean" })
             }
 
             if (typeof type !== "string") {
                 return res.status(400).json({ error: "Field type must be a string" })
             }
 
-            const nField = createField(type, name, isRequired, field)
+            const nField = createField(type, name, required, field)
             if (nField.error) {
                 return res.status(400).json(nField)
             }

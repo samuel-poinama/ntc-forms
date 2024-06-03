@@ -28,7 +28,7 @@ export default function View() {
     } catch (error) {
       newForm = { error: "Form not found" }
     }
-
+    console.log(newForm)
     setForm(newForm)
   }
 
@@ -75,8 +75,13 @@ export default function View() {
 
   const addField = () => {
     setForm({ ...form, fields: [...form.fields, field] })
-    setField({ isRequired: false })
+    setField({ required: false })
     show()
+  }
+
+  const removeField = (index: number) => {
+    const newFields = form.fields.filter((field: any, i: number) => i !== index)
+    setForm({ ...form, fields: newFields })
   }
 
   useEffect(() => {
@@ -130,6 +135,8 @@ export default function View() {
                         <Text
                           key={index}
                           field={field}
+                          edit={edit}
+                          onRemove={() => removeField(index)}
                         />
                       )
                     case "NUMBER":
@@ -137,6 +144,8 @@ export default function View() {
                         <Number
                           key={index}
                           field={field}
+                          edit={edit}
+                          onRemove={() => removeField(index)}
                         />
                       )
                     case "BOOLEAN":
@@ -144,6 +153,8 @@ export default function View() {
                         <Boolean
                           key={index}
                           field={field}
+                          edit={edit}
+                          onRemove={() => removeField(index)}
                         />
                       )
                     case "SELECT":
@@ -151,12 +162,16 @@ export default function View() {
                         <Select
                           key={index}
                           field={field}
+                          edit={edit}
+                          onRemove={() => removeField(index)}
                         />
                       )
                     case "DATE":
                       return (
                         <Date
                         field={field}
+                        edit={edit}
+                        onRemove={() => removeField(index)}
                         />
                       )
                     case "CHECKBOX":
@@ -164,6 +179,8 @@ export default function View() {
                         <CheckBox
                           key={index}
                           field={field}
+                          edit={edit}
+                          onRemove={() => removeField(index)}
                         />
                       )
                   }
