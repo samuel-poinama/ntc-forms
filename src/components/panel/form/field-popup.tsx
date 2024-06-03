@@ -1,10 +1,10 @@
 import Popup from "@/components/popup"
 import { useEffect, useState } from "react"
-import TextPopup from "./text-popup"
-import NumberPopup from "./number-popup"
-import DatePopup from "./date-popup"
-import SelectPopup from "./select-popup"
-import CheckBoxPopup from "./checkbox-popup"
+import TextPopup from "./popup/text-popup"
+import NumberPopup from "./popup/number-popup"
+import DatePopup from "./popup/date-popup"
+import SelectPopup from "./popup/select-popup"
+import CheckBoxPopup from "./popup/checkbox-popup"
 
 
 

@@ -1,8 +1,30 @@
+import Content from "../content";
 
 
 
 
 
+
+export default function CheckBox( { field } :
+    { field: { name: string, content: string[], required: boolean, options: string[] }}) {
+
+    return (
+        <Content field={field}>
+            <form className="flex justify-evenly items-center">
+                {field.options.map((option, index) => (
+                    <div className="flex items-center p-3">
+                        <input type="checkbox" name="option" value={option} onChange={(e) => {
+                            field.content.push(e.target.value)
+                        }} />
+                        <p className="pl-2">{option}</p>
+                    </div>
+                ))}
+            </form>
+        </Content>
+    )
+}
+
+/*
 export default function CheckBox( { field } : 
     { field: { name: string, content: string[], required: boolean, options: string[] }}) {
 
@@ -23,4 +45,4 @@ export default function CheckBox( { field } :
             </form>
         </div>
     )
-}
+}*/

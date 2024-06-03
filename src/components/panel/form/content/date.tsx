@@ -1,7 +1,19 @@
+import Content from "../content";
 
 
 
 
+
+export default function DateView( { field } : { field: any }) {
+    return (
+        <Content field={field}>
+            <input type="date" className="custom-date w-full max-w-xs border-b-2 border-black p-2 focus:outline-none"
+            onChange={(e) => field.content = ((new Date(e.target.value)).getTime())}
+            />
+        </Content>
+    )
+}
+/*
 export default function DateView( { field } : { field: any }) {
     return (
         <div className="flex flex-wrap justify-between items-center gap-4 my-5">
@@ -15,4 +27,4 @@ export default function DateView( { field } : { field: any }) {
             </div>
         </div>
     )
-}
+}*/

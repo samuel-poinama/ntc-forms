@@ -33,15 +33,19 @@ function createField(type: string, name: string, isRequired: boolean, field: any
             return new TextField(name, isRequired, regexObj)
 
         case FieldType.NUMBER:
-            const { min, max } = field
+            let { min, max } = field
 
             // secure min
-            if (typeof min !== "number") {
+            try {
+                min = Number(min)
+            } catch (e) {
                 return { error: "min must be a number" }
             }
 
             // secure max
-            if (typeof max !== "number") {
+            try {
+                max = Number(max)
+            } catch (e) {
                 return { error: "max must be a number" }
             }
 
@@ -56,10 +60,12 @@ function createField(type: string, name: string, isRequired: boolean, field: any
             return new BooleanField(name, isRequired)
 
         case FieldType.DATE:
-            const { minDate } = field
+            let { minDate } = field
 
             // secure minDate
-            if (typeof minDate !== "number") {
+            try {
+                minDate = Number(minDate)
+            } catch (e) {
                 return { error: "minDate must be a number" }
             }
 
@@ -92,6 +98,7 @@ function createField(type: string, name: string, isRequired: boolean, field: any
             }
 
             // secure max
+            console.log(minCheck)
             try {
                 minCheck = Number(minCheck)
             } catch (e) {
