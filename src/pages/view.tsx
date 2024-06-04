@@ -2,17 +2,13 @@ import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import FiledPopUp from "@/components/panel/form/field-popup"
-import Text from "@/components/panel/form/content/text"
-import Number from "@/components/panel/form/content/number"
-import Boolean from "@/components/panel/form/content/bool"
-import Select from "@/components/panel/form/content/select"
-import Date from "@/components/panel/form/content/date"
-import CheckBox from "@/components/panel/form/content/checkbox"
+import Viewer from "@/components/panel/viewer"
+import { reduceString } from "@/lib/parser"
 
 
 export default function View() {
   const router = useRouter()
-  const { id, edit, title, description } = router.query
+  const { id, edit, title, description, answer } = router.query
 
   const [form, setForm] = useState({} as any)
   const [field, setField] = useState({ isRequired: false } as any)
@@ -28,7 +24,6 @@ export default function View() {
     } catch (error) {
       newForm = { error: "Form not found" }
     }
-    console.log(newForm)
     setForm(newForm)
   }
 
@@ -52,7 +47,6 @@ export default function View() {
 
 
   const fetchCreateResponse = async () => {
-    console.log(form.fields)
     const res = await fetch("/api/response", {
       method: "POST",
       body: JSON.stringify({ id: id, fields: form.fields }),
@@ -67,6 +61,18 @@ export default function View() {
     } else {
       router.push(`/`)
     }
+  }
+
+  const fetchResponse = async () => {
+    const res = await fetch(`/api/response?id=${id}`)
+    const data = await res.json()
+    
+    if (data.error) {
+      router.push("/404")
+    } else {
+      setForm(data)
+    }
+
   }
 
   const show = () => {
@@ -85,8 +91,10 @@ export default function View() {
   }
 
   useEffect(() => {
-    if (id && edit !== 'true')
+    if (id && edit !== 'true' && answer !== 'true')
       fetchForm()
+    else if (id && edit === 'false' && answer === 'true')
+      fetchResponse()
     else if (title && description)
       setForm({ title, description, fields: [] })
     else
@@ -120,71 +128,12 @@ export default function View() {
             <div className="flex justify-center items-center mb-4 flex-col">
               <h1 className="text-4xl text-yellow-500 font-bold">{form.title}</h1>
               <p className="text-lg text-gray-500">
-                {form.description.length > 20
-                  ? form.description.substring(0, 20) + "..."
-      : form.description}
+                { reduceString(form.description, 50) }
               </p>
             </div>
 
             <div className="overflow-y-auto h-[70vh]">
-            {form.fields.map((field: any, index: number) => {
-              console.log(field)
-                  switch (field.type) {
-                    case "TEXT":
-                      return (
-                        <Text
-                          key={index}
-                          field={field}
-                          edit={edit}
-                          onRemove={() => removeField(index)}
-                        />
-                      )
-                    case "NUMBER":
-                      return (
-                        <Number
-                          key={index}
-                          field={field}
-                          edit={edit}
-                          onRemove={() => removeField(index)}
-                        />
-                      )
-                    case "BOOLEAN":
-                      return (
-                        <Boolean
-                          key={index}
-                          field={field}
-                          edit={edit}
-                          onRemove={() => removeField(index)}
-                        />
-                      )
-                    case "SELECT":
-                      return (
-                        <Select
-                          key={index}
-                          field={field}
-                          edit={edit}
-                          onRemove={() => removeField(index)}
-                        />
-                      )
-                    case "DATE":
-                      return (
-                        <Date
-                        field={field}
-                        edit={edit}
-                        onRemove={() => removeField(index)}
-                        />
-                      )
-                    case "CHECKBOX":
-                      return (
-                        <CheckBox
-                          key={index}
-                          field={field}
-                          edit={edit}
-                          onRemove={() => removeField(index)}
-                        />
-                      )
-                  }
-                })}
+            <Viewer fields={form.fields} edit={edit} onRemove={removeField} />
 
                 { !edit &&
                   <div className="flex justify-center items-center">

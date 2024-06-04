@@ -27,6 +27,10 @@ export default function Forms() {
         fetchForms()
     }
 
+    const fetchDownload = async (id: string, email: boolean) => {
+        router.push(`/api/response/download?id=${id}&email=${email}`)
+    }
+
 
     const saveForm = async () => {
         router.push(`/view?edit=true&title=${title}&description=${description}`)
@@ -67,7 +71,7 @@ export default function Forms() {
                         
                             <div className="h-[70vh] overflow-auto">
                                 {forms.map((form: any, i) => (
-                                    <Form key={i} form={form} onRemove={removeForm} />
+                                    <Form key={i} form={form} onRemove={removeForm} onDownload={fetchDownload} />
                                 ))}
                             </div>
                         </div>

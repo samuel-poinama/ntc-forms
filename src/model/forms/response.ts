@@ -69,6 +69,11 @@ export default class Response {
         return true
     }
 
+    public async infos(): Promise<any> {
+        const result = await db.collection('reponses_user_title').findOne({ _id: this._id })
+        return result
+    }
+
     static async find(id: string): Promise<Response | null> {
         const response = await collection.findOne({ _id: new ObjectId(id) })
         if (!response) {

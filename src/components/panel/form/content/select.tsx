@@ -1,4 +1,4 @@
-import Content from "../content";
+import Content from "../content"
 
 
 
@@ -12,10 +12,11 @@ export default function Select( { field, edit, onRemove } :
             <form className="flex justify-evenly items-center">
                 {field.options.map((option: string, index: number) => (
                     <div className="flex items-center p-3">
-                        <input type="radio" name="option" value={option} onChange={(e) => {
-                            field.content = e.target.value
-                            console.log(e.target.value)
-                        }} />
+                        <input type="radio" name="option" value={option}
+                            onChange={(e) => field.content = e.target.value }
+                            disabled={edit !== undefined}
+                            checked={edit !== undefined ? field.content === option : undefined}
+                        />
                         <p className="pl-2">{option}</p>
                     </div>
                 ))}

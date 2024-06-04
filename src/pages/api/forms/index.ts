@@ -88,7 +88,6 @@ function createField(type: string, name: string, required: boolean, field: any) 
         
         case FieldType.CHECKBOX:
             let { min: minCheck, max: maxCheck, options: checkOptions } = field
-            console.log(minCheck, maxCheck, checkOptions)
 
             // secure min
             try {
@@ -98,7 +97,6 @@ function createField(type: string, name: string, required: boolean, field: any) 
             }
 
             // secure max
-            console.log(minCheck)
             try {
                 minCheck = Number(minCheck)
             } catch (e) {

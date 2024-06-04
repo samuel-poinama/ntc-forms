@@ -1,6 +1,9 @@
 
 
-
+export function reduceString(str: string, length: number): string {
+    if (!str) return ""
+    return str.length > length ? str.substring(0, length) + "..." : str
+}
 
 
 export function csvFormater(responses: any[]): string {
@@ -13,7 +16,6 @@ export function csvFormater(responses: any[]): string {
     }
 
     csv += "\n"
-    let i = 0
 
     // set content
     for (const response of responses) {

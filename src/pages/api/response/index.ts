@@ -29,7 +29,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
 
         if (req.method === "GET") {
-            return res.status(200).json(response.toJson())
+            const infos = await response.infos()
+            return res.status(200).json(infos)
         } else if (req.method === "DELETE") {
             response.remove()
             return res.status(200).json({ message: "Response deleted" })
@@ -84,7 +85,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
                 if (response.fields[i].name === entry.name) {
                     response.fields[i].content = entry.content
-                    console.log(response.fields[i].restriction())
                     fieldError = response.fields[i].restriction()
                     break
                 }

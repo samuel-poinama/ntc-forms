@@ -9,18 +9,27 @@ export default function TextPopup({field, setField }: { field: any, setField: (f
 
     const setRegex = () => {
         let regex = ""
+        
+        // enable special char (special char is optional)
         if (specialChar) {
             regex += "(?=.*[!@#$%^&*])"
         }
+
+        // enable numbers (numbers are optional)
         if (allowNumbers) {
             regex += "(?=.*[0-9])"
         }
-        if (minNumber > 0) {
-            regex += `(?=.{${minNumber},})`
-        }
+
+        // set min number
+        regex += `.{${minNumber},`
+
+        // set max number
         if (maxNumber > 0) {
-            regex += `(?=.{0,${maxNumber}})`
+            regex += `${maxNumber}}`
+        } else {
+            regex += "}"
         }
+
         return regex
     }
 
