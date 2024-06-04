@@ -41,7 +41,7 @@ abstract class Field {
         return this._required && this._content !== undefined
     }
 
-    abstract restriction(): boolean
+    abstract restriction(): true | { error: string, field: string }
 
 
     abstract toJson(): any
@@ -57,8 +57,10 @@ abstract class Field {
                 return new BooleanField(json.name, json.required, undefined)
             case FieldType.DATE:
                 return new DateField(json.name, json.required, json.min, undefined)
+            case FieldType.CHECKBOX:
+                return new CheckBoxField(json.name, json.required, json.min, json.max, json.options, undefined)
             case FieldType.SELECT:
-                return new SelectField(json.name, json.required, json.options, json.options[0])
+                return new SelectField(json.name, json.required, json.options, undefined)
             default:
                 throw new Error("Invalid type")
         }
@@ -85,12 +87,12 @@ export class TextField extends Field {
         }
     }
 
-    public restriction(): boolean {
+    public restriction(): true | { error: string, field: string } {
         if (typeof this.content !== 'string') {
-            return false
+            return { error: "content must be a string", field: this.name }
         }
 
-        return this._regex.test(this.content)
+        return this._regex.test(this.content) ? true : { error: "invalid content", field: this.name }
     }
 
     public toJson(): any {
@@ -128,12 +130,15 @@ export class NumberField extends Field {
         return this._max
     }
 
-    public restriction(): boolean {
-        if (typeof this.content !== 'number') {
-            return false
+    public restriction(): true | { error: string, field: string } {
+        try {
+            this.content = Number(this.content)
+        } catch (e) {
+            return { error: "content must be a number", field: this.name }
         }
-
-        return this.content >= this._min && this.content <= this._max
+        
+         return (this.content >= this._min && this.content <= this._max) ? true : 
+            { error: "invalid content", field: this.name }
     }
 
     public toJson(): any {
@@ -166,16 +171,15 @@ export class DateField extends Field {
         return this._min
     }
 
-    public restriction(): boolean {
+    public restriction(): true | { error: string, field: string } {
         if (typeof this.content === 'number') {
             this.content = new Date(this.content)
         }
 
         if (!(this.content instanceof Date)) {
-            return false
+            return { error: "content must be a date", field: this.name }
         }
-
-        return this.content >= this._min
+        return (this.content >= this._min) ? true : { error: "invalid content", field: this.name }
     }
 
     public toJson(): any {
@@ -199,8 +203,14 @@ export class BooleanField extends Field {
         super(name, required, FieldType.BOOLEAN, content)
     }
 
-    public restriction(): boolean {
-        return typeof this.content === 'boolean'
+    public restriction(): true | { error: string, field: string } {
+        try {
+            this.content = Boolean(this.content)
+        } catch (e) {
+            return { error: "content must be a boolean", field: this.name }
+        }
+        return (!this.required || this.content) ? true : 
+            { error: "content must be true", field: this.name }
     }
 
     public toJson(): any {
@@ -231,8 +241,11 @@ export class SelectField extends Field {
         return this._options
     }
 
-    public restriction(): boolean {
-        return this._options.includes(this.content)
+    public restriction(): true | { error: string, field: string } {
+        if (!this._options.includes(this.content)) {
+            return { error: "invalid content", field: this.name }
+        }
+        return true
     }
 
     public toJson(): any {
@@ -244,4 +257,71 @@ export class SelectField extends Field {
             options: this.options
         }
     }
+}
+
+
+export class CheckBoxField extends Field {
+
+    private _min: number
+    private _max: number
+    private _options: string[]
+    
+    constructor(
+        name: string,
+        required: boolean,
+        min: number,
+        max: number,
+        options: string[],
+        content?: string[]
+    ) {
+        super(name, required, FieldType.CHECKBOX, content)
+        this._min = min
+        this._max = max
+        this._options = options
+        this.content = content ? content : []
+    }
+
+    get min(): number {
+        return this._min
+    }
+
+    get max(): number {
+        return this._max
+    }
+
+    get options(): string[] {
+        return this._options
+    }
+
+    public restriction(): true | { error: string, field: string } {
+        if (this.content.length < this._min) {
+            return { error: "content must have at least " + this._min + " elements", field: this.name }
+        }
+
+        if (this.content.length > this._max) {
+            return { error: "content must have at most " + this._max + " elements", field: this.name }
+        }
+        
+        for (const option of this.content) {
+            if (!this._options.includes(option)) {
+                return { error: "invalid option " + option, field: this.name }
+            }
+        }
+
+        return true
+    }
+
+    public toJson(): any {
+        return {
+            name: this.name,
+            required: this.required,
+            type: this.type,
+            content: this.content,
+            min: this.min,
+            max: this.max,
+            options: this.options
+        }
+    }
+
+
 }

@@ -1,9 +1,10 @@
 import Popup from "@/components/popup"
 import { useEffect, useState } from "react"
-import TextPopup from "./text-popup"
-import NumberPopup from "./number-popup"
-import DatePopup from "./date-popup"
-import SelectPopup from "./select-popup"
+import TextPopup from "./popup/text-popup"
+import NumberPopup from "./popup/number-popup"
+import DatePopup from "./popup/date-popup"
+import SelectPopup from "./popup/select-popup"
+import CheckBoxPopup from "./popup/checkbox-popup"
 
 
 
@@ -28,6 +29,8 @@ export default function fieldPopup({ field, setField, error, isVisible, hidePopu
                     return <DatePopup field={field} setField={setField} />
                 case "SELECT":
                     return <SelectPopup field={field} setField={setField} />
+                case "CHECKBOX":
+                    return <CheckBoxPopup field={field} setField={setField} />
             }
                 
         }
@@ -44,7 +47,7 @@ export default function fieldPopup({ field, setField, error, isVisible, hidePopu
                     <div className="checkbox-container mb-6">
                         <label htmlFor="is-required" className="text-gray-700">Is required</label>
                         <input type="checkbox" id="is-required" name="is-required" className="ml-2"
-                            onChange={(e) => setField({ ...field, isRequired: e.target.checked })}
+                            onChange={(e) => setField({ ...field, required: e.target.checked })}
                         />
                     </div>
                     <div className="mb-6">

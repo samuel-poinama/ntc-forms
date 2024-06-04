@@ -1,11 +1,14 @@
-import Date from "@/components/panel/form/date"
-import Text from "@/components/panel/form/text"
-import Select from "@/components/panel/form/select"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
-import Number from "@/components/panel/form/number"
-import FiledPopUp from "@/components/panel/form/popup/field-popup"
 import Link from "next/link"
+import FiledPopUp from "@/components/panel/form/field-popup"
+import Text from "@/components/panel/form/content/text"
+import Number from "@/components/panel/form/content/number"
+import Boolean from "@/components/panel/form/content/bool"
+import Select from "@/components/panel/form/content/select"
+import Date from "@/components/panel/form/content/date"
+import CheckBox from "@/components/panel/form/content/checkbox"
+
 
 export default function View() {
   const router = useRouter()
@@ -25,7 +28,7 @@ export default function View() {
     } catch (error) {
       newForm = { error: "Form not found" }
     }
-
+    console.log(newForm)
     setForm(newForm)
   }
 
@@ -42,7 +45,27 @@ export default function View() {
     if (data.error) {
       setError(data.error)
     } else {
+      setError("")
       router.push(`/view?id=${data._id}`)
+    }
+  }
+
+
+  const fetchCreateResponse = async () => {
+    console.log(form.fields)
+    const res = await fetch("/api/response", {
+      method: "POST",
+      body: JSON.stringify({ id: id, fields: form.fields }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+
+    const data = await res.json()
+    if (data.error) {
+      setError(data.error)
+    } else {
+      router.push(`/`)
     }
   }
 
@@ -52,8 +75,13 @@ export default function View() {
 
   const addField = () => {
     setForm({ ...form, fields: [...form.fields, field] })
-    setField({ isRequired: false })
+    setField({ required: false })
     show()
+  }
+
+  const removeField = (index: number) => {
+    const newFields = form.fields.filter((field: any, i: number) => i !== index)
+    setForm({ ...form, fields: newFields })
   }
 
   useEffect(() => {
@@ -100,12 +128,15 @@ export default function View() {
 
             <div className="overflow-y-auto h-[70vh]">
             {form.fields.map((field: any, index: number) => {
+              console.log(field)
                   switch (field.type) {
                     case "TEXT":
                       return (
                         <Text
                           key={index}
                           field={field}
+                          edit={edit}
+                          onRemove={() => removeField(index)}
                         />
                       )
                     case "NUMBER":
@@ -113,27 +144,56 @@ export default function View() {
                         <Number
                           key={index}
                           field={field}
+                          edit={edit}
+                          onRemove={() => removeField(index)}
                         />
                       )
                     case "BOOLEAN":
                       return (
-                        <p>bool</p>
+                        <Boolean
+                          key={index}
+                          field={field}
+                          edit={edit}
+                          onRemove={() => removeField(index)}
+                        />
                       )
                     case "SELECT":
                       return (
                         <Select
                           key={index}
                           field={field}
+                          edit={edit}
+                          onRemove={() => removeField(index)}
                         />
                       )
                     case "DATE":
                       return (
                         <Date
                         field={field}
+                        edit={edit}
+                        onRemove={() => removeField(index)}
+                        />
+                      )
+                    case "CHECKBOX":
+                      return (
+                        <CheckBox
+                          key={index}
+                          field={field}
+                          edit={edit}
+                          onRemove={() => removeField(index)}
                         />
                       )
                   }
                 })}
+
+                { !edit &&
+                  <div className="flex justify-center items-center">
+                    <div className="btn bg-yellow-500 text-white py-4 px-8 text-lg rounded-lg cursor-pointer"
+                        onClick={fetchCreateResponse}>
+                      Submit
+                    </div>
+                  </div>
+                }
             </div>
           </div>
         </div>
