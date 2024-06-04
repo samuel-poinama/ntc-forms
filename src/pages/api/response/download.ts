@@ -5,7 +5,7 @@ import { permissions } from '@/lib/checker'
 import { Role } from '@/model/User'
 import Form from '@/model/forms/forms'
 import Response from '@/model/forms/response'
-import { csvFormater } from '@/lib/csvFormater'
+import { csvFormater } from '@/lib/parser'
 import { sendFormsMail } from '@/lib/mailer'
 
 
@@ -47,7 +47,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const csv = csvFormater(responses)
     if (email === 'true') {
         sendFormsMail(user.email, form.title, csv)
-        return res.status(200).json({ message: 'Email sent' })
+        return res.status(200).redirect('/panel/forms')
     } else if (email === 'false') {
         res.setHeader('Content-Type', 'text/csv')
         res.setHeader('Content-Disposition', `attachment; filename="${form.title}.csv"`)

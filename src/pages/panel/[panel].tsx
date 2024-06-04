@@ -4,6 +4,7 @@ import Users from '@/components/panel/users'
 import { useRouter } from 'next/router'
 import { signIn, useSession } from 'next-auth/react'
 import Loading from '@/components/loading'
+import Answers from '@/components/panel/answers'
 
 
 
@@ -20,8 +21,11 @@ export default function Panel() {
                 return <Users/>
             case 'forms':
                 return <FormsPanel/>
+            case 'answers':
+                return <Answers/>
             default:
-                return <Home/>
+                router.push('/panel/home')
+                break
         }
     }
 

@@ -29,7 +29,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
 
         if (req.method === "GET") {
-            return res.status(200).json(response.toJson())
+            const infos = await response.infos()
+            return res.status(200).json(infos)
         } else if (req.method === "DELETE") {
             response.remove()
             return res.status(200).json({ message: "Response deleted" })
@@ -98,7 +99,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         if (!response.isFilled()) {
             res.status(400).json({ error: "all fields must be filled" })
         }
-
+        console.log(response)
         const result = await response.insert()
         if (!result) {
             return res.status(500).json({ error: "Failed to insert response" })

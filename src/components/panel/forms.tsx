@@ -15,6 +15,7 @@ export default function Forms() {
 
     const fetchForms = async () => {
         const res = await fetch('/api/forms')
+        console.log(res)
         const newForms = await res.json()
         setForms(newForms)
     }
@@ -25,6 +26,10 @@ export default function Forms() {
             method: 'DELETE',
         })
         fetchForms()
+    }
+
+    const fetchDownload = async (id: string, email: boolean) => {
+        router.push(`/api/response/download?id=${id}&email=${email}`)
     }
 
 
@@ -67,7 +72,7 @@ export default function Forms() {
                         
                             <div className="h-[70vh] overflow-auto">
                                 {forms.map((form: any, i) => (
-                                    <Form key={i} form={form} onRemove={removeForm} />
+                                    <Form key={i} form={form} onRemove={removeForm} onDownload={fetchDownload} />
                                 ))}
                             </div>
                         </div>
