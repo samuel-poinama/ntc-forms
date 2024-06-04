@@ -136,7 +136,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // check permissions
     const session = await getServerSession(req, res, authOptions)
-    const user = await permissions(session, Role.VIEWER)
+    const user = await permissions(session, Role.USER)
     if (!user) {
         return res.status(401).json({ error: "Unauthorized" })
     }
