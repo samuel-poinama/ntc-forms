@@ -167,7 +167,7 @@ export default function Home() {
             </div>
           </div>
           <div>
-            <div className="flex justify-center mt-20">
+            <div className="flex justify-center p-12">
               <div className="flex flex-col md:flex-row items-center bg-blue-100 text-black lg:h-[400px] mr-[10%] ml-[10%] w-full lg:w-4/4 rounded-full relative">
                 <div className="absolute top-10 left-12 bg-white mt-4 rounded-md md:rounded-l-[250px] p-4 w-72 h-72 flex justify-center items-center">
                   <p className="text-lg font-bold">Management</p>
