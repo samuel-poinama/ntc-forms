@@ -2,12 +2,6 @@ import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import FiledPopUp from "@/components/panel/form/field-popup"
-import Text from "@/components/panel/form/content/text"
-import Number from "@/components/panel/form/content/number"
-import Boolean from "@/components/panel/form/content/bool"
-import Select from "@/components/panel/form/content/select"
-import Date from "@/components/panel/form/content/date"
-import CheckBox from "@/components/panel/form/content/checkbox"
 import Viewer from "@/components/panel/viewer"
 import { reduceString } from "@/lib/parser"
 
@@ -30,7 +24,6 @@ export default function View() {
     } catch (error) {
       newForm = { error: "Form not found" }
     }
-    console.log(newForm)
     setForm(newForm)
   }
 
@@ -54,7 +47,6 @@ export default function View() {
 
 
   const fetchCreateResponse = async () => {
-    console.log(form.fields)
     const res = await fetch("/api/response", {
       method: "POST",
       body: JSON.stringify({ id: id, fields: form.fields }),
@@ -72,7 +64,6 @@ export default function View() {
   }
 
   const fetchResponse = async () => {
-    console.log('ok')
     const res = await fetch(`/api/response?id=${id}`)
     const data = await res.json()
     

@@ -12,7 +12,6 @@ export default function Viewer({ fields, edit, onRemove }: { fields: any, edit: 
     return (
         <div>
             {fields.map((field: any, index: number) => {
-                console.log(edit)
                 switch (field.type) {
                     case "TEXT":
                         return (

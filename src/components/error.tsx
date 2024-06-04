@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "next/image"
 
 
 
@@ -62,5 +62,5 @@ export default function Error({ code, message } : { code: number, message: strin
         />
       </div>
     </div>
-  );
+  )
 }

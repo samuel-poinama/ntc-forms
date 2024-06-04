@@ -1,7 +1,7 @@
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import Answer from "./answer/answer";
-import { useRouter } from "next/router";
+import Image from "next/image"
+import { useEffect, useState } from "react"
+import Answer from "./answer/answer"
+import { useRouter } from "next/router"
 
 
 
@@ -98,5 +98,5 @@ export default function Answers() {
         </div>
       </div>
     </div>
-  );
+  )
 }

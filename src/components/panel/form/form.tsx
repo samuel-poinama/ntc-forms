@@ -6,7 +6,6 @@ import Link from 'next/link'
 
 export default function Form({ form, onRemove, onDownload } : 
     { form: any, onRemove:(id: string) => void, onDownload : (id: string, email: boolean) => void }) {
-        console.log(form)
 
     return (
         <div

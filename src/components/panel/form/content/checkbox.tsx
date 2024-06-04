@@ -1,4 +1,4 @@
-import Content from "../content";
+import Content from "../content"
 
 
 
@@ -7,16 +7,13 @@ import Content from "../content";
 
 export default function CheckBox( { field, edit, onRemove } : 
     { field: any, edit: any, onRemove: () => void }) {
-        console.log(edit)
-        const onCheck = (e: any) => {
-            console.log(e.target.value)
-            if (field.content.includes(e.target.value)) {
-                field.content = field.content.filter((option: string) => option !== e.target.value);
-            } else {
-                field.content.push(e.target.value);
-            }
 
-            console.log(field.content)
+        const onCheck = (e: any) => {
+            if (field.content.includes(e.target.value)) {
+                field.content = field.content.filter((option: string) => option !== e.target.value)
+            } else {
+                field.content.push(e.target.value)
+            }
         }
 
 

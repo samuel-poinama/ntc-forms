@@ -1,11 +1,11 @@
-import Content from "../content";
+import Content from "../content"
 
 
 
 
 
 export default function Boolean({ field, edit, onRemove }: { field: any, edit: any, onRemove: () => void }) {
-    console.log(edit !== undefined)
+
     return (
         <Content field={field} edit={edit} onRemove={onRemove}>
             <form className="flex items-center">
