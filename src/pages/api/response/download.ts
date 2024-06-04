@@ -13,7 +13,7 @@ import { sendFormsMail } from '@/lib/mailer'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method !== 'GET') {
-        return res.status(405).json({ message: 'Method not allowed' })
+        return res.redirect('405')
     }
 
     // check permissions
@@ -21,24 +21,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const user = await permissions(session, Role.VIEWER)
 
     if (!user) {
-        return res.status(401).json({ error: "Unauthorized" })
+        return res.redirect('/401')
     }
 
 
     const { id, email } = req.query
 
     if (!id || typeof id !== 'string') {
-        return res.status(400).json({ error: 'id is required' })
+        return res.redirect('/400')
     }
 
     const form = await Form.find(id)
 
     if (!form) {
-        return res.status(404).json({ error: 'Form not found' })
+        return res.redirect('/400')
     }
 
     if (!email) {
-        return res.status(400).json({ error: 'email is required' })
+        return res.redirect('/400')
     } 
 
     
@@ -53,6 +53,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         res.setHeader('Content-Disposition', `attachment; filename="${form.title}.csv"`)
         res.status(200).send(csv)
     } else {
-        return res.status(400).json({ error: 'email is required' })
+        return res.redirect('/400')
     }
 }
