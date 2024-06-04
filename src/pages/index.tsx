@@ -56,7 +56,7 @@ export default function Home() {
                     The Corps offers a variety of activities like sailing,
                     canoeing, sports, climbing, music, and shooting, available
                     at local divisions, national activity centers, and other
-                    facilities, including the Duke of Edinburgh's Award Scheme.
+                    facilities, including the Duke of Edinburgh&apos;s Award Scheme.
                   </p>
                 </div>
                 <div className="flex justify-center md:justify-end md:mr-12">
@@ -107,10 +107,10 @@ export default function Home() {
                     Flag
                   </h2>
                   <p className="text-xl font-roboto leading-relaxed max-w-3xl">
-                    In 2009, the Ministry of Defence granted the NTC a 'defaced
-                    ensign', the first in nearly 40 years! The ensign bears the
+                    In 2009, the Ministry of Defence granted the NTC a &apos;defaced
+                    ensign&apos;, the first in nearly 40 years! The ensign bears the
                     Union Flag Cross and the Corps Badge Tudor Rose, symbolizing
-                    our country's faith and traditions, closely aligned with the
+                    our country&apos;s faith and traditions, closely aligned with the
                     Royal Navy uniform. Our present uniform and training are
                     rooted in centuries-old traditions of great sea adventurers,
                     emphasizing discipline but foremost, youth development. Our
@@ -174,9 +174,9 @@ export default function Home() {
                 </div>
                 <div className="md:pl-24 md:pr-16 ml-96">
                   <p className="text-xl font-roboto leading-relaxed max-w-2xl mx-auto">
-                    The Corps' governing body, the National Council, acts as
-                    Trustees overseeing the charity's operations and assets.
-                    They manage the organization's day-to-day affairs, providing
+                    The Corps&apos; governing body, the National Council, acts as
+                    Trustees overseeing the charity&apos;s operations and assets.
+                    They manage the organization&apos;s day-to-day affairs, providing
                     top-level direction. The Chief of Staff manages uniformed
                     operations, supported by Regional Commanders overseeing
                     groups of units. HQ Officers assist in operations, all

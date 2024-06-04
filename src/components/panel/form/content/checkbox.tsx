@@ -22,7 +22,7 @@ export default function CheckBox( { field, edit, onRemove } :
         <Content field={field} edit={edit} onRemove={onRemove}>
             <form className="flex justify-evenly items-center">
                 {field.options.map((option: string, index: number) => (
-                    <div className="flex items-center p-3">
+                    <div key={index} className="flex items-center p-3">
                         <input type="checkbox" name="option" value={option}
                             onChange={onCheck}
                             checked={edit !== undefined ? field.content.includes(option): undefined}

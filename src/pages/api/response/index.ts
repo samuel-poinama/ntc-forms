@@ -14,7 +14,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     
     // check permissions
     const session = await getServerSession(req, res, authOptions)
-    const user = await permissions(session, Role.VIEWER)
+    const user = await permissions(session, Role.USER)
 
     if (!user) {
         return res.status(401).json({ error: "Unauthorized" })
@@ -23,6 +23,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { id } = req.query
 
     if (id && typeof id === "string") {
+        if (user.role > Role.ADMIN) {
+            return res.status(403).json({ error: "Forbidden" })
+        }
+
         const response = await Response.find(id)
         if (!response) {
             return res.status(404).json({ error: "Response not found" })
@@ -40,6 +44,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         
     } else if (req.method === "GET") {
+        if (user.role > Role.ADMIN) {
+            return res.status(403).json({ error: "Forbidden" })
+        }
+
         const responses = await Response.all()
 
         res.status(200).json(responses)

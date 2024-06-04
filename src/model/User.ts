@@ -74,6 +74,8 @@ export class User {
 
     public async delete() : Promise<boolean> {
         const result = await collection.deleteOne({_id: this._id})
+        await db.collection("responses").deleteMany({userId: this._id})
+
         return result.deletedCount > 0
     }
 

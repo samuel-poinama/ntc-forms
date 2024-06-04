@@ -77,6 +77,7 @@ export default class Form {
 
     public async remove(): Promise<boolean> {
         const result = await collection.deleteOne({ _id: this._id })
+        await db.collection("responses").deleteMany({ formId: this._id })
 
         return result.deletedCount > 0
     }
