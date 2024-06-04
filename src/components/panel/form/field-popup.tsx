@@ -9,7 +9,7 @@ import CheckBoxPopup from "./popup/checkbox-popup"
 
 
 
-export default function fieldPopup({ field, setField, error, isVisible, hidePopup, save } :
+export default function FieldPopup({ field, setField, error, isVisible, hidePopup, save } :
     { field: any, setField:(field: any) => void, error?: string, isVisible: boolean, hidePopup: () => void, save: () => void }) {
         const [types, setTypes] = useState([])
 

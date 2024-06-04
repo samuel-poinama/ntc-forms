@@ -11,7 +11,7 @@ export default function Select( { field, edit, onRemove } :
         <Content field={field} edit={edit} onRemove={onRemove}>
             <form className="flex justify-evenly items-center">
                 {field.options.map((option: string, index: number) => (
-                    <div className="flex items-center p-3">
+                    <div key={index} className="flex items-center p-3">
                         <input type="radio" name="option" value={option}
                             onChange={(e) => field.content = e.target.value }
                             disabled={edit !== undefined}
