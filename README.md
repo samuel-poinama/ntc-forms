@@ -38,8 +38,10 @@ USER_EMAIL=sender@exemple.com
 EMAIL_ACCESS=secret
 ```
 
-> * AUTH_GOOGLE_ID: Google client id [get it here](https://developers.google.com/identity/oauth2/web/guides/get-google-api-clientid)
-> * AUTH_GOOGLE_SECRET: Google client secret [get it here](https://developers.google.com/identity/oauth2/web/guides/get-google-api-clientid)
+> * AUTH_GOOGLE_ID: Google client id [get it here](https://developers.google.com/identity/protocols/oauth2?hl=fr)
+> > set Authorised JavaScript origins to https://{your_domain}
+> > set Authorised redirect URIs to https://{your_domain}/api/auth/callback/google
+> * AUTH_GOOGLE_SECRET: Google client secret [get it here](https://developers.google.com/identity/protocols/oauth2?hl=fr)
 > * NEXTAUTH_SECRET: a random strong secret key
 > * MONGO_URI: mongodb connection string
 > * USER_EMAIL: email address to send emails
