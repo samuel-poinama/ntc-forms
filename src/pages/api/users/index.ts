@@ -45,12 +45,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 case "PUT":
                     const { role } = req.body
 
-                    const newRole = Role[role]
-
-                    if (newRole === undefined) {
+                    const isRole = Object.keys(Role).filter((role) => isNaN(Number(role))).includes(role)
+                    if (!isRole) {
                         return res.status(400).json({ error: "Invalid role" })
                     }
-                    target.role = role
+                    target.role = Role[role] as any
                     const result = await target.update()
 
                     if (!result) {
@@ -93,13 +92,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
 
         // secure role
-        const newRole = Role[role]
-
-        if (newRole === undefined) {
+        const isRole = Object.keys(Role).filter((role) => isNaN(Number(role))).includes(role)
+         if (!isRole) {
             return res.status(400).json({ error: "Invalid role" })
         }
 
-        const target = new User(email, role)
+        const target = new User(email, Role[role] as any)
         await target.insert()
 
         return res.status(201).json({ message: "User created" })

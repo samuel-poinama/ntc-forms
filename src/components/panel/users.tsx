@@ -4,16 +4,15 @@ import User from "./user/user"
 import Popup from "../popup"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/router"
-import Loading from "../loading"
 import Role from "@/model/role"
-import { permissions } from "@/lib/client"
+import { getRole, permissions } from "@/lib/client"
 
 
 export default function Users() {
     const session = useSession()
     const router = useRouter()
 
-    const [me, setMe] = useState({} as any)
+    const [me, setMe] = useState(Role.VIEWER)
     const [users, setUsers] = useState([])
     const [isAdd, setIsAdd] = useState(false)
     const [isEdit, setIsEdit] = useState(false)
@@ -33,6 +32,11 @@ export default function Users() {
     }
 
     const showAdd = () => {
+        if (me < Role.ADMIN) {
+            setError("Unauthorized")
+            return
+        }
+
         setIsAdd(!isAdd)
 
         if (!isAdd) {
@@ -43,6 +47,11 @@ export default function Users() {
     }
 
     const showEdit = () => {
+        if (me < Role.ADMIN) {
+            setError("Unauthorized")
+            return
+        }
+
         setIsEdit(!isEdit)
 
         if (!isEdit) {
@@ -137,6 +146,7 @@ export default function Users() {
     useEffect(() => {
         fetchUsers()
         setRoles(Object.keys(Role).filter((role) => isNaN(Number(role))))
+        getRole(setMe)
     }, [])
 
     

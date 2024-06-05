@@ -57,7 +57,8 @@ export default function View() {
 
     const data = await res.json()
     if (data.error) {
-      setError(data.error)
+      console.log(data)
+      setError(data.error + " " +data.field)
     } else {
       router.push(`/`)
     }
