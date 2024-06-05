@@ -2,7 +2,7 @@ import Image from "next/image"
 
 export default function Footer() {
     return (
-        <div className="bg-[#2F5597] text-white my-3 px-0">
+        <div className="bg-[#2F5597] text-white px-0">
             <div className="flex flex-wrap justify-center space-x-4 mb-8 py-5 bg-white px-0">
                 <a href="https://www.facebook.com/TheNauticalTrainingCorps" className="mb-4 md:mb-0">
                     <Image src="/facebook.png" width={60} height={60} className="logoImage inline-block" alt="Facebook" />
