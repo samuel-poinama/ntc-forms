@@ -13,7 +13,6 @@ export default function Layout({ children }: { children: ReactNode }) {
           <main className="flex-grow p-4 bg-white">{children}</main>
         </div>
       </div>
-      <Footer />
     </div>
   )
 }
