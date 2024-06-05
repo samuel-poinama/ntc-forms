@@ -2,6 +2,8 @@ import Image from "next/image"
 import { useEffect, useState } from "react"
 import Answer from "./answer/answer"
 import { useRouter } from "next/router"
+import Role from "@/model/role"
+import { getRole } from "@/lib/client"
 
 
 
@@ -10,9 +12,15 @@ export default function Answers() {
   const [answers, setAnswers] = useState([] as any)
   const [search, setSearch] = useState("")
   const [type, setType] = useState("form")
+  const [role, setRole] = useState(Role.USER)
 
   const fetchAnswers = async () => {
-    const res = await fetch("/api/response")
+    let res: Response
+    if (role > Role.VIEWER) {
+      res = await fetch("/api/me/responses")
+    } else {
+      res = await fetch("/api/response")
+    }
     const data = await res.json()
     setAnswers(data)
   }
@@ -40,8 +48,9 @@ export default function Answers() {
 
 
   useEffect(() => {
+    getRole(setRole)
     fetchAnswers()
-  }, [])
+  }, [role])
 
 
 
@@ -86,7 +95,7 @@ export default function Answers() {
               </div>
               <div className="h-[70vh] overflow-auto">
                 {answers?.map((answer: any, index: number) => (
-                  <Answer key={index} title={answer.title} description={answer.description} 
+                  <Answer role={role} key={index} title={answer.title} description={answer.description} 
                     user={answer.userName}
                     onRemove={() => fetchRemoveAnswer(answer._id)}
                     onSee={() => onSee(answer._id)}

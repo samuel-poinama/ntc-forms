@@ -1,4 +1,5 @@
-import { Role, User } from "@/model/User"
+import Role from "@/model/role"
+import User from "@/model/User"
 import { Session } from "next-auth"
 
 

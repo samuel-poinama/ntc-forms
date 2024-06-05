@@ -3,15 +3,17 @@ import { useEffect, useState } from "react"
 import Form from "./form/form"
 import Popup from "../popup"
 import { useRouter } from "next/router"
+import Role from "@/model/role"
+import { getRole } from "@/lib/client"
 
 
 export default function Forms() {
     const router = useRouter()
     const [forms, setForms] = useState([])
     const [isNewForm, setIsNewForm] = useState(false)
-    const [error, setError] = useState('')
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
+    const [role, setRole] = useState(Role.USER)
 
     const fetchForms = async () => {
         const res = await fetch('/api/forms')
@@ -43,13 +45,14 @@ export default function Forms() {
 
 
     useEffect(() => {
+        getRole(setRole)
         fetchForms()
     }, [])
 
     return (
         <div className="flex justify-between items-center "> 
             { isNewForm &&
-                <Popup isVisible={isNewForm} error={error} hidePopup={showIsNewForm} save={saveForm}>
+                <Popup isVisible={isNewForm} hidePopup={showIsNewForm} save={saveForm}>
                     <div className="flex flex-col items-center">
                         <h1 className="text-2xl font-bold mb-4">Create New Form</h1>
                         <input value={title} onChange={(e) => setTitle(e.target.value)} 
@@ -71,26 +74,28 @@ export default function Forms() {
                         
                             <div className="h-[70vh] overflow-auto">
                                 {forms.map((form: any, i) => (
-                                    <Form key={i} form={form} onRemove={removeForm} onDownload={fetchDownload} />
+                                    <Form key={i} role={role} form={form} onRemove={removeForm} onDownload={fetchDownload} />
                                 ))}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div className="w-[30%]">
-                <div className="p-6 flex text-white">
-                    <div className="bg-[#2F5597] p-6 rounded-2xl ml-3 w-1/4 
-                        text-center w-[100%] h-[500px] cursor-pointer" onClick={showIsNewForm}>
-                        <div className="relative h-322 w-322 ">
-                            <Image src="/calendar.png" alt="" width={100} height={100} className="h-auto max-w-lg mx-auto fa-solid fa-calendar text-4xl" />
+            { role === Role.ADMIN &&
+                <div className="w-[30%]">
+                    <div className="p-6 flex text-white">
+                        <div className="bg-[#2F5597] p-6 rounded-2xl ml-3 w-1/4 
+                            text-center w-[100%] h-[500px] cursor-pointer" onClick={showIsNewForm}>
+                            <div className="relative h-322 w-322 ">
+                                <Image src="/calendar.png" alt="" width={100} height={100} className="h-auto max-w-lg mx-auto fa-solid fa-calendar text-4xl" />
+                            </div>
+                            <i className="fa-solid fa-calendar text-4xl"></i>
+                            <h1 className="text-xl mb-2 font-bold">Create New Form</h1>
+                            <h3 className="text-lg pt-2">Create new form in the easiest way</h3>
                         </div>
-                        <i className="fa-solid fa-calendar text-4xl"></i>
-                        <h1 className="text-xl mb-2 font-bold">Create New Form</h1>
-                        <h3 className="text-lg pt-2">Create new form in the easiest way</h3>
                     </div>
                 </div>
-            </div>
+            }
         </div>
  
     )

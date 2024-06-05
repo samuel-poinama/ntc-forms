@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import Form from "@/model/forms/forms"
-import { Role } from "@/model/User"
+import Role from "@/model/role"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/pages/api/auth/[...nextauth]"
 import { permissions } from "@/lib/checker"

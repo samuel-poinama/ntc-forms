@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/pages/api/auth/[...nextauth]"
 import { permissions } from "@/lib/checker"
-import { Role } from "@/model/User"
+import Role from "@/model/role"
 import Response from "@/model/forms/response"
 import Form from "@/model/forms/forms"
 
@@ -23,7 +23,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { id } = req.query
 
     if (id && typeof id === "string") {
-        if (user.role > Role.ADMIN) {
+        if (user.role > Role.VIEWER) {
             return res.status(403).json({ error: "Forbidden" })
         }
 
@@ -36,6 +36,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             const infos = await response.infos()
             return res.status(200).json(infos)
         } else if (req.method === "DELETE") {
+            if (user.role > Role.ADMIN) {
+                return res.status(403).json({ error: "Forbidden" })
+            }
+
             response.remove()
             return res.status(200).json({ message: "Response deleted" })
         } else {
@@ -44,7 +48,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         
     } else if (req.method === "GET") {
-        if (user.role > Role.ADMIN) {
+        if (user.role > Role.VIEWER) {
             return res.status(403).json({ error: "Forbidden" })
         }
 

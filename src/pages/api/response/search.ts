@@ -4,7 +4,7 @@ import { authOptions } from "@/pages/api/auth/[...nextauth]"
 import { permissions } from "@/lib/checker"
 import Response from "@/model/forms/response"
 import { findApproximateMatches } from "@/lib/searcher"
-import { Role } from "@/model/User"
+import Role from "@/model/role"
 
 
 

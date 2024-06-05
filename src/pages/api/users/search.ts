@@ -2,7 +2,8 @@ import { NextApiRequest, NextApiResponse } from "next"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/pages/api/auth/[...nextauth]"
 import { permissions } from "@/lib/checker"
-import { Role, User } from "@/model/User"
+import User from "@/model/User"
+import Role from "@/model/role"
 import { findApproximateMatches } from "@/lib/searcher"
 
 

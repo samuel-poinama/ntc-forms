@@ -1,4 +1,5 @@
-import { Role, User } from "@/model/User"
+import User from "@/model/User"
+import Role from "@/model/role"
 import { NextApiRequest, NextApiResponse } from "next"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/pages/api/auth/[...nextauth]"
@@ -44,18 +45,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 case "PUT":
                     const { role } = req.body
 
-                    // secure role
-                    if (typeof role !== "string") {
-                        return res.status(400).json({ error: "Role must be a string" })
-                    }
-
-                    const newRole = Role[role as keyof typeof Role]
+                    const newRole = Role[role]
 
                     if (newRole === undefined) {
                         return res.status(400).json({ error: "Invalid role" })
                     }
-
-                    target.role = newRole
+                    console.log(role)
+                    target.role = role
                     const result = await target.update()
 
                     if (!result) {
@@ -98,17 +94,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
 
         // secure role
-        if (typeof role !== "string") {
-            return res.status(400).json({ error: "Role must be a string" })
-        }
-
-        const newRole = Role[role as keyof typeof Role]
+        const newRole = Role[role]
 
         if (newRole === undefined) {
             return res.status(400).json({ error: "Invalid role" })
         }
 
-        const target = new User(email, newRole)
+        const target = new User(email, role)
         await target.insert()
 
         return res.status(201).json({ message: "User created" })

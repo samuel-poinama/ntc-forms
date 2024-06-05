@@ -1,9 +1,9 @@
-import { User } from '@/model/User'
+import User from '@/model/User'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/pages/api/auth/[...nextauth]'
 import { permissions } from '@/lib/checker'
-import { Role } from '@/model/User'
+import Role from '@/model/role'
 
 
 
@@ -14,7 +14,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // check permissions
     const session = await getServerSession(req, res, authOptions)
-    const user = await permissions(session, Role.VIEWER)
+    const user = await permissions(session, Role.USER)
     if (!user) {
         return res.status(401).json({ error: "Unauthorized" })
     }

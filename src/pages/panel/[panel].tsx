@@ -11,7 +11,7 @@ import Answers from '@/components/panel/answers'
 export default function Panel() {
     const router = useRouter()
     const { panel } = router.query
-    const { data: session } = useSession()
+    const { data: session, status } = useSession()
 
     function renderPanel() {
         switch (panel) {
@@ -29,23 +29,19 @@ export default function Panel() {
         }
     }
 
-    if (session === null) {
+    if (status === "authenticated") {
         return (
-        <div className="panel_cbtn">
-            <button onClick={() => signIn()} className='btn' >
-                Log In
-            </button>
-        </div>
+            <div className="panel">
+                <div className="content">
+                    {renderPanel()}
+                </div>
+            </div>
         )
-    } else if (session !== undefined) {
-        return (
-        <div  className="panel">
-            <div className="content">
-                {renderPanel()}
-            </div> 
-        </div>
-        )
+    } else if (status === "loading") {
+        return <Loading/>
     } else {
-        return ( <Loading /> )
+        return (
+            <Loading fun={() => router.push('/')} delay={500}/>
+        )
     }
 }
