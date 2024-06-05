@@ -26,9 +26,9 @@ export default function Home() {
 
 
     return (
-        <div className="relative flex h-screen">
-            <div className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat bg-cyan-50">
-                <div className="text-yellow-400 p-4 h-full flex flex-col justify-center items-center bg-cyan-50 bg-opacity-50">
+        <div className="relative flex h-[100%]">
+            <div className="absolute inset-0 w-full h-[100%] bg-cover bg-center bg-no-repeat bg-cyan-50">
+                <div className="text-yellow-400 p-4 h-[100%] flex flex-col justify-center items-center bg-cyan-50 bg-opacity-50">
                     
                 </div>
             </div>

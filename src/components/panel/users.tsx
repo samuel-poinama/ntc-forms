@@ -141,7 +141,7 @@ export default function Users () {
 
 
   return (
-    <div className="bg-blue-700 rounded-2xl p-4 w-99% mx-4 my-4 relative overflow-hidden">
+    <div className="bg-[#2F5597] rounded-2xl p-4 w-99% mx-4 my-4 relative overflow-hidden">
 
         {/* edit user popup */}
         <Popup isVisible={isEdit} error={error} hidePopup={showEdit} save={editUser} >

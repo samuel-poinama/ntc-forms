@@ -35,8 +35,8 @@ export default function Panel() {
         )
     } else if (session !== undefined) {
         return (
-        <div  className="panel">
-            <div className="content">
+        <div  className="panel h-[100%]">
+            <div className="content h-[100%]">
                 {renderPanel()}
             </div> 
         </div>

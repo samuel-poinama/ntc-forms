@@ -41,14 +41,14 @@ export default function Header() {
             </div>
 
             <div className="flex flex-col md:flex-row p-4">
-                <div className="flex items-center bg-blue-800 text-white rounded-lg p-4 m-2 w-full md:w-1/2 lg:w-1/4">
+                <div className="flex items-center bg-[#2F5597] text-white rounded-lg p-4 m-2 w-full md:w-1/2 lg:w-1/4">
                     <Image src="/stats.png" alt="stats icon" width={60} height={60} className="mr-4"/>
                     <div className="ml-4">
                         <p>Total Forms</p>
                         <h1 className="text-2xl">{nForms}</h1>
                     </div>
                 </div>
-                <div className="flex items-center bg-blue-800 text-white rounded-lg p-4 m-2 w-full md:w-1/2 lg:w-1/4">
+                <div className="flex items-center bg-[#2F5597] text-white rounded-lg p-4 m-2 w-full md:w-1/2 lg:w-1/4">
                     <Image src="/calendar.png" alt="form icon" width={60} height={60} className="mr-4"/>
                     <div className="ml-4">
                         <p>Total Users</p>

@@ -43,9 +43,11 @@ export default function Navigation() {
             </Link>
 
             <Link href="/logout">
-                <div className="flex items-center bg-blue-800 p-4 rounded-lg mt-auto">
-                    <Image src="/signout.png" alt="sign out" width={30} height={30} />
-                    <p className="ml-3 text-white text-lg">Sign Out</p>
+                <div className="relative w-full max-w-xs">
+                    <div className="absolute top-[325px] left-0 flex items-center bg-blue-800 p-4 rounded-lg w-full">
+                        <Image src="/signout.png" alt="sign out" width={30} height={30} />
+                        <p className="ml-3 text-white text-lg">Sign Out</p>
+                    </div>
                 </div>
             </Link>
         </div>

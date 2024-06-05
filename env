@@ -1,0 +1,7 @@
+AUTH_GOOGLE_ID=518794124488-5ae2q1ks6225l78kg5sr00134lsbbcsh.apps.googleusercontent.com
+AUTH_GOOGLE_SECRET=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
+NEXTAUTH_SECRET=test123
+MONGO_URI=mongodb://localhost:27017/ntc_forms
+USER_EMAIL=vincent.marque.vm@gmail.com
+CONTACT_EMAIL=vincent.marque.vm@gmail.com
+EMAIL_ACCESS=jfxg qsvb hbis wtoo
