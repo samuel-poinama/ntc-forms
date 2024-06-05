@@ -1,11 +1,12 @@
 import { reduceString } from '@/lib/parser'
+import Role from '@/model/role'
 import Image from 'next/image'
 import Link from 'next/link'
 
 
 
-export default function Form({ form, onRemove, onDownload } : 
-    { form: any, onRemove:(id: string) => void, onDownload : (id: string, email: boolean) => void }) {
+export default function Form({ role, form, onRemove, onDownload } : 
+    { role: Role, form: any, onRemove:(id: string) => void, onDownload : (id: string, email: boolean) => void }) {
 
     return (
         <div
@@ -14,50 +15,50 @@ export default function Form({ form, onRemove, onDownload } :
                 <h2 className="mb-2 text-yellow-400">{ reduceString(form.title, 20) }</h2>
                 <p>{ reduceString(form.description, 50) }</p>
             </div>
-            
-            <div className="absolute top-1/2 transform -translate-y-1/2 right-10 flex justify-center items-center space-x-2">
-                <div className="cursor-pointer" onClick={() => onRemove(form._id)}>
-                    <Image
-                        src="/bin.png"
-                        alt=""
-                        width={25}
-                        height={25}
-                        className="fa-regular fa-trash-can text-black"
-                    />
-                </div>
-                <Link href={`/view?id=${form._id}`}>
-                    <div className="cursor-pointer">
+            { role === Role.ADMIN &&
+                <div className="absolute top-1/2 transform -translate-y-1/2 right-10 flex justify-center items-center space-x-2">
+                    <div className="cursor-pointer" onClick={() => onRemove(form._id)}>
                         <Image
-                            src="/forms.png"
+                            src="/bin.png"
                             alt=""
-                            width={50}
-                            height={50}
+                            width={25}
+                            height={25}
+                            className="fa-regular fa-trash-can text-black"
+                        />
+                    </div>
+                    <Link href={`/view?id=${form._id}`}>
+                        <div className="cursor-pointer">
+                            <Image
+                                src="/forms.png"
+                                alt=""
+                                width={50}
+                                height={50}
+                                className="fa-solid fa-pencil text-black"
+                            />
+                        </div>
+                    </Link>
+
+                    <div className="cursor-pointer" onClick={() => onDownload(form._id, false)}>
+                        <Image
+                            src="/save.png"
+                            alt=""
+                            width={25}
+                            height={25}
                             className="fa-solid fa-pencil text-black"
                         />
                     </div>
-                </Link>
 
-                <div className="cursor-pointer" onClick={() => onDownload(form._id, false)}>
-                    <Image
-                        src="/save.png"
-                        alt=""
-                        width={25}
-                        height={25}
-                        className="fa-solid fa-pencil text-black"
-                    />
+                    <div className="cursor-pointer" onClick={() => onDownload(form._id, true)}>
+                        <Image
+                            src="/user.png"
+                            alt=""
+                            width={25}
+                            height={25}
+                            className="fa-solid fa-pencil text-black"
+                        />
+                    </div>
                 </div>
-
-                <div className="cursor-pointer" onClick={() => onDownload(form._id, true)}>
-                    <Image
-                        src="/user.png"
-                        alt=""
-                        width={25}
-                        height={25}
-                        className="fa-solid fa-pencil text-black"
-                    />
-                </div>
-            </div>
-            
+            }
         </div>
     )
 }

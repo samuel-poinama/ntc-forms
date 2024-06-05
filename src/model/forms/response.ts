@@ -2,7 +2,7 @@ import db from "@/lib/database"
 import Field from "./field"
 import Form from "./forms"
 import { ObjectId } from "mongodb"
-import { User } from "../User"
+import User from "../User"
 
 
 
@@ -84,10 +84,10 @@ export default class Response {
     }
 
 
-    static async getByUser(user: User): Promise<Response[]> {
-        const responses = await collection.find({ userId: user.id }).toArray()
+    static async getByUser(user: User): Promise<any[]> {
+        const responses = await db.collection('reponses_user_title').find({ userId: user.id }).toArray()
 
-        return responses.map((response: any) => Response.fromJSON(response))
+        return responses
     }
 
     static async all(): Promise<any[]> {

@@ -1,18 +1,15 @@
 import db from "@/lib/database"
 import { ObjectId } from "mongodb"
+import Role from "./role"
 
 
 
 const collection = db.collection("users")
 
-export enum Role {
-    ADMIN = 0,
-    VIEWER = 1,
-    USER = 2
-}
 
 
-export class User {
+
+export default class User {
 
     private _id: ObjectId
     private _email: string
@@ -118,7 +115,7 @@ export class User {
     }
 
     private static fromJson(json: any): User {
-        return new User(json.email, Role[json.role as keyof typeof Role], json.name, json.image, json._id)
+        return new User(json.email, json.role, json.name, json.image, json._id)
     }
 
     public toJson() {
@@ -127,7 +124,7 @@ export class User {
             email: this._email,
             name: this._name,
             image: this._image,
-            role: Role[this._role]
+            role: this._role
         }
     }
 }
