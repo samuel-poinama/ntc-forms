@@ -1,7 +1,7 @@
-import Loading from "@/components/loading";
+import Loading from "@/components/loading"
 import Role from "@/model/role"
 import { SessionContextValue } from "next-auth/react"
-import { NextRouter } from "next/router";
+import { NextRouter } from "next/router"
 
 
 async function fetchData() {

@@ -79,7 +79,6 @@ export default function Users() {
 
 
     const editUser = async () => {
-        console.log(selectedUser)
         const response = await fetch(`/api/users?id=${selectedUser._id}`, {
             method: 'PUT',
             headers: {

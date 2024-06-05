@@ -2,7 +2,7 @@ import Home from '@/components/panel/home'
 import FormsPanel from '@/components/panel/forms'
 import Users from '@/components/panel/users'
 import { useRouter } from 'next/router'
-import { signIn, useSession } from 'next-auth/react'
+import { useSession } from 'next-auth/react'
 import Loading from '@/components/loading'
 import Answers from '@/components/panel/answers'
 

@@ -1,6 +1,8 @@
 import React from 'react'
 import { useState } from 'react'
 
+
+
 export default function TextPopup({field, setField }: { field: any, setField: (field: any) => void }) {
     const [minNumber, setMinNumber] = useState(0)
     const [maxNumber, setMaxNumber] = useState(0)
